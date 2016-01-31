@@ -10,10 +10,10 @@ Issue puns
 
 Pitfall
 ----
-_[Pitfall!]_ [ˈpʰɪʔˌfɔːɫ] is a chart-topping platformer for the Atari 2600 Video Computer System published by Activision.
+_[Pitfall!]_ [ˈpʰɪʔˌfɔːɫ] is a chart-topping platformer published by Activision for the Atari 2600 Video Computer System.
 This was back when Activision and Electronic Arts were still indie studios.
 (Yes, there was such a time before they became behemoths.)
-It received at several sequels, including _Pitfall 2: Lost Caverns_ on the 2600, which was remade as _Super Pitfall_ on the Nintendo Entertainment System, _Pitfall: The Mayan Adventure_ on Super NES and Sega Genesis, and a _Temple Run_ clone for Apple iOS and Android.
+It received several sequels, including _Pitfall 2: Lost Caverns_ on the 2600, which was remade as _Super Pitfall_ on the Nintendo Entertainment System, _Pitfall: The Mayan Adventure_ on Super NES and Sega Genesis, and a _Temple Run_ clone for Apple iOS and Android.
 _Super Pitfall_ was poorly received, to put it nicely.
 
 "Pitfall" or "[Pitfall seed]" is also the name of an uncommon item in Nintendo's social simulator _[Animal Crossing]_ for GameCube.
@@ -36,7 +36,7 @@ Here, a "pitfall" may refer to a bug in the documentation.
 
 Unova
 ----
-[Unova] [ˈju:nəvə/] is the region in which Nintendo's cockfighting role-playing games _Pokémon Black Version_ and _Pokémon White Version_ for Nintendo DS (_B&W_ for short) take place.
+[Unova], pronounced [ˈjuːnəvə/], is the region in which Nintendo's cockfighting role-playing games _Pokémon Black Version_ and _Pokémon White Version_ for Nintendo DS (_B&W_ for short) take place.
 Its geography roughly corresponds to the area around New York, New York.
 In the Japanese versions of _B&W_, Unova is called Isshu (イッシュ), pronounced roughly like "issue".
 
