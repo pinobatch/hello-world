@@ -105,7 +105,7 @@ Scoot back and admire your work by viewing the **commit log**.
 
 **Tag** the latest commit with a version number. Occasionally you may want to release your software, which creates a tarball or zipfile suitable for use by people who do not use Git.  A tag identifies a release.
 
-        git tag v0.05wip4
+    git tag v0.05wip4
 
 ## Working with remote repositories (e.g. GitHub)
 
@@ -113,7 +113,7 @@ The first time you contribute to a project, copy its repository to your computer
 
     git clone GITHUBURL
 
-Once it's cloned, you can branch and commit locally.  To publish the new branch to the remote, use the [`-u` switch](http://stackoverflow.com/a/6232535/2738262), added in Git 1.7, to set up the connection.
+Once it's cloned, you can branch and commit locally.  To publish the new branch to the remote, use the [`-u` switch](https://stackoverflow.com/a/6232535/2738262), added in Git 1.7, to set up the connection.
 
     git push -u origin subseq-optimization
 
