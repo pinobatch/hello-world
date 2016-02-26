@@ -1,6 +1,6 @@
 ## Import a project
 
-Based on an [answer to "Import existing source code to Github" by Peter](http://stackoverflow.com/a/8012698/2738262):
+Based on an [answer to "Import existing source code to Github" by Peter](https://stackoverflow.com/a/8012698/2738262):
 
 1. On GitHub, create the remote repository and get the HTTPS URL of the repository.
 2. Unzip the zip distribution into a new folder.
@@ -36,7 +36,7 @@ An alternate method is to clone the GitHub repository first.
 
 Say you've got the idea for a bug fix or new feature while riding the bus. For this, you create a branch of the tree, sometimes called a feature branch or topic branch.
 
-**List** the existing branches.
+**List** the existing branches and show which is checked out.
 
     git branch
 
@@ -44,7 +44,7 @@ Say you've got the idea for a bug fix or new feature while riding the bus. For t
 
     git checkout -b subseq-optimization
 
-Make changes inside the branch.
+Make changes inside the branch. This can actually be done before or after creating the branch ([thanks knittl](https://stackoverflow.com/a/1394804/2738262)).
 
     gedit src/pentlymusic.s &
     make
@@ -60,6 +60,14 @@ Or remove a file:
 Or just add all additions and removals to the cart:
 
     git add -A .
+
+**Remove a file** from the cart as if it had not been changed ([thanks genehack](https://stackoverflow.com/a/348234/2738262)).
+
+    git reset src/notready.s
+
+Empty the cart.
+
+    git reset
 
 **Show changes** since the last commit.
 
@@ -77,9 +85,9 @@ Or all changes since the commit before last.
 
     git diff HEAD^
 
-**Commit changes** that have been added to the cart.
+**Commit changes** that have been added to the cart, with a message describing the change such as what issue it fixes.
 
-    git commit
+    git commit -m "fixes #13"
 
 Or add all changed files to the cart and commit them. Newly created files are skipped; they must be added manually.
 
@@ -107,7 +115,12 @@ Scoot back and admire your work by viewing the **commit log**.
 
     git tag v0.05wip4
 
-## Working with remote repositories (e.g. GitHub)
+Remove outdated files and **estimate the total size** of the repository ([thanks VonC](https://stackoverflow.com/a/16163608/2738262)).
+
+    git gc
+    git count-objects -vH | grep size-pack
+
+## Working with remote repositories (such as GitHub)
 
 The first time you contribute to a project, copy its repository to your computer.  This downloads its contents and sets up the `origin` link, which lets you keep up to date with changes to a remote repository.
 
@@ -122,7 +135,7 @@ Once you set up the connection, you'll usually want to pull before pushing to en
     git pull origin subseq-optimization
     git push origin subseq-optimization
 
-If the remote has "pull request" functionality to associate merges with issues, you can do the merge that way. Or you can do the merge locally:
+If the remote has "pull request" functionality to associate merges with issues and perform them, you can do the merge that way. Or you can do the merge locally and then push the changes:
 
     git checkout master
     git merge subseq-optimization
