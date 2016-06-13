@@ -77,13 +77,17 @@ Or only changes not added to cart.
 
     git diff
 
-Or only changes that have been added to cart.
+Or only changes that have been added to cart. This shows what will be committed.
 
     git diff --cached
 
 Or all changes since the commit before last.
 
     git diff HEAD^
+
+Or all changes made in the last commit.
+
+    git diff HEAD^ HEAD
 
 **Commit changes** that have been added to the cart, with a message describing the change such as what issue it fixes.
 
