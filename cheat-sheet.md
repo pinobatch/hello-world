@@ -69,7 +69,15 @@ Empty the cart.
 
     git reset
 
-**Show changes** since the last commit.
+**Revert a file** to the copy in the repository.
+
+    git checkout -- src/messedthisup.s
+
+**Show a summary of what has been changed** since the last commit.
+
+    git status
+
+Or a line-by-line difference of changes since the last commit.
 
     git diff HEAD
 
@@ -85,11 +93,12 @@ Or all changes since the commit before last.
 
     git diff HEAD^
 
-Or all changes made in the last commit.
+Or all changes made in the last commit.  Either of these works:
 
     git diff HEAD^ HEAD
+    git show HEAD  
 
-**Commit changes** that have been added to the cart, with a message describing the change such as what issue it fixes.
+**Commit changes** that have been added to the cart, with a message describing the change. Some repository hosts watch for specially formatted messages and use them to trigger actions such as closing issue reports.
 
     git commit -m "fixes #13"
 
@@ -118,6 +127,10 @@ Scoot back and admire your work by viewing the **commit log**.
 **Tag** the latest commit with a version number. Occasionally you may want to release your software, which creates a tarball or zipfile suitable for use by people who do not use Git.  A tag identifies a release.
 
     git tag v0.05wip4
+
+List all tracked files.  This helps determine what files to include in a release archive.
+
+    git ls-files | grep -e "^[^.]"
 
 Remove outdated files and **estimate the total size** of the repository ([thanks VonC](https://stackoverflow.com/a/16163608/2738262)).
 
