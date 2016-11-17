@@ -96,7 +96,7 @@ Or all changes since the commit before last.
 Or all changes made in the last commit.  Either of these works:
 
     git diff HEAD^ HEAD
-    git show HEAD  
+    git show HEAD
 
 **Commit changes** that have been added to the cart, with a message describing the change. Some repository hosts watch for specially formatted messages and use them to trigger actions such as closing issue reports.
 
@@ -156,4 +156,17 @@ If the remote has "pull request" functionality to associate merges with issues a
 
     git checkout master
     git merge subseq-optimization
+    git push origin master
+
+If you're starting a new project from a template released on GitHub, you can fork it *unless* the repository is your own. If it's yours, you have to manually [check it out and check it in as a different project](http://bitdrift.com/post/4534738938/fork-your-own-project-on-github). First create `my-game` as an empty repository on GitHub. Then clone your existing project into a new folder:
+
+    git clone https://github.com/pinobatch/nrom-template.git PROJECT
+    cd PROJECT
+    git remote rename origin upstream
+    git remote add origin https://github.com/USERNAME/PROJECT.git
+    git push -u origin master
+
+To sync changes from the parent project:
+
+    git pull upstream master
     git push origin master
