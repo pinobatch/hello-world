@@ -10,10 +10,21 @@ Based on an [answer to "Import existing source code to Github" by Peter](https:/
 
         git init
         git add .
-        git commit -m 'Imported version X.Y.Z from ZIPURL'
-        git remote add origin GITHUBURL
-        git pull origin master
-        git push origin master
+        git commit -m "Imported version X.Y.Z from ZIPURL"
+
+Or if your existing working copy has files that shouldn't be tracked
+quite yet, but you have a list of files that should, you can
+[use `xargs` to pass the same manifest file to Git](http://unix.stackexchange.com/a/244172/119806).
+
+    git init
+    xargs echo git add < zip.in
+    git commit -m "Imported version X.Y.Z from ZIPURL"
+
+Then you can send this new project to GitHub.
+
+    git remote add origin GITHUBURL
+    git pull origin master
+    git push origin master
 
 An alternate method is to clone the GitHub repository first.
 
@@ -128,14 +139,25 @@ Scoot back and admire your work by viewing the **commit log**.
 
     git tag v0.05wip4
 
-List all tracked files.  This helps determine what files to include in a release archive.
-
-    git ls-files | grep -e "^[^.]"
-
 Remove outdated files and **estimate the total size** of the repository ([thanks VonC](https://stackoverflow.com/a/16163608/2738262)).
 
     git gc
     git count-objects -vH | grep size-pack
+
+List all tracked files.  This helps determine what files to include in a release archive.
+
+    git ls-files | grep -e "^[^.]"
+
+This can be incorporated into a makefile:
+
+    .PHONY: dist
+    dist: mygame-git.zip
+    mygame-git.zip: \
+      zip.in mygame.nes README.md CHANGES.txt $(objdir)/index.txt
+    	zip -9 -u $@ -@ < $<
+    zip.in:
+    	git ls-files | grep -e "^[^.]" > $@
+    	echo zip.in >> $@
 
 ## Working with remote repositories (such as GitHub)
 
