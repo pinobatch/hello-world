@@ -12,7 +12,7 @@ Based on an [answer to "Import existing source code to Github" by Peter](https:/
         git add .
         git commit -m "Imported version X.Y.Z from ZIPURL"
 
-Or if your existing working copy has files that shouldn't be tracked
+Or if your working copy has files that shouldn't be tracked
 quite yet, but you have a list of files that should, you can
 [use `xargs` to pass the same manifest file to Git](http://unix.stackexchange.com/a/244172/119806).
 But make sure to do this *before* you set up a `.gitignore` that
@@ -27,8 +27,7 @@ adding an ignored file and refuse to do anything.
 Then you can send this new project to GitHub.
 
     git remote add origin GITHUBURL
-    git pull origin master
-    git push origin master
+    git push --set-upstream origin master
 
 An alternate method is to clone the GitHub repository first.
 
