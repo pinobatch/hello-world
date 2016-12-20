@@ -19,7 +19,7 @@ Open a terminal, check for updated software, and install it:
 
 While that's running, open Terminal preferences:
 
-* Change the terminal font to Ubuntu Mono 9 to fit two terminals
+* Change the font to Ubuntu Mono 9 to fit two terminals
   side-by-side on a 1024-pixel-wide display.
 * Set the default geometry to 35 rows tall.
 * Set the background to transparent, with 0.90 opacity, and the
@@ -27,20 +27,29 @@ While that's running, open Terminal preferences:
 
 Then install useful free software:
 
-    sudo apt-get install build-essential gimp git
-    sudo apt-get install python3-numpy hexchat python3-pil idle3
+    sudo apt install build-essential gimp git
+    sudo apt install python3-numpy hexchat python3-pil idle3 ffmpeg
 
 Interestingly enough, `python3-pil` comes with Xubuntu now.
 
 Install compatibility with Qt applications, which adds 123 MB to the
 HDD footprint:
 
-    sudo apt-get install retext sqlitebrowser
+    sudo apt install retext sqlitebrowser
+
+Install Microsoft proprietary fonts needed for some applications and
+websites.  Ubuntu has a package for this, but the download locations
+in its package are out of date.  This causes configuration to fail,
+which in turn causes Update Notifier to fail.  So install Debian's
+newer package.
+
+    wget http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.6_all.deb
+    sudo dpkg -i ttf-mscorefonts-installer_3.6_all.deb
 
 Install compatibility with 32- and 64-bit Windows applications, which
 adds 735 MB to the HDD footprint:
 
-    sudo apt-get install wine
+    sudo apt install wine
 
 Set up the panel
 ----------------
@@ -68,11 +77,33 @@ on the top panel:
 
 1. Change the Whisker Menu to display icon and title, and change its
    title to Start.
-2. Add Show Desktop and Directory Menu to the right of Start
+2. Add Show Desktop and Directory Menu to the right of Start.
 3. Add CPU Graph to the right of the big separator, and set update
    interval to 1 s, width to 30, and no current usage bars.
 
-Mousepad settings:
+Other personalizations
+----------------------
+
+Download [Jester] from Dafont.  Then install it:
+
+    mkdir -p ~/.fonts
+    cd ~/.fonts
+    unzip ~/Downloads/Jester.zip
+    ls
+
+Make sure `Jester.ttf` shows up in the list.
+
+
+
+Power Manager:
+
+* When laptop lid is closed on battery: Suspend
+* Suspend when inactive for 15 minutes on battery
+* On critical battery power (10%), ask
+* Blank screen after 5 minutes on battery 15 minutes plugged in
+* Put display to sleep one minute later
+
+Mousepad:
 
 * Show line numbers
 * Wrap long lines
@@ -80,6 +111,8 @@ Mousepad settings:
 * Highlight current line
 * Colors: Kate
 * Ubuntu Mono 9
+
+[Jester]: http://www.dafont.com/jester.font
 
 Building applications from source
 ---------------------------------
@@ -95,22 +128,30 @@ Build cc65:
 
 And add it to your `PATH` for next time you log in:
 
-    mousepad ~/.bash_profile
+    mousepad ~/.bashrc
 
     if [ -d "$HOME/.local/bin" ] ; then
         PATH="$HOME/.local/bin:$PATH"
     fi
-    
-FCEUX (SDL) in SVN is newer than the one in Ubuntu's repository:
 
-lua 5.1 libgd
+FCEUX (SDL) in SVN is newer than the one in Ubuntu's repository.
 
-    sudo apt-get install git-svn scons libsdl-image1.2-dev libgtk2.0-dev
+    sudo apt install git-svn scons libsdl-image1.2-dev libgtk2.0-dev
+    sudo apt install libgd-dev liblua5.1-0-dev
     cd ~/develop
     git svn clone svn://svn.code.sf.net/p/fceultra/code/fceu/trunk fceux
     cd fceux
     scons
-    scons --prefix=~/.local install
+
+That's as far as I got before going offline.
+
+    scons --prefix=$HOME/.local install
+
+Set up Git to identify you when committing changes to your own
+repositories:
+
+    git config --global user.email "you@example.com"
+    git config --global user.name "Your Name"
 
 Proprietary crap
 ----------------
