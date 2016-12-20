@@ -22,6 +22,8 @@ adding an ignored file and refuse to do anything.
     git init
     xargs git add < zip.in
     git rm --cached zip.in
+    cp ~/path/to/some/gitignore .gitignore
+    git add .gitignore
     git commit -m "Imported version X.Y.Z from ZIPURL"
 
 Then you can send this new project to GitHub.

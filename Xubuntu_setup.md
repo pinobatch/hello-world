@@ -27,10 +27,10 @@ While that's running, open Terminal preferences:
 
 Then install useful free software:
 
-    sudo apt install build-essential gimp git
+    sudo apt install build-essential gimp git vorbis-tools audacity
     sudo apt install python3-numpy hexchat python3-pil idle3 ffmpeg
 
-Interestingly enough, `python3-pil` comes with Xubuntu now.
+Interestingly enough, `python3-pil` comes with Xubuntu 16.04.
 
 Install compatibility with Qt applications, which adds 123 MB to the
 HDD footprint:
@@ -88,7 +88,18 @@ Download [Jester] from Dafont.  Then install it:
     unzip ~/Downloads/jester.zip
     ls
 
-Make sure `Jester.ttf` shows up in the list.
+Make sure `Jester.ttf` shows up in the list.  Then spray it over
+the rest of the UI:
+
+* In Appearance, set the default font to Jester 10.
+* In Window Manager, set the title font to Jester Bold 10 and the
+  theme to Daloa, which has frames thicker than 1 pixel to allow
+  practical resizing.
+* In Window Manager Tweaks, change the key used to grab windows
+  to Super, so as not to interfere with GIMP's use of Alt.
+
+Other fonts to download include Wasted Collection, Comic Neue,
+and Patrick Hand.
 
 Power Manager:
 
@@ -113,7 +124,7 @@ GIMP:
 
 IDLE 3:
 
-* Ubuntu Mono 9
+* Font: Ubuntu Mono 9
 
 Mousepad:
 
@@ -122,13 +133,39 @@ Mousepad:
 * Highlight matching brackets
 * Highlight current line
 * Colors: Kate
-* Ubuntu Mono 9
+* Font: Ubuntu Mono 9
+
+ReText:
+
+* Editor font: Ubuntu Mono 9
+* Preview font: Jester 12
 
 [Jester]: http://www.dafont.com/jester.font
 
+Firefox
+-------
+Firefox beta is stable enough for me, plus 51 is more likely to offer
+multiprocess windows (aka Electrolysis or e10s) to Ubuntu users than
+50 because the Ubuntu Modifications extension isn't explicitly marked
+as compatible with e10s.
+
+    sudo add-apt-repository ppa:mozillateam/firefox-next
+    sudo apt-get update
+    sudo apt-get upgrade
+
+Change these preferences:
+
+* Default serif font for Latin script: Jester
+* `browser.tabs.remote.autostart`: True
+
+Some of these preferences won't take effect until Firefox is
+restarted.  So install some extensions, some of which also require
+a restart:
+
+* Stylish
+
 Building applications from source
 ---------------------------------
-
 Build cc65:
 
     mkdir ~/develop
