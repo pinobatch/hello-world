@@ -60,8 +60,7 @@ and my LCARS mockup:
 1. Deskbar orientation, always autohide, 128px wide, 75% length;
    appearance: 75% background alpha.
 2. Drag it to the bottom left corner and lock it.
-3. Add a Quicklauncher to the new panel. This will be configured
-   after the big apt install.
+3. Add a Quicklauncher to the new panel.
 4. Move the window buttons to the new panel below the Quicklauncher.
 
 Quicklauncher is 2 columns:
@@ -69,8 +68,6 @@ Quicklauncher is 2 columns:
 1. `firefox` and `mousepad`
 2. `xfce4-terminal` and `gnome-calculator`
 3. `gimp` and ???
-
-Set up the quicklauncher with firefox, gimp, gnome-calculator
 
 With the window buttons out of the way, we have room for other things
 on the top panel:
@@ -88,20 +85,35 @@ Download [Jester] from Dafont.  Then install it:
 
     mkdir -p ~/.fonts
     cd ~/.fonts
-    unzip ~/Downloads/Jester.zip
+    unzip ~/Downloads/jester.zip
     ls
 
 Make sure `Jester.ttf` shows up in the list.
-
-
 
 Power Manager:
 
 * When laptop lid is closed on battery: Suspend
 * Suspend when inactive for 15 minutes on battery
 * On critical battery power (10%), ask
-* Blank screen after 5 minutes on battery 15 minutes plugged in
-* Put display to sleep one minute later
+* Blank screen after 5 minutes on battery or 15 minutes plugged in
+* Put display to sleep one minute after blanking
+
+GIMP:
+
+* Enable single-window mode
+* Tool Options: Change to Pixel brush at size 1
+* Patterns: Change to Clipboard
+* Save Tool Options Now
+* Theme: Small
+* Default grid spacing: 8 pixels
+* Default image size: 256x240 pixels
+* Toolbox: Resize to 7 tools wide
+* Left dock: Tool Options, Layers, and Colormap
+* Right dock: Empty
+
+IDLE 3:
+
+* Ubuntu Mono 9
 
 Mousepad:
 
@@ -123,7 +135,7 @@ Build cc65:
     cd ~/develop
     git clone https://github.com/cc65/cc65.git
     cd cc65
-    make
+    nice make -j2
     make install prefix=~/.local
 
 And add it to your `PATH` for next time you log in:
@@ -141,24 +153,41 @@ FCEUX (SDL) in SVN is newer than the one in Ubuntu's repository.
     cd ~/develop
     git svn clone svn://svn.code.sf.net/p/fceultra/code/fceu/trunk fceux
     cd fceux
-    scons
-
-That's as far as I got before going offline.
-
+    nice scons -j2
     scons --prefix=$HOME/.local install
 
 Set up Git to identify you when committing changes to your own
-repositories:
+repositories.  (These are commented out to discourage copying and
+pasting without the address changed.)
 
-    git config --global user.email "you@example.com"
-    git config --global user.name "Your Name"
+    #git config --global user.email "jdoe@example.com"
+    #git config --global user.name "John Doe"
 
 Proprietary crap
 ----------------
 
-Get the Ubuntu .deb from <https://www.dropbox.com/install-linux>,
-install it, and then install its dependencies.
+Get the Ubuntu .deb from for [Dropbox] and [Skype 4.3] for Ubuntu,
+12.04 "Precise" (32-bit), which uses less RAM than the Chromium-based
+Skype for Linux alpha.
+
+Then install them and their dependencies:
 
     sudo dpkg -i ~/Downloads/dropbox_2015.10.28_amd64.deb
     sudo dpkg -i ~/Downloads/skype-ubuntu-precise_4.3.0.37-1_i386.deb
     sudo apt-get -f install
+
+Then sign in to Dropbox and Skype.
+
+Skype settings:
+
+* Style: GTK+
+* Save files to `~/Downloads`
+* Allow chats from anybody
+* Disable Skype WiFi
+
+The third proprietary program I regularly use is the NO$SNS emulator
+by Martin Korth, which runs at full speed on an Atom unlike anything
+bsnes-based.  *TODO: describe this*
+
+[Dropbox]: https://www.dropbox.com/install-linux
+[Skype 4.3]: https://www.skype.com/
