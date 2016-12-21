@@ -69,11 +69,15 @@ Make changes inside the branch. This can actually be done before or after creati
 
     git add src/somenewfile.s
 
-Or remove a file:
+Or remove a file.
 
     git rm src/obsoletefile.s
 
-Or just add all additions and removals to the cart:
+Add all changes to tracked files (not newly added files) to the cart.
+
+    git add -u
+
+Or just add all additions and removals to the cart.
 
     git add -A .
 
@@ -118,9 +122,10 @@ Or all changes made in the last commit.  Either of these works:
 
     git commit -m "fixes #13"
 
-Or add all changed files to the cart and commit them. Newly created files are skipped; they must be added manually.
+Or add all changed files to the cart and commit them, skipping newly created files.  These are equivalent:
 
-    git commit -a
+    git add -u && git commit -m "update chat server list"
+    git commit -am "update chat server list"
 
 Do the same while adding to the commit message a signature that the changes are yours. Some projects require this signature to trace responsibility for copyright in changes.
 
@@ -149,7 +154,7 @@ Remove outdated files and **estimate the total size** of the repository ([thanks
     git gc
     git count-objects -vH | grep size-pack
 
-List all tracked files.  This helps determine what files to include in a release archive.
+List all tracked files whose name does not begin with a dot.  This helps determine what files to include in a release archive.
 
     git ls-files | grep -e "^[^.]"
 
