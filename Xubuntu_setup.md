@@ -33,7 +33,7 @@ Then install useful free software:
     sudo apt install build-essential gimp git vorbis-tools audacity
     sudo apt install python3-numpy hexchat python3-pil idle3 ffmpeg
     sudo apt install libreoffice-impress libreoffice-draw sqlite3
-    sudo apt install oidentd advancecomp
+    sudo apt install oidentd advancecomp gksu
 
 Interestingly enough, `python3-pil` comes with Xubuntu 16.04.
 
@@ -101,6 +101,17 @@ Power Manager:
 * Blank screen after 5 minutes on battery or 15 minutes plugged in
 * Put display to sleep one minute after blanking
 
+**Experimental:** Some laptops' trackpads come set to treat
+accidental touches while typing as mouse clicks.  Try turning on
+[palm detection] so that touching the trackpad while typing doesn't
+move the insertion point or (worse) focus.  Add this to the end of
+`.profile` (or to `.bash_profile` if that exists instead):
+
+    synclient PalmDetect=1
+
+If that doesn't work, in Settings > Mouse and Touchpad, have it
+freeze for 0.2 seconds after typing.
+
 GIMP:
 
 * Enable single-window mode
@@ -145,6 +156,7 @@ HexChat:
 * Set my real name in Preferences > Chatting > Advanced
 
 [Jester]: http://www.dafont.com/jester.font
+[palm detection]: https://github.com/advancingu/XPS13Linux/issues/3
 
 Firefox
 -------
@@ -200,8 +212,10 @@ Build cc65:
     cd cc65
     nice make -j2
     make install prefix=~/.local
+    which cc65
 
-And add it to your `PATH` for next time you log in:
+The last step should show `/home/<username>/.local/bin/cc65`.  If it
+does not, add `~/.local/bin` to your `PATH` for next time you log in:
 
     mousepad ~/.bashrc
 
