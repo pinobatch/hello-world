@@ -69,6 +69,7 @@ on the top panel:
 2. Add Directory Menu and Show Desktop to the right of Start.
 3. Add CPU Graph to the right of the big separator, and set update
    interval to 1 s, width to 30, and no current usage bars.
+4. Change the clock's format to a custom format: `%a %m-%d %H:%M`
 
 Other personalizations
 ----------------------
@@ -181,8 +182,13 @@ Change these preferences:
 Some of these preferences take effect once Firefox is restarted.
 So install some extensions that also require a restart:
 
-* Stylish
-* HTTPS Everywhere
+* [Stylish]
+* [HTTPS Everywhere]
+* [Keybinder]
+
+After restarting, open Keybinder and disable Ctrl+Q to quit.  Ctrl+Q
+is fine for applications that have only one window, not a tabbed MDI
+like that of most web browsers since NetCaptor.
 
 Some sites are deliberately incompatible with Disconnect because
 their administrators fail to figure out how to serve ads that don't
@@ -201,6 +207,11 @@ list for the benefit of members.
     
     # Social networks to which I don't belong
     0.0.0.0 www.facebook.com
+    0.0.0.0 connect.facebook.net
+
+[Stylish]: https://addons.mozilla.org/en-US/firefox/addon/stylish/?src=search
+[HTTPS Everywhere]: https://addons.mozilla.org/en-US/firefox/addon/https-everywhere/
+[Keybinder]: https://addons.mozilla.org/en-US/firefox/addon/keybinder/
 
 Building applications from source
 ---------------------------------
