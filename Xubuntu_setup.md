@@ -1,9 +1,9 @@
 Once Xubuntu is installed, it's time to set it up.
 
-The absolute first thing is to turn off keyboard backlighting on
-machines that don't have it.  Otherwise, a bug in Linux itself causes
-the system to hang during boot ([Bug 107651]).  Open a terminal
-and disable this feature:
+The absolute first thing if you have a Dell laptop whose keyboard
+isn't backlit is to turn off keyboard backlighting.  Otherwise, a bug
+in Linux itself causes the system to hang during boot ([Bug 107651]).
+Open a terminal and disable this feature:
 
     sudo systemctl mask systemd-backlight@leds\:dell\:\:kbd_backlight.service
 
@@ -33,7 +33,7 @@ Then install useful free software:
     sudo apt install build-essential gimp git vorbis-tools audacity
     sudo apt install python3-numpy hexchat python3-pil idle3 ffmpeg
     sudo apt install libreoffice-impress libreoffice-draw sqlite3
-    sudo apt install oidentd advancecomp gksu
+    sudo apt install oidentd advancecomp gksu ghex
 
 Interestingly enough, `python3-pil` comes with Xubuntu 16.04.
 
@@ -306,5 +306,15 @@ Skype settings:
 * Allow chats from anybody
 * Disable Skype WiFi
 
+In `.config/Trolltech.conf`, under `[Qt]`, change or add the following:
+
+    font="Jester,9,-1,5,50,0,0,0,0,0"
+
+If you can't join Skype group chats, change to [MSNP24] protocol:
+
+1. Into any chat window, type `/msnp24`
+2. Restart Skype.
+
 [Dropbox]: https://www.dropbox.com/install-linux
 [Skype 4.3]: https://www.skype.com/
+[MSNP24]: https://community.skype.com/t5/Linux/Skype-group-chat-not-working-anymore/td-p/3987288
