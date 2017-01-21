@@ -1,3 +1,14 @@
+## Identify yourself
+
+Before you do anything else, install Git and associate your commits
+with your name.  (Some lines are commented out to discourage copying
+and pasting without the address changed.)
+
+    sudo apt-get update
+    sudo apt-get install git build-essential
+    #git config --global user.email "jdoe@example.com"
+    #git config --global user.name "John Doe"
+
 ## Import a project
 
 Based on an [answer to "Import existing source code to Github" by Peter](https://stackoverflow.com/a/8012698/2738262):
@@ -13,14 +24,15 @@ Based on an [answer to "Import existing source code to Github" by Peter](https:/
         git commit -m "Imported version X.Y.Z from ZIPURL"
 
 Or if your working copy has files that shouldn't be tracked
-quite yet, but you have a list of files that should, you can
-[use `xargs` to pass the same manifest file to Git](http://unix.stackexchange.com/a/244172/119806).
+quite yet, but you have a newline-separated list of files that
+should, you can pass this manifest file to Git
+[using `xargs`](http://unix.stackexchange.com/a/244172/119806).
 But make sure to do this *before* you set up a `.gitignore` that
 includes the manifest file.  Otherwise, Git will complain that you're
 adding an ignored file and refuse to do anything.
 
     git init
-    xargs git add < zip.in
+    xargs -d \\012 git add < zip.in
     git rm --cached zip.in
     cp ~/path/to/some/gitignore .gitignore
     git add .gitignore

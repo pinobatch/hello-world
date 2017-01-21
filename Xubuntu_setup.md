@@ -14,8 +14,7 @@ First round of apt-get
 
 Open a terminal, check for updated software, and install it:
 
-    sudo apt-get update
-    sudo apt-get dist-upgrade
+    sudo sh -c "apt update && apt dist-upgrade"
 
 While that's running, open Terminal preferences:
 
@@ -28,17 +27,27 @@ While that's running, open Terminal preferences:
 At this point, APT will have installed an updated `linux-image`
 package.  Updates to `linux-image` require a reboot.
 
+Uninstall a proprietary plug-in that was made mostly obsolete by
+APIs added to the HTML DOM as part of HTML5:
+
+    sudo apt remove flashplugin-installer
+
 Then install useful free software:
 
     sudo apt install build-essential gimp git vorbis-tools audacity
     sudo apt install python3-numpy hexchat python3-pil idle3 ffmpeg
     sudo apt install libreoffice-impress libreoffice-draw sqlite3
-    sudo apt install oidentd advancecomp gksu ghex
+    sudo apt install oidentd advancecomp gksu ghex gnome-font-viewer
 
-Interestingly enough, `python3-pil` comes with Xubuntu 16.04.
+Interestingly enough, as of 16.04, `python3-pil` is installed by
+default to support HP printers, but the built-in Printers control
+panel doesn't support reading ink level.  So install compatibility
+with Qt 4 applications, which adds 64 MB to the HDD footprint:
 
-Install compatibility with Qt applications, which adds 123 MB to the
-HDD footprint:
+    sudo apt install hplip-gui
+
+Also Install compatibility with Qt 5 applications, which adds 123 MB
+to the HDD footprint:
 
     sudo apt install retext sqlitebrowser
 
@@ -111,14 +120,15 @@ move the insertion point or (worse) focus.  Add this to the end of
     synclient PalmDetect=1
 
 If that doesn't work, in Settings > Mouse and Touchpad, have it
-freeze for 0.2 seconds after typing.
+freeze for 0.3 seconds after typing.
 
 GIMP:
 
 * Enable single-window mode
-* Tool Options: Change to Pixel brush at size 1
-* Patterns: Change to Clipboard
-* Save Tool Options Now
+* Tool Options:
+    1. Change to Pixel brush at size 1
+    2. Patterns: Change to Clipboard
+    3. Save Tool Options Now
 * Theme: Small
 * Default grid spacing: 8 pixels
 * Default image size: 256x240 pixels
@@ -152,7 +162,7 @@ Xfce Task Manager:
 
 HexChat:
 
-* Update EFnet server list
+* Update EFnet server list, with `irc.servercentral.net` at top
 * Set my nick
 * Set my real name in Preferences > Chatting > Advanced
 
@@ -174,10 +184,10 @@ Change these preferences:
 
 * Default serif font for Latin script: Jester
 * `browser.tabs.remote.autostart`: true  
-  (This enables e10s.)
+  This enables e10s.
 * `privacy.trackingprotection.enabled`: true  
-  (This enables tracking blocking similar to the Disconnect extension
-  even outside Private Browsing windows.)
+  This enables tracking blocking similar to the Disconnect extension
+  even outside Private Browsing windows.
 
 Some of these preferences take effect once Firefox is restarted.
 So install some extensions that also require a restart:
@@ -262,12 +272,11 @@ pasting without the address changed.)
 
 Wine is not an emulator
 -----------------------
-
 Install Microsoft proprietary fonts needed for some applications and
 websites.  Ubuntu has a package for this, but the download locations
 in its package are out of date.  This causes configuration to fail,
-which in turn causes Update Notifier to fail.  So install Debian's
-newer package.
+which in turn causes Update Notifier to make repeated pop-ups.
+So install Debian's newer package.
 
     wget http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.6_all.deb
     sudo dpkg -i ttf-mscorefonts-installer_3.6_all.deb
@@ -288,10 +297,10 @@ The things I'm most likely to run in Wine:
 Proprietary crap
 ----------------
 Get the Ubuntu .deb from for [Dropbox] matching your distribution.
-Also install [Skype 4.3] for Ubuntu 12.04 "Precise" (32-bit), which
+Also get [Skype 4.3] for Ubuntu 12.04 "Precise" (32-bit), which
 uses less RAM than the Chromium-based Skype for Linux alpha.
 
-Then install them and their dependencies:
+Install them and their dependencies:
 
     sudo dpkg -i ~/Downloads/dropbox_2015.10.28_amd64.deb
     sudo dpkg -i ~/Downloads/skype-ubuntu-precise_4.3.0.37-1_i386.deb
