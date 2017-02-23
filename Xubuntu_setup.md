@@ -38,6 +38,7 @@ Then install useful free software:
     sudo apt install python3-numpy hexchat python3-pil idle3 ffmpeg
     sudo apt install libreoffice-impress libreoffice-draw sqlite3
     sudo apt install oidentd advancecomp gksu ghex gnome-font-viewer
+    sudo apt install whois
 
 Interestingly enough, as of 16.04, `python3-pil` is installed by
 default to support HP printers, but the built-in Printers control
@@ -177,8 +178,8 @@ multiprocess windows (aka Electrolysis or e10s) to Ubuntu users than
 as compatible with e10s.
 
     sudo add-apt-repository ppa:mozillateam/firefox-next
-    sudo apt-get update
-    sudo apt-get upgrade
+    sudo apt update
+    sudo apt upgrade
 
 Change these preferences:
 
@@ -188,9 +189,13 @@ Change these preferences:
 * `privacy.trackingprotection.enabled`: true  
   This enables tracking blocking similar to the Disconnect extension
   even outside Private Browsing windows.
+* `network.http.pipelining`: true  
+  This requests multiple resources at a time from a web server.
+* `browser.cache.use_new_backend`: 1  
+  This enables an experimental non-blocking HTTP cache.
 
 Some of these preferences take effect once Firefox is restarted.
-So install some extensions that also require a restart:
+So install some extensions, some of which also require a restart:
 
 * [Stylish]
 * [HTTPS Everywhere]
@@ -251,6 +256,13 @@ FCEUX (SDL) in SVN is newer than the one in Ubuntu's repository.
     cd ~/develop
     git svn clone svn://svn.code.sf.net/p/fceultra/code/fceu/trunk fceux
     cd fceux
+    nice scons -j2
+    scons --prefix=$HOME/.local install
+
+Once a month, track latest changes:
+
+    cd ~/develop/fceux
+    git svn rebase
     nice scons -j2
     scons --prefix=$HOME/.local install
 
