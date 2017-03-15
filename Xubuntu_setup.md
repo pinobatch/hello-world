@@ -38,7 +38,7 @@ Then install useful free software:
     sudo apt install python3-numpy hexchat python3-pil idle3 ffmpeg
     sudo apt install libreoffice-impress libreoffice-draw sqlite3
     sudo apt install oidentd advancecomp gksu ghex gnome-font-viewer
-    sudo apt install whois
+    sudo apt install whois sox p7zip-full guvcview
 
 Interestingly enough, as of 16.04, `python3-pil` is installed by
 default to support HP printers, but the built-in Printers control
@@ -80,6 +80,28 @@ on the top panel:
 3. Add CPU Graph to the right of the big separator, and set update
    interval to 1 s, width to 30, and no current usage bars.
 4. Change the clock's format to a custom format: `%a %m-%d %H:%M`
+
+Keyboard shortcuts
+------------------
+
+In Settings > Keyboard > Application Shortcuts, add these commands:
+
+* `xfce-taskmanager`: Ctrl+Shift+Esc
+
+In Settings > Window Manager > Keyboard, change these commands to
+match [keyboard shortcuts in Windows], which I use at my day job:
+
+* Switch window for same application: Alt+F6
+* Switch application: Super+Tab
+* Maximize window: Super+Up
+* Hide window (that is, iconify or minimize): Super+Down
+* Show desktop: Super+D
+* Add adjacent workspace: Ctrl+Super+D
+* Delete active workspace: Ctrl+Super+F4
+* Left and Right workspace: Ctrl+Super+Left and Ctrl+Super+Right  
+  *or is it Previous and Next workspace?*
+
+[keyboard shortcuts in Windows]: https://support.microsoft.com/en-us/help/126449/keyboard-shortcuts-for-windows
 
 Other personalizations
 ----------------------
@@ -131,7 +153,7 @@ GIMP:
     2. Patterns: Change to Clipboard
     3. Save Tool Options Now
 * Theme: Small
-* Default grid spacing: 8 pixels
+* Default grid: 8 pixel spacing, color #800000
 * Default image size: 256x240 pixels
 * Toolbox: Resize to 7 tools wide
 * Left dock: Tool Options, Layers, and Colormap
