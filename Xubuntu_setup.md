@@ -36,9 +36,9 @@ Then install useful free software:
 
     sudo apt install build-essential gimp git vorbis-tools audacity
     sudo apt install python3-numpy hexchat python3-pil idle3 ffmpeg
-    sudo apt install libreoffice-impress libreoffice-draw sqlite3
+    sudo apt install libreoffice-impress libreoffice-draw sqlite3 vlc
     sudo apt install oidentd advancecomp gksu ghex gnome-font-viewer
-    sudo apt install whois sox p7zip-full guvcview
+    sudo apt install whois sox p7zip-full guvcview python3-pip
 
 Interestingly enough, as of 16.04, `python3-pil` is installed by
 default to support HP printers, but the built-in Printers control
@@ -117,6 +117,9 @@ Make sure `Jester.ttf` shows up in the list.  Then spray it over
 the rest of the UI:
 
 * In Appearance, set the default font to Jester 10.
+* In Configure Wine > Desktop Integration > Appearance, change
+  Active Title Text, Menu Text, Message Box, and Tooltip Text to
+  Jester Regular 9.
 * In Window Manager, set the title font to Jester Bold 10 and the
   theme to Daloa, which has frames thicker than 1 pixel to allow
   practical resizing.
@@ -194,14 +197,19 @@ HexChat:
 
 Firefox
 -------
-Firefox beta is stable enough for me, plus 51 is more likely to offer
-multiprocess windows (aka Electrolysis or e10s) to Ubuntu users than
-50 because the Ubuntu Modifications extension isn't explicitly marked
-as compatible with e10s.
+Get new Firefox features, particularly improvements to multiprocess
+windows (aka Electrolysis or e10s), several weeks early by following
+the beta channel.
 
     sudo add-apt-repository ppa:mozillateam/firefox-next
     sudo apt update
     sudo apt upgrade
+
+Remove Ubuntu modifications for Firefox ([xul-ext-ubufox]), which
+interferes with e10s. The most useful thing it does is remind the
+user to restart Firefox after APT upgrades it.
+
+    sudo apt remove xul-ext-ubufox
 
 Change these preferences:
 
@@ -246,6 +254,7 @@ list for the benefit of members.
     0.0.0.0 www.facebook.com
     0.0.0.0 connect.facebook.net
 
+[xul-ext-ubufox]: https://apps.ubuntu.com/cat/applications/xul-ext-ubufox/
 [Stylish]: https://addons.mozilla.org/en-US/firefox/addon/stylish/?src=search
 [HTTPS Everywhere]: https://addons.mozilla.org/en-US/firefox/addon/https-everywhere/
 [Keybinder]: https://addons.mozilla.org/en-US/firefox/addon/keybinder/

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ca65 highlighting
+for Mousepad and other apps using GTKSourceView
+
+Copyright 2017 Damian Yerrick
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.  This file is offered as-is,
+without any warranty.
+
+Instructions:
+
+1. Create the folder
+   ~/.local/share/gtksourceview-3.0/language-specs
+2. Copy this file into that folder
+3. Restart Mousepad
+
+-->
+<language id="ca65" _name="ca65" version="2.0" _section="Source">
+<metadata>
+<!--  <property name="mimetypes">text/x-c;text/x-csrc</property> -->
+  <property name="globs">*.s;*.asm;*.inc</property>
+  <property name="line-comment-start">;</property>
+</metadata>
+
+<styles>
+<style id="comment" _name="Comment" map-to="def:comment"/>
+<style id="string" _name="String" map-to="def:string"/>
+<style id="char" _name="Character" map-to="def:character"/>
+<style id="instruction" _name="Instruction" map-to="def:builtin"/>
+<style id="flow-control" _name="Flow Control" map-to="def:builtin"/>
+<style id="decimal" _name="Decimal" map-to="def:decimal"/>
+<style id="base-n-integer" _name="Base-N number" map-to="def:base-n-integer"/>
+<style id="type" _name="Data Type" map-to="def:type"/>
+<style id="segment" _name="Segment" map-to="def:type"/>
+<style id="keyword" _name="Keyword" map-to="def:keyword"/>
+<style id="preprocessor" _name="Preprocessor" map-to="def:preprocessor"/>
+<style id="included-file" _name="Included File" map-to="def:string"/>
+</styles>
+
+<default-regex-options case-sensitive="false" />
+
+<definitions>
+<context id="ca65"><include>
+
+<context id="comment" style-ref="comment">
+  <start>;</start>
+  <end>$</end>
+</context>
+
+<!-- Data types -->
+
+<context id="string" end-at-line-end="true" style-ref="string">
+  <start>"</start>
+  <end>"</end>
+  <!-- ca65 doesn't have escaping -->
+</context>
+
+<context id="char" end-at-line-end="true" style-ref="char">
+  <start>'</start>
+  <end>'</end>
+</context>
+
+<context ref="def:decimal" />
+
+<context id="hex-number" style-ref="base-n-integer">
+  <match>\$[0-9A-F]+</match>
+</context>
+<context id="binary-number" style-ref="base-n-integer">
+  <match>%[01]+</match>
+</context>
+
+<!-- Data storage -->
+
+<context id="types" style-ref="type">
+  <prefix>\.</prefix>
+  <keyword>asciiz</keyword>
+  <keyword>byte?</keyword>
+  <keyword>dbyt</keyword>
+  <keyword>d?word</keyword>
+  <keyword>(lo|hi|bank)bytes</keyword>
+  <keyword>(far|)addr</keyword>
+  <keyword>res</keyword>
+</context>
+
+<context id="segments" style-ref="segment">
+  <prefix>\.</prefix>
+  <keyword>bss</keyword>
+  <keyword>code</keyword>
+  <keyword>p(ush|op)seg</keyword>
+  <keyword>(ro|)data</keyword>
+  <keyword>segment</keyword>
+  <keyword>zeropage</keyword>
+</context>
+
+<!-- Instructions -->
+
+<context id="flow-control_" style-ref="flow-control">
+  <keyword>bcc</keyword>
+  <keyword>beq</keyword>
+  <keyword>bcs</keyword>
+  <keyword>bmi</keyword>
+  <keyword>bne</keyword>
+  <keyword>bpl</keyword>
+  <keyword>brk</keyword>
+  <keyword>bvc</keyword>
+  <keyword>bvs</keyword>
+  <keyword>jmp</keyword>
+  <keyword>jsr</keyword>
+  <keyword>rti</keyword>
+  <keyword>rts</keyword>
+</context>
+
+<context id="instructions" style-ref="instruction">
+  <keyword>adc</keyword>
+  <keyword>and</keyword>
+  <keyword>asl</keyword>
+  <keyword>bit</keyword>
+  <keyword>clc</keyword>
+  <keyword>cld</keyword>
+  <keyword>cli</keyword>
+  <keyword>clv</keyword>
+  <keyword>cmp</keyword>
+  <keyword>cpx</keyword>
+  <keyword>cpy</keyword>
+  <keyword>dec</keyword>
+  <keyword>dex</keyword>
+  <keyword>dey</keyword>
+  <keyword>eor</keyword>
+  <keyword>inc</keyword>
+  <keyword>inx</keyword>
+  <keyword>iny</keyword>
+  <keyword>lda</keyword>
+  <keyword>ldx</keyword>
+  <keyword>ldy</keyword>
+  <keyword>lsr</keyword>
+  <keyword>ora</keyword>
+  <keyword>pha</keyword>
+  <keyword>php</keyword>
+  <keyword>pla</keyword>
+  <keyword>plp</keyword>
+  <keyword>rol</keyword>
+  <keyword>ror</keyword>
+  <keyword>sbc</keyword>
+  <keyword>sec</keyword>
+  <keyword>sed</keyword>
+  <keyword>sei</keyword>
+  <keyword>sta</keyword>
+  <keyword>stx</keyword>
+  <keyword>sty</keyword>
+  <keyword>tax</keyword>
+  <keyword>tay</keyword>
+  <keyword>txa</keyword>
+  <keyword>tya</keyword>
+</context>
+
+<!-- Assembler control commands -->
+
+<context id="keywords" style-ref="keyword">
+  <prefix>^\s*\.</prefix>
+  <keyword>a(16|8)</keyword>
+  <keyword>align</keyword>
+  <keyword>assert</keyword>
+  <keyword>(con|de)structor</keyword>
+  <keyword>def(|ined|inedmacro)</keyword>
+  <keyword>(end|)(enum|proc|scope|union)</keyword>
+  <keyword>feature</keyword>
+  <keyword>f(ile|)opt</keyword>
+  <keyword>(auto|force)import</keyword>
+  <keyword>(im|ex)port(zp|)</keyword>
+  <keyword>global(zp|)</keyword>
+</context>
+
+<context id="preprocessor" style-ref="preprocessor">
+  <prefix>^\s*\.</prefix>
+  <keyword>define</keyword>
+  <keyword>undef(ine)?</keyword>
+  <keyword>inc(lude|bin)</keyword>
+  <keyword>if(n?[dr]ef|n?blank|const)?</keyword>
+  <keyword>ifp(02|s?c02|816|4510)?</keyword>
+  <keyword>else</keyword>
+  <keyword>elseif</keyword>
+  <keyword>endif</keyword>
+  <keyword>(end)?mac(ro)?</keyword>
+  <keyword>macpack</keyword>
+  <keyword>repeat</keyword>
+  <keyword>endrep(eat)?</keyword>
+</context>
+
+</include></context>
+</definitions>
+
+</language>
