@@ -11,7 +11,6 @@ Open a terminal and disable this feature:
 
 First round of apt-get
 ----------------------
-
 Open a terminal, check for updated software, and install it:
 
     sudo sh -c "apt update && apt dist-upgrade"
@@ -34,11 +33,11 @@ APIs added to the HTML DOM as part of HTML5:
 
 Then install useful free software:
 
-    sudo apt install build-essential gimp git vorbis-tools audacity
-    sudo apt install python3-numpy hexchat python3-pil idle3 ffmpeg
+    sudo apt install build-essential git vorbis-tools audacity ffmpeg
+    sudo apt install python3-numpy hexchat python3-pil idle3 ghex sox
     sudo apt install libreoffice-impress libreoffice-draw sqlite3 vlc
-    sudo apt install oidentd advancecomp gksu ghex gnome-font-viewer
-    sudo apt install whois sox p7zip-full guvcview python3-pip
+    sudo apt install oidentd advancecomp gksu gnome-font-viewer whois
+    sudo apt install gimp p7zip-full guvcview python3-pip lame flac
 
 Interestingly enough, as of 16.04, `python3-pil` is installed by
 default to support HP printers, but the built-in Printers control
@@ -126,6 +125,11 @@ the rest of the UI:
 * In Window Manager Tweaks, change the key used to grab windows
   to Super, so as not to interfere with GIMP's use of Alt.
 
+To set the font in Qt 4 applications, open `.config/Trolltech.conf`,
+and under `[Qt]`, change or add the following:
+
+    font="Jester,9,-1,5,50,0,0,0,0,0"
+
 Other fonts to download include Wasted Collection, Comic Neue,
 and Patrick Hand.
 
@@ -197,19 +201,17 @@ HexChat:
 
 Firefox
 -------
-Get new Firefox features, particularly improvements to multiprocess
-windows (aka Electrolysis or e10s), several weeks early by following
-the beta channel.
+Remove Ubuntu modifications for Firefox ([xul-ext-ubufox]), which
+interferes with multiprocess operation. The most useful thing it
+does is remind the user to restart Firefox after APT upgrades it.
+
+    sudo apt remove xul-ext-ubufox
+
+Get new Firefox features weeks early by following the beta channel.
 
     sudo add-apt-repository ppa:mozillateam/firefox-next
     sudo apt update
     sudo apt upgrade
-
-Remove Ubuntu modifications for Firefox ([xul-ext-ubufox]), which
-interferes with e10s. The most useful thing it does is remind the
-user to restart Firefox after APT upgrades it.
-
-    sudo apt remove xul-ext-ubufox
 
 Change these preferences:
 
@@ -217,8 +219,9 @@ Change these preferences:
 * `browser.tabs.remote.autostart`: true  
   This enables e10s.
 * `privacy.trackingprotection.enabled`: true  
-  This enables tracking blocking similar to the Disconnect extension
-  even outside Private Browsing windows.
+  Firefox Private Browsing blocks domains that track users across
+  sites based on the list used by the Disconnect extension.
+  This enables tracking protection even outside Private Browsing.
 * `network.http.pipelining`: true  
   This requests multiple resources at a time from a web server.
 * `browser.cache.use_new_backend`: 1  
@@ -235,13 +238,13 @@ After restarting, open Keybinder and disable Ctrl+Q to quit.  Ctrl+Q
 is fine for applications that have only one window, not a tabbed MDI
 like that of most web browsers since NetCaptor.
 
-Some sites are deliberately incompatible with Disconnect because
-their administrators fail to figure out how to serve ads that don't
-track users across websites.  So I just ignore articles on those
-sites and block them at the DNS level to keep from visiting them by
-mistake.  Others are social networks that build a dossier about
-non-members' viewing habits, but which are left out of Disconnect's
-list for the benefit of members.
+Some sites are deliberately incompatible with Firefox tracking
+protection because their operators fail to figure out how to serve
+[ads that don't track] users across websites.  So I just ignore
+articles on those sites and block them at the DNS level to keep from
+visiting them by mistake.  Others are social networks that build a
+[shadow profile] (a dossier about non-members' viewing habits), but
+which are left out of Disconnect's list for the benefit of members.
 
     gksudo mousepad /etc/hosts
     
@@ -249,6 +252,7 @@ list for the benefit of members.
     0.0.0.0 www.wired.com
     0.0.0.0 www.theinquirer.net
     0.0.0.0 www.theatlantic.com
+    0.0.0.0 www.jellynote.com
     
     # Social networks to which I don't belong
     0.0.0.0 www.facebook.com
@@ -258,6 +262,8 @@ list for the benefit of members.
 [Stylish]: https://addons.mozilla.org/en-US/firefox/addon/stylish/?src=search
 [HTTPS Everywhere]: https://addons.mozilla.org/en-US/firefox/addon/https-everywhere/
 [Keybinder]: https://addons.mozilla.org/en-US/firefox/addon/keybinder/
+[ads that don't track]: https://blogs.harvard.edu/doc/2016/04/15/get-it-right-forbes/
+[shadow profile]: https://spideroak.com/articles/facebook-shadow-profiles-a-profile-of-you-that-you-never-created
 
 Building applications from source
 ---------------------------------
@@ -279,6 +285,17 @@ does not, add `~/.local/bin` to your `PATH` for next time you log in:
     if [ -d "$HOME/.local/bin" ] ; then
         PATH="$HOME/.local/bin:$PATH"
     fi
+
+Build Scale2x to enlarge PNG images:
+
+    sudo apt install libpng12-dev
+    cd ~/develop
+    wget https://github.com/amadvance/scale2x/releases/download/v4.0/scale2x-4.0.tar.gz
+    tar zxf scale2x-4.0.tar.gz
+    cd scale2x-4.0
+    ./configure --prefix=$HOME/.local
+    make
+    make install
 
 FCEUX (SDL) in SVN is newer than the one in Ubuntu's repository.
 
@@ -313,6 +330,17 @@ pasting without the address changed.)
     #git config --global user.email "jdoe@example.com"
     #git config --global user.name "John Doe"
 
+Build the NSF and S3M to WAVE converter [gmewav]:
+
+    sudo apt install libdumb1-dev libgme-dev
+    mkdir -p ~/develop/gmewav
+    wget -O gmewav.zip https://forums.nesdev.com/download/file.php?id=9551
+    unzip gmewav.zip
+    make
+    cp ./gmewav ~/.local/bin
+
+[gmewav]: https://forums.nesdev.com/viewtopic.php?p=200347#p200347
+
 Wine is not an emulator
 -----------------------
 Install Microsoft proprietary fonts needed for some applications and
@@ -340,33 +368,12 @@ The things I'm most likely to run in Wine:
 Proprietary crap
 ----------------
 Get the Ubuntu .deb from for [Dropbox] matching your distribution.
-Also get [Skype 4.3] for Ubuntu 12.04 "Precise" (32-bit), which
-uses less RAM than the Chromium-based Skype for Linux alpha.
 
-Install them and their dependencies:
+Install it and fetch its dependencies:
 
     sudo dpkg -i ~/Downloads/dropbox_2015.10.28_amd64.deb
-    sudo dpkg -i ~/Downloads/skype-ubuntu-precise_4.3.0.37-1_i386.deb
     sudo apt-get -f install
 
-Then sign in to Dropbox and Skype.
-
-Skype settings:
-
-* Style: GTK+
-* Save files to `~/Downloads`
-* Allow chats from anybody
-* Disable Skype WiFi
-
-In `.config/Trolltech.conf`, under `[Qt]`, change or add the following:
-
-    font="Jester,9,-1,5,50,0,0,0,0,0"
-
-If you can't join Skype group chats, change to [MSNP24] protocol:
-
-1. Into any chat window, type `/msnp24`
-2. Restart Skype.
+Then sign in to Dropbox.
 
 [Dropbox]: https://www.dropbox.com/install-linux
-[Skype 4.3]: https://www.skype.com/
-[MSNP24]: https://community.skype.com/t5/Linux/Skype-group-chat-not-working-anymore/td-p/3987288
