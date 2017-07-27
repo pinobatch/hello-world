@@ -323,6 +323,23 @@ Josh "NovaSquirrel" Hoffman:
     cd NetPuzzleArena
     make -j2
 
+As of 2017-07-01, Microsoft has ended service for the previous Skype
+client (version 4.3), and versions 5 and later require hundreds of
+megabytes of RAM.  So perhaps the most efficient way to communicate
+with your existing Skype contacts without hogging a browser content
+process is to use [skype4pidgin], a Pidgin plug-in that uses the same
+JSON-based protocol as Skype for Web.
+
+    sudo apt install libpurple-dev libjson-glib-dev
+    git clone git://github.com/EionRobb/skype4pidgin.git
+    cd skype4pidgin/skypeweb
+    mkdir build
+    cd build
+    cmake ..
+    cpack
+    sudo dpkg -i skypeweb-1.4.0-Linux.deb 
+
+
 Set up Git to identify you when committing changes to your own
 repositories.  (These are commented out to discourage copying and
 pasting without the address changed.)
@@ -340,6 +357,7 @@ Build the NSF and S3M to WAVE converter [gmewav]:
     cp ./gmewav ~/.local/bin
 
 [gmewav]: https://forums.nesdev.com/viewtopic.php?p=200347#p200347
+[skype4pidgin]: https://github.com/EionRobb/skype4pidgin
 
 Wine is not an emulator
 -----------------------
