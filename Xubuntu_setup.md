@@ -328,7 +328,8 @@ client (version 4.3), and versions 5 and later require hundreds of
 megabytes of RAM.  So perhaps the most efficient way to communicate
 with your existing Skype contacts without hogging a browser content
 process is to use [skype4pidgin], a Pidgin plug-in that uses the same
-JSON-based protocol as Skype for Web.
+JSON-based protocol as Skype for Web.  Its biggest drawback is that
+as of mid-2017, it fails to reconnect when a PC comes out of suspend.
 
     sudo apt install libpurple-dev libjson-glib-dev
     git clone git://github.com/EionRobb/skype4pidgin.git
@@ -337,8 +338,7 @@ JSON-based protocol as Skype for Web.
     cd build
     cmake ..
     cpack
-    sudo dpkg -i skypeweb-1.4.0-Linux.deb 
-
+    sudo dpkg -i skypeweb-1.4.0-Linux.deb
 
 Set up Git to identify you when committing changes to your own
 repositories.  (These are commented out to discourage copying and
@@ -377,7 +377,7 @@ adds 735 MB to the HDD footprint:
 
 The things I'm most likely to run in Wine:
 
-* ModPlug Tracker (free sample-based music editor)
+* OpenMPT (free sample-based music editor, formerly ModPlug Tracker)
 * FCEUX (free NES emulator with debugger)
 * FamiTracker (free NES music editor)
 * NO$SNS (proprietary Super NES emulator, which runs at full speed on
@@ -390,7 +390,12 @@ Get the Ubuntu .deb from for [Dropbox] matching your distribution.
 Install it and fetch its dependencies:
 
     sudo dpkg -i ~/Downloads/dropbox_2015.10.28_amd64.deb
-    sudo apt-get -f install
+
+After running `dpkg -i`, you need to install `--fix-broken` (or
+`-f` for short), a pseudo-package that causes APT to look in the
+repositories for unmet dependencies of recently installed packages.
+
+    sudo apt install -f
 
 Then sign in to Dropbox.
 
