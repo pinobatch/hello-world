@@ -26,8 +26,9 @@ While that's running, open Terminal preferences:
 At this point, APT will have installed an updated `linux-image`
 package.  Updates to `linux-image` require a reboot.
 
-Uninstall a proprietary plug-in that was made mostly obsolete by
-APIs added to the HTML DOM as part of HTML5:
+Uninstall a proprietary plug-in that was made obsolete by HTML5.
+Even Adobe has [deprecated SWF] in favor of renting Animate CC
+and using it to reexporting the original FLA to HTML5.
 
     sudo apt remove flashplugin-installer
 
@@ -38,6 +39,7 @@ Then install useful free software:
     sudo apt install libreoffice-impress libreoffice-draw sqlite3 vlc
     sudo apt install oidentd advancecomp gksu gnome-font-viewer whois
     sudo apt install gimp p7zip-full guvcview python3-pip lame flac
+    sudo apt install inkscape
 
 Interestingly enough, as of 16.04, `python3-pil` is installed by
 default to support HP printers, but the built-in Printers control
@@ -50,6 +52,8 @@ Also Install compatibility with Qt 5 applications, which adds 123 MB
 to the HDD footprint:
 
     sudo apt install retext sqlitebrowser
+
+[deprecated SWF]: https://blogs.adobe.com/conversations/2017/07/adobe-flash-update.html
 
 Set up the panel
 ----------------
