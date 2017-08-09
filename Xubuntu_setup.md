@@ -328,14 +328,17 @@ Josh "NovaSquirrel" Hoffman:
     make -j2
 
 As of 2017-07-01, Microsoft has ended service for the previous Skype
-client (version 4.3), and versions 5 and later require hundreds of
-megabytes of RAM.  So perhaps the most efficient way to communicate
-with your existing Skype contacts without hogging a browser content
-process is to use [skype4pidgin], a Pidgin plug-in that uses the same
-JSON-based protocol as Skype for Web.  Its biggest drawback is that
-as of mid-2017, it fails to reconnect when a PC comes out of suspend.
+client (version 4.3), and versions 5 and later run in Electron, a
+cut-down version of the Chrome web browser that requires hundreds of
+megabytes of RAM just for chat.  So perhaps the most efficient way
+to communicate with your existing Skype contacts without hogging a
+browser content process is to use Eion Robb's [skype4pidgin], a
+Pidgin plug-in that uses the same JSON-based protocol as Skype for
+Web.  Its biggest drawback is that as of mid-2017, it fails to
+reconnect when a PC comes out of suspend.
 
     sudo apt install libpurple-dev libjson-glib-dev
+    cd ~/develop
     git clone git://github.com/EionRobb/skype4pidgin.git
     cd skype4pidgin/skypeweb
     mkdir build
@@ -343,6 +346,21 @@ as of mid-2017, it fails to reconnect when a PC comes out of suspend.
     cmake ..
     cpack
     sudo dpkg -i skypeweb-1.4.0-Linux.deb
+
+The same developer made the [Purple Discord] plug-in to connect to
+Discord, whose official client also uses Electron.  But because it
+lacks retrieval of older messages, the line separating new messages
+from old, reactions, emoji selection, editing, pins, and other
+distinctive features of Discord, it's not quite as convenient as a
+RAM-saving tool.  In addition, use alongside Discord for Web will
+likely cause one of the two to stop receiving messages.  But for
+the sake of completeness:
+
+    cd ~/develop
+    git clone git://github.com/EionRobb/purple-discord.git
+    cd purple-discord
+    make
+    sudo make install
 
 Set up Git to identify you when committing changes to your own
 repositories.  (These are commented out to discourage copying and
@@ -362,6 +380,7 @@ Build the NSF and S3M to WAVE converter [gmewav]:
 
 [gmewav]: https://forums.nesdev.com/viewtopic.php?p=200347#p200347
 [skype4pidgin]: https://github.com/EionRobb/skype4pidgin
+[Purple Discord]: https://github.com/EionRobb/purple-discord
 
 Wine is not an emulator
 -----------------------
@@ -385,7 +404,7 @@ The things I'm most likely to run in Wine:
 * FCEUX (free NES emulator with debugger)
 * FamiTracker (free NES music editor)
 * NO$SNS (proprietary Super NES emulator, which runs at full speed on
-  an Atom unlike bsnes)
+  an Atom unlike bsnes-plus)
 
 Proprietary crap
 ----------------
