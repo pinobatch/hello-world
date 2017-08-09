@@ -74,7 +74,7 @@ Say you've got the idea for a bug fix or new feature while riding the bus. For t
 
 Make changes inside the branch. This can actually be done before or after creating the branch ([thanks knittl](https://stackoverflow.com/a/1394804/2738262)).
 
-    gedit src/pentlymusic.s &
+    mousepad src/pentlymusic.s &
     make
 
 **Add new or changed files** to the cart. Git commits changed files only if they are in the "staging area", which is analogous to a shopping cart.
@@ -130,7 +130,7 @@ Or all changes made in the last commit.  Either of these works:
     git diff HEAD^ HEAD
     git show HEAD
 
-**Commit changes** that have been added to the cart, with a message describing the change. Some repository hosts watch for specially formatted messages and use them to trigger actions such as closing issue reports.
+**Commit changes** that have been added to the cart, with a message describing the change. Some remotes watch for specially formatted messages and use them to trigger actions such as closing issue reports.
 
     git commit -m "fixes #13"
 
@@ -143,7 +143,7 @@ Do the same while adding to the commit message a signature that the changes are 
 
     git commit -a -s
 
-Or add more changes to the last commit.
+Or add more changes to the last commit before you push them.
 
     git commit -a --amend
 
@@ -157,7 +157,7 @@ Scoot back and admire your work by viewing the **commit log**.
     git log --since='3 days ago'
     git log --until=2015-12-31
 
-**Tag** the latest commit with a version number. Occasionally you may want to release your software, which creates a tarball or zipfile suitable for use by people who do not use Git.  A tag identifies a release.
+**Tag** the latest commit with a version number. Occasionally you may want to release your software, which creates a tarball or zipfile suitable for use by people who do not use Git or even a compiler.  A tag identifies a release, and some remotes use it to associate a binary release with the corresponding source release.
 
     git tag v0.05wip4
 
