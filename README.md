@@ -24,7 +24,7 @@ Because _Animal Crossing_ also included several playable NES games that the play
 Many thought it was an NES game like _Super Pitfall_.
 
 The [pitfall item reappeared][Brawl pitfall] in Nintendo's platform fighting game _Super Smash Bros. Brawl_ for the Wii console, with a similar effect.
-Though Nintendo's _Super Smash Bros. For_, the sequel to _Brawl_ on Wii U and Nintendo 3DS, includes several third-party characters as DLC, it still does not include the Pitfall Harry character from _Pitfall!_ as of January 2016.
+Though Nintendo's _Super Smash Bros. For_, the sequel to _Brawl_ on Wii U and Nintendo 3DS, includes several third-party characters as DLC, it never got the Pitfall Harry character from _Pitfall!_.
 
 Here, a "pitfall" may refer to a bug in the documentation.
 
