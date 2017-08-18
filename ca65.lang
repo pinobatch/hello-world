@@ -5,17 +5,14 @@ ca65 highlighting
 for Mousepad and other apps using GTKSourceView
 
 Copyright 2017 Damian Yerrick
-Copying and distribution of this file, with or without modification,
-are permitted in any medium without royalty provided the copyright
-notice and this notice are preserved.  This file is offered as-is,
-without any warranty.
+[insert GNU All-Permissive License here]
 
-Instructions:
+Installation:
 
-1. Create the folder
-   ~/.local/share/gtksourceview-3.0/language-specs
-2. Copy this file into that folder
-3. Restart Mousepad
+    mkdir -p ~/.local/share/gtksourceview-3.0/language-specs
+    cp ca65.lang ~/.local/share/gtksourceview-3.0/language-specs
+
+Then restart Mousepad
 
 -->
 <language id="ca65" _name="ca65" version="2.0" _section="Source">
