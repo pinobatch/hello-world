@@ -242,6 +242,13 @@ After restarting, open Keybinder and disable Ctrl+Q to quit.  Ctrl+Q
 is fine for applications that have only one window, not a tabbed MDI
 like that of most web browsers since NetCaptor.
 
+Unfortunately, Keybinder will stop working in Firefox 57, and the
+replacement ([Disable Ctrl-Q and Cmd-Q]) is not compatible with
+GNU/Linux because of [bug 1325692].  If bug 1325692 is not fixed
+before Firefox 57 release, I may have to drop back to Firefox 52 ESR
+to prevent data loss in those HTML forms that Restore Previous
+Session cannot restore.
+
 Some sites are deliberately incompatible with Firefox tracking
 protection because their operators fail to figure out how to serve
 [ads that don't track] users across websites.  So I just ignore
@@ -266,6 +273,8 @@ which are left out of Disconnect's list for the benefit of members.
 [Stylish]: https://addons.mozilla.org/en-US/firefox/addon/stylish/?src=search
 [HTTPS Everywhere]: https://addons.mozilla.org/en-US/firefox/addon/https-everywhere/
 [Keybinder]: https://addons.mozilla.org/en-US/firefox/addon/keybinder/
+[Disable Ctrl-Q and Cmd-Q]: https://addons.mozilla.org/en-US/firefox/addon/disable-ctrl-q-and-cmd-q/?src=search
+[bug 1325692]: https://bugzilla.mozilla.org/show_bug.cgi?id=1325692
 [ads that don't track]: https://blogs.harvard.edu/doc/2016/04/15/get-it-right-forbes/
 [shadow profile]: https://spideroak.com/articles/facebook-shadow-profiles-a-profile-of-you-that-you-never-created
 
