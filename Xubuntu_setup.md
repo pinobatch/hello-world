@@ -211,12 +211,6 @@ does is remind the user to restart Firefox after APT upgrades it.
 
     sudo apt remove xul-ext-ubufox
 
-Get new Firefox features weeks early by following the beta channel.
-
-    sudo add-apt-repository ppa:mozillateam/firefox-next
-    sudo apt update
-    sudo apt upgrade
-
 Change these preferences:
 
 * Default serif font for Latin script: Jester
@@ -242,12 +236,19 @@ After restarting, open Keybinder and disable Ctrl+Q to quit.  Ctrl+Q
 is fine for applications that have only one window, not a tabbed MDI
 like that of most web browsers since NetCaptor.
 
-Unfortunately, Keybinder will stop working in Firefox 57, and the
-replacement ([Disable Ctrl-Q and Cmd-Q]) is not compatible with
-GNU/Linux because of [bug 1325692].  If bug 1325692 is not fixed
-before Firefox 57 release, I may have to drop back to Firefox 52 ESR
-to prevent data loss in those HTML forms that Restore Previous
-Session cannot restore.
+Prior to Firefox 55, it was recommended to follow the beta channel by
+adding `ppa:mozillateam/firefox-next`.  As of September 2017, this is
+no longer recommended because Keybinder will stop working in
+Firefox 57, and the replacement ([Disable Ctrl-Q and Cmd-Q]) is not
+compatible with GNU/Linux because of [bug 1325692].  Because
+Andy McKay has decided that bug 1325692 will not be fixed in Firefox
+57, the only way to prevent data loss in those HTML forms that
+Restore Previous Session cannot restore is to
+[downgrade to Firefox 52 ESR].
+
+    sudo add-apt-repository ppa:jonathonf/firefox-esr
+    sudo apt update
+    sudo apt install firefox-esr
 
 Some sites are deliberately incompatible with Firefox tracking
 protection because their operators fail to figure out how to serve
@@ -275,6 +276,7 @@ which are left out of Disconnect's list for the benefit of members.
 [Keybinder]: https://addons.mozilla.org/en-US/firefox/addon/keybinder/
 [Disable Ctrl-Q and Cmd-Q]: https://addons.mozilla.org/en-US/firefox/addon/disable-ctrl-q-and-cmd-q/?src=search
 [bug 1325692]: https://bugzilla.mozilla.org/show_bug.cgi?id=1325692
+[downgrade to Firefox 52 ESR]: https://askubuntu.com/q/894871/232993
 [ads that don't track]: https://blogs.harvard.edu/doc/2016/04/15/get-it-right-forbes/
 [shadow profile]: https://spideroak.com/articles/facebook-shadow-profiles-a-profile-of-you-that-you-never-created
 
@@ -343,8 +345,9 @@ megabytes of RAM just for chat.  So perhaps the most efficient way
 to communicate with your existing Skype contacts without hogging a
 browser content process is to use Eion Robb's [skype4pidgin], a
 Pidgin plug-in that uses the same JSON-based protocol as Skype for
-Web.  Its biggest drawback is that as of mid-2017, it fails to
-reconnect when a PC comes out of suspend.
+Web.  Its biggest drawback is that as of mid-2017, leaving suspend
+produces "Failed getting PPFT value", requiring a visit to the Buddy
+List to reconnect.
 
     sudo apt install libpurple-dev libjson-glib-dev
     cd ~/develop
@@ -382,7 +385,7 @@ Build the NSF and S3M to WAVE converter [gmewav]:
 
     sudo apt install libdumb1-dev libgme-dev
     mkdir -p ~/develop/gmewav
-    wget -O gmewav.zip https://forums.nesdev.com/download/file.php?id=9551
+    wget -O gmewav.zip https://forums.nesdev.com/download/file.php?id=9899
     unzip gmewav.zip
     make
     cp ./gmewav ~/.local/bin
