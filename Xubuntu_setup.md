@@ -282,14 +282,15 @@ which are left out of Disconnect's list for the benefit of members.
 
 Building applications from source
 ---------------------------------
-Build cc65:
+Build cc65, an assembler targeting the NES, Super NES, and other
+6502 and 65816 platforms.
 
     mkdir ~/develop
     cd ~/develop
     git clone https://github.com/cc65/cc65.git
     cd cc65
     nice make -j2
-    make install prefix=~/.local
+    make install PREFIX=~/.local
     which cc65
 
 The last step should show `/home/<username>/.local/bin/cc65`.  If it
@@ -300,6 +301,16 @@ does not, add `~/.local/bin` to your `PATH` for next time you log in:
     if [ -d "$HOME/.local/bin" ] ; then
         PATH="$HOME/.local/bin:$PATH"
     fi
+
+Build RGBDS, an assembler targeting the Game Boy.
+
+    sudo apt install byacc flex pkg-config libpng-dev
+    cd ~/develop
+    git clone https://github.com/rednex/rgbds.git
+    cd rgbds
+    make
+    make install PREFIX="$HOME/.local"
+    man rgbds
 
 Build Scale2x to enlarge PNG images:
 
@@ -312,7 +323,8 @@ Build Scale2x to enlarge PNG images:
     make
     make install
 
-FCEUX (SDL) in SVN is newer than the one in Ubuntu's repository.
+Build FCEUX (SDL) from source because the version in SVN is newer
+than the one in Ubuntu's repository.
 
     sudo apt install git-svn scons libsdl-image1.2-dev libgtk2.0-dev
     sudo apt install libgd-dev liblua5.1-0-dev
@@ -337,6 +349,15 @@ Josh "NovaSquirrel" Hoffman:
     git clone https://github.com/NovaSquirrel/NetPuzzleArena.git
     cd NetPuzzleArena
     make -j2
+
+Build the NSF and S3M to WAVE converter [gmewav]:
+
+    sudo apt install libdumb1-dev libgme-dev
+    mkdir -p ~/develop/gmewav
+    wget -O gmewav.zip https://forums.nesdev.com/download/file.php?id=9899
+    unzip gmewav.zip
+    make
+    cp ./gmewav ~/.local/bin
 
 As of 2017-07-01, Microsoft has ended service for the previous Skype
 client (version 4.3), and versions 5 and later run in Electron, a
@@ -381,15 +402,6 @@ pasting without the address changed.)
     #git config --global user.email "jdoe@example.com"
     #git config --global user.name "John Doe"
 
-Build the NSF and S3M to WAVE converter [gmewav]:
-
-    sudo apt install libdumb1-dev libgme-dev
-    mkdir -p ~/develop/gmewav
-    wget -O gmewav.zip https://forums.nesdev.com/download/file.php?id=9899
-    unzip gmewav.zip
-    make
-    cp ./gmewav ~/.local/bin
-
 [gmewav]: https://forums.nesdev.com/viewtopic.php?p=200347#p200347
 [skype4pidgin]: https://github.com/EionRobb/skype4pidgin
 [Purple Discord]: https://github.com/EionRobb/purple-discord
@@ -417,6 +429,7 @@ The things I'm most likely to run in Wine:
 * FamiTracker (free NES music editor)
 * NO$SNS (proprietary Super NES emulator, which runs at full speed on
   an Atom unlike bsnes-plus)
+* BGB (proprietary Game Boy emulator)
 
 Proprietary crap
 ----------------
