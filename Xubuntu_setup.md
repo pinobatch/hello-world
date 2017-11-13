@@ -1,9 +1,10 @@
 Once Xubuntu is installed, it's time to set it up.
 
-The absolute first thing if you have a Dell laptop whose keyboard
-isn't backlit is to turn off keyboard backlighting.  Otherwise, a bug
-in Linux itself causes the system to hang during boot ([Bug 107651]).
-Open a terminal and disable this feature:
+**Before you shut down your computer for the first time,** the
+absolute first thing if you have a Dell laptop whose keyboard isn't
+backlit is to turn off keyboard backlighting.  Otherwise, a bug
+in Linux itself causes the system to hang during the second boot
+([Bug 107651]).  Open a terminal and disable this feature:
 
     sudo systemctl mask systemd-backlight@leds\:dell\:\:kbd_backlight.service
 
@@ -39,7 +40,7 @@ Then install useful free software:
     sudo apt install libreoffice-impress libreoffice-draw sqlite3 vlc
     sudo apt install oidentd advancecomp gksu gnome-font-viewer whois
     sudo apt install gimp p7zip-full guvcview python3-pip lame flac
-    sudo apt install inkscape
+    sudo apt install inkscape libjpeg-turbo-progs
 
 Interestingly enough, as of 16.04, `python3-pil` is installed by
 default to support HP printers, but the built-in Printers control
@@ -211,6 +212,20 @@ does is remind the user to restart Firefox after APT upgrades it.
 
     sudo apt remove xul-ext-ubufox
 
+Prior to Firefox 55, it was recommended to follow the beta channel by
+adding `ppa:mozillateam/firefox-next`.  As of September 2017, this is
+no longer recommended because Keybinder will stop working in
+Firefox 57, and the replacement ([Disable Ctrl-Q and Cmd-Q]) is not
+compatible with GNU/Linux because of [bug 1325692].  Because
+Andy McKay has decided that bug 1325692 will not be fixed in Firefox
+57, the only way to prevent data loss in those HTML forms that
+Restore Previous Session cannot restore is to
+[downgrade to Firefox 52 ESR].
+
+    sudo add-apt-repository ppa:jonathonf/firefox-esr
+    sudo apt update
+    sudo apt install firefox-esr
+
 Change these preferences:
 
 * Default serif font for Latin script: Jester
@@ -235,20 +250,6 @@ So install some extensions, some of which also require a restart:
 After restarting, open Keybinder and disable Ctrl+Q to quit.  Ctrl+Q
 is fine for applications that have only one window, not a tabbed MDI
 like that of most web browsers since NetCaptor.
-
-Prior to Firefox 55, it was recommended to follow the beta channel by
-adding `ppa:mozillateam/firefox-next`.  As of September 2017, this is
-no longer recommended because Keybinder will stop working in
-Firefox 57, and the replacement ([Disable Ctrl-Q and Cmd-Q]) is not
-compatible with GNU/Linux because of [bug 1325692].  Because
-Andy McKay has decided that bug 1325692 will not be fixed in Firefox
-57, the only way to prevent data loss in those HTML forms that
-Restore Previous Session cannot restore is to
-[downgrade to Firefox 52 ESR].
-
-    sudo add-apt-repository ppa:jonathonf/firefox-esr
-    sudo apt update
-    sudo apt install firefox-esr
 
 Some sites are deliberately incompatible with Firefox tracking
 protection because their operators fail to figure out how to serve
