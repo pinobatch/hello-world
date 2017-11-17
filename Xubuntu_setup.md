@@ -206,50 +206,48 @@ HexChat:
 
 Firefox
 -------
-Remove Ubuntu modifications for Firefox ([xul-ext-ubufox]), which
-interferes with multiprocess operation. The most useful thing it
-does is remind the user to restart Firefox after APT upgrades it.
+There used to be an extension called "Ubuntu modifications for
+Firefox" ([xul-ext-ubufox]) that reminded the user to restart
+Firefox after APT upgrades it.  It no longer works with Firefox 57.
 
     sudo apt remove xul-ext-ubufox
 
-Prior to Firefox 55, it was recommended to follow the beta channel by
-adding `ppa:mozillateam/firefox-next`.  As of September 2017, this is
-no longer recommended because Keybinder will stop working in
-Firefox 57, and the replacement ([Disable Ctrl-Q and Cmd-Q]) is not
-compatible with GNU/Linux because of [bug 1325692].  Because
-Andy McKay has decided that bug 1325692 will not be fixed in Firefox
-57, the only way to prevent data loss in those HTML forms that
-Restore Previous Session cannot restore is to
-[downgrade to Firefox 52 ESR].
+Firefox 57 has Ctrl+Q as a shortcut for Quit.  Ctrl+Q is fine for
+applications that have only one window, not a tabbed MDI like that
+of most web browsers since NetCaptor.  When the user reaches for
+Ctrl+Tab or Ctrl+W, he may accidentally press Ctrl+Q and lose data in
+those HTML forms that Restore Previous Session cannot restore.  The
+extension that's supposed to fix this ([Disable Ctrl-Q and Cmd-Q])
+is not compatible with GNU/Linux because of [bug 1325692].
+
+But there are two workarounds.  One is to open `about:config`
+and set the preferences `browser.showQuitWarning` and
+`browser.warnOnQuit` to `true`.  The other is to
+[downgrade to Firefox 52 ESR], which can still run [Keybinder].
 
     sudo add-apt-repository ppa:jonathonf/firefox-esr
     sudo apt update
     sudo apt install firefox-esr
 
-Change these preferences:
+While you're in `about:config`, change these preferences as well:
 
 * Default serif font for Latin script: Jester
-* `browser.tabs.remote.autostart`: true  
-  This enables e10s.
 * `privacy.trackingprotection.enabled`: true  
   Firefox Private Browsing blocks domains that track users across
   sites based on the list used by the Disconnect extension.
   This enables tracking protection even outside Private Browsing.
 * `network.http.pipelining`: true  
   This requests multiple resources at a time from a web server.
-* `browser.cache.use_new_backend`: 1  
-  This enables an experimental non-blocking HTTP cache.
+
+In Firefox ESR, if `about:support` doesn't show that multiprocess
+windows are enabled, you may have to enable them manually:
+
+* `browser.tabs.remote.autostart`: true  
+  This enables e10s.
 
 Some of these preferences take effect once Firefox is restarted.
-So install some extensions, some of which also require a restart:
-
-* [Stylish]
-* [HTTPS Everywhere]
-* [Keybinder]
-
-After restarting, open Keybinder and disable Ctrl+Q to quit.  Ctrl+Q
-is fine for applications that have only one window, not a tabbed MDI
-like that of most web browsers since NetCaptor.
+So install [Stylus] (or a [previous version of Stylus] in ESR)
+and [HTTPS Everywhere] before you restart.
 
 Some sites are deliberately incompatible with Firefox tracking
 protection because their operators fail to figure out how to serve
@@ -272,12 +270,13 @@ which are left out of Disconnect's list for the benefit of members.
     0.0.0.0 connect.facebook.net
 
 [xul-ext-ubufox]: https://apps.ubuntu.com/cat/applications/xul-ext-ubufox/
-[Stylish]: https://addons.mozilla.org/en-US/firefox/addon/stylish/?src=search
-[HTTPS Everywhere]: https://addons.mozilla.org/en-US/firefox/addon/https-everywhere/
-[Keybinder]: https://addons.mozilla.org/en-US/firefox/addon/keybinder/
 [Disable Ctrl-Q and Cmd-Q]: https://addons.mozilla.org/en-US/firefox/addon/disable-ctrl-q-and-cmd-q/?src=search
 [bug 1325692]: https://bugzilla.mozilla.org/show_bug.cgi?id=1325692
 [downgrade to Firefox 52 ESR]: https://askubuntu.com/q/894871/232993
+[Keybinder]: https://addons.mozilla.org/en-US/firefox/addon/keybinder/
+[Stylus]: https://addons.mozilla.org/en-US/firefox/addon/styl-us/
+[previous version of Stylus]: https://addons.mozilla.org/en-US/firefox/addon/styl-us/versions/1.1.4.2
+[HTTPS Everywhere]: https://addons.mozilla.org/en-US/firefox/addon/https-everywhere/
 [ads that don't track]: https://blogs.harvard.edu/doc/2016/04/15/get-it-right-forbes/
 [shadow profile]: https://spideroak.com/articles/facebook-shadow-profiles-a-profile-of-you-that-you-never-created
 
