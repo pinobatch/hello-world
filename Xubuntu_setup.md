@@ -301,6 +301,9 @@ does not, add `~/.local/bin` to your `PATH` for next time you log in:
     if [ -d "$HOME/.local/bin" ] ; then
         PATH="$HOME/.local/bin:$PATH"
     fi
+    if [ -d "$HOME/.local/lib" ] ; then
+        export LD_LIBRARY_PATH=$HOME/.local/lib/:${LD_LIBRARY_PATH}
+    fi
 
 Build RGBDS, an assembler targeting the Game Boy.
 
@@ -350,7 +353,22 @@ Josh "NovaSquirrel" Hoffman:
     cd NetPuzzleArena
     make -j2
 
-Build the NSF and S3M to WAVE converter [gmewav]:
+Good news: Debian and Ubuntu package the free Game Boy Color and Game
+Boy Advance emulator mGBA.  Bad news: The distro's repository has an
+outdated version.  Good news: Even the outdated version has useful
+build dependency information.
+
+    sudo apt build-dep mgba
+    cd ~/develop
+    git clone https://github.com/mgba-emu/mgba.git
+    cd mgba
+    mkdir build
+    cd build
+    cmake -DCMAKE_INSTALL_PREFIX:PATH=$HOME/.local ..
+    make -j2
+    make install
+
+Build the NSF, GBS, and S3M to WAVE converter [gmewav]:
 
     sudo apt install libdumb1-dev libgme-dev
     mkdir -p ~/develop/gmewav
