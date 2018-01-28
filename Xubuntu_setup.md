@@ -41,7 +41,6 @@ Then install useful free software:
     sudo apt install oidentd advancecomp gksu gnome-font-viewer whois
     sudo apt install gimp p7zip-full guvcview python3-pip lame flac
     sudo apt install inkscape libjpeg-turbo-progs
-    sudo apt install compizconfig-settings-manager
 
 Interestingly enough, as of 16.04, `python3-pil` is installed by
 default to support HP printers, but the built-in Printers control
