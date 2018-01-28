@@ -41,6 +41,7 @@ Then install useful free software:
     sudo apt install oidentd advancecomp gksu gnome-font-viewer whois
     sudo apt install gimp p7zip-full guvcview python3-pip lame flac
     sudo apt install inkscape libjpeg-turbo-progs
+    sudo apt install compizconfig-settings-manager
 
 Interestingly enough, as of 16.04, `python3-pil` is installed by
 default to support HP printers, but the built-in Printers control
@@ -290,7 +291,7 @@ Build cc65, an assembler targeting the NES, Super NES, and other
     git clone https://github.com/cc65/cc65.git
     cd cc65
     nice make -j2
-    make install PREFIX=~/.local
+    make install PREFIX="$HOME/.local"
     which cc65
 
 The last step should show `/home/<username>/.local/bin/cc65`.  If it
@@ -302,7 +303,7 @@ does not, add `~/.local/bin` to your `PATH` for next time you log in:
         PATH="$HOME/.local/bin:$PATH"
     fi
     if [ -d "$HOME/.local/lib" ] ; then
-        export LD_LIBRARY_PATH=$HOME/.local/lib/:${LD_LIBRARY_PATH}
+        export LD_LIBRARY_PATH="$HOME/.local/lib/:${LD_LIBRARY_PATH}"
     fi
 
 Build RGBDS, an assembler targeting the Game Boy.
