@@ -249,13 +249,15 @@ Some of these preferences take effect once Firefox is restarted.
 So install [Stylus] (or a [previous version of Stylus] in ESR)
 and [HTTPS Everywhere] before you restart.
 
-Some sites are deliberately incompatible with Firefox tracking
+Some websites are deliberately incompatible with Firefox tracking
 protection because their operators fail to figure out how to serve
-[ads that don't track] users across websites.  So I just ignore
-articles on those sites and block them at the DNS level to keep from
-visiting them by mistake.  Others are social networks that build a
-[shadow profile] (a dossier about non-members' viewing habits), but
-which are left out of Disconnect's list for the benefit of members.
+[ads that don't track] users across websites.  (I admit this is a
+hard problem because). A [JavaScript switcher] extension works for
+some but not all sites.  So I just ignore articles on those sites and
+block them at the DNS level to keep from visiting them by mistake.
+Others are social networks that build a [shadow profile] (a dossier
+about non-members' viewing habits), but which are left out of
+Disconnect's list for the benefit of members.
 
     gksudo mousepad /etc/hosts
     
@@ -264,6 +266,7 @@ which are left out of Disconnect's list for the benefit of members.
     0.0.0.0 www.theinquirer.net
     0.0.0.0 www.theatlantic.com
     0.0.0.0 www.jellynote.com
+    0.0.0.0 tvtropes.org
     
     # Social networks to which I don't belong
     0.0.0.0 www.facebook.com
@@ -278,6 +281,7 @@ which are left out of Disconnect's list for the benefit of members.
 [previous version of Stylus]: https://addons.mozilla.org/en-US/firefox/addon/styl-us/versions/1.1.4.2
 [HTTPS Everywhere]: https://addons.mozilla.org/en-US/firefox/addon/https-everywhere/
 [ads that don't track]: https://blogs.harvard.edu/doc/2016/04/15/get-it-right-forbes/
+[JavaScript switcher]: https://addons.mozilla.org/en-US/firefox/addon/quick-js-switcher/
 [shadow profile]: https://spideroak.com/articles/facebook-shadow-profiles-a-profile-of-you-that-you-never-created
 
 Building applications from source
@@ -294,7 +298,10 @@ Build cc65, an assembler targeting the NES, Super NES, and other
     which cc65
 
 The last step should show `/home/<username>/.local/bin/cc65`.  If it
-does not, add `~/.local/bin` to your `PATH` for next time you log in:
+does not, add `~/.local/bin` to your `PATH` for next time you log in.
+And while you're at it, add a path for locally installed shared
+libraries and a path for header files belonging to locally installed
+compilers and assemblers.
 
     mousepad ~/.bashrc
 
@@ -303,6 +310,9 @@ does not, add `~/.local/bin` to your `PATH` for next time you log in:
     fi
     if [ -d "$HOME/.local/lib" ] ; then
         export LD_LIBRARY_PATH="$HOME/.local/lib/:${LD_LIBRARY_PATH}"
+    fi
+    if [ -d "$HOME/.local/share/cc65" ] ; then
+        export CC65_HOME="$HOME/.local/share/cc65"
     fi
 
 Build RGBDS, an assembler targeting the Game Boy.
