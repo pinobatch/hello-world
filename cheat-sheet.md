@@ -1,13 +1,17 @@
 ## Identify yourself
 
 Before you do anything else, install Git and associate your commits
-with your name.  (Some lines are commented out to discourage copying
-and pasting without the address changed.)
+with your name.  Some lines are commented out to discourage copying
+and pasting without the address changed.  If your favorite text
+editor is graphical, you may have to configure it to wait for you
+to close the file using a
+[command line option](https://stackoverflow.com/a/2596835/2738262).
 
-    sudo apt-get update
-    sudo apt-get install git build-essential
+    sudo apt update
+    sudo apt install git build-essential
     #git config --global user.email "jdoe@example.com"
     #git config --global user.name "John Doe"
+    #git config --global core.editor "nano"
 
 ## Import a project
 
@@ -143,7 +147,11 @@ Or all changes made in the last commit.  Either of these works:
 
 **Commit changes** that have been added to the cart, with a message describing the change. Some remotes watch for specially formatted messages and use them to trigger actions such as closing issue reports.
 
-    git commit -m "fixes #13"
+    git commit -m "fix #13: blah blah check if null"
+
+Or add a commit with a longer message spanning multiple lines.  This opens a text file in your chosen text editor to compose the message.  Once you save the file and close the editor, Git uses the first 50 characters of the first line as the summary.
+
+    git commit
 
 Or add all changed files to the cart and commit them, skipping newly created files.  These are equivalent:
 
