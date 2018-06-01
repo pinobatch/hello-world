@@ -1,12 +1,13 @@
 Common programs with EXE/MSI installers:
-Dropbox, Notepad++, Python 3, Git (with Bash and Coreutils), Transmission,
-GIMP, 7-Zip
+Dropbox, Notepad++, Python 3, Git (with Bash and Coreutils),
+devkitARM, Transmission, GIMP, 7-Zip, Firefox, OpenMPT
 
 Specialized programs that may require playing with zipfiles and/or
 SmartScreen "More info":
-j0CC-FamiTracker, FCEUX, BGB, Make, cc65, Info-ZIP
+j0CC-FamiTracker, FCEUX, BGB, RGBDS, Make, cc65, Info-ZIP,
+AdvanceCOMP
 
-In a PowerShell window, install the a few Python packages from PyPI:
+In a PowerShell window, install a few Python packages from PyPI:
 
     py -m pip install --upgrade pip
     py -m pip install pygame
@@ -14,7 +15,7 @@ In a PowerShell window, install the a few Python packages from PyPI:
     py -m pip install pillow
 
 To install:
-Audacity, LAME, VLC, Firefox
+Audacity, LAME, oggenc, FFmpeg, VLC
 
 For command-line zipfile support, install Zip and UnZip programs published by
 [Info-ZIP].  But handle `unz600xn.exe` carefully, as it's a self-extracting
@@ -53,7 +54,7 @@ In Notepad++, open Settings > Preferences and change these:
 * [Auto-Completion] > From `3` th character
 
 Open Settings > Style Configurator > Language: Global Styles > Style: Default
-Style, and change Font Style to Consolas 10.
+Style, and change Font Style to Consolas 9.
 
 [Auto-Completion]: http://docs.notepad-plus-plus.org/index.php/Auto_Completion
 

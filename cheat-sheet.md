@@ -105,6 +105,17 @@ Empty the cart.
 
     git checkout -- src/messedthisup.s
 
+**Rename a file** in the repository while preserving its history.
+
+    git mv mispeld.s spellcheck.s
+
+**Rename all files in a directory** so that syntax highlighting can recognize them ([thanks thkala](https://stackoverflow.com/a/4509530/2738262)).
+
+    find -type f -name '*.s' | while read f; do git mv "$f" "${f%.s}.z80"; done
+    # Or the following if a filename contains newlines, which
+	# shouldn't happen in a well-behaved repository
+    find -type f -name '*.s' -print0 | while read -d $'\0' f; do git mv "$f" "${f%.s}.z80"; done
+
 **Show a summary of what has been changed** since the last commit.
 
     git status
