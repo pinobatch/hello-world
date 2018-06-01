@@ -26,7 +26,7 @@ Based on an [answer to "Import existing source code to Github" by Peter](https:/
 Or if your working copy has files that shouldn't be tracked
 quite yet, but you have a newline-separated list of files that
 should, you can pass this manifest file to Git
-[using `xargs`](http://unix.stackexchange.com/a/244172/119806).
+[using `xargs`](https://unix.stackexchange.com/a/244172/119806).
 But make sure to do this *before* you set up a `.gitignore` that
 includes the manifest file.  Otherwise, Git will complain that you're
 adding an ignored file and refuse to do anything.
@@ -213,7 +213,7 @@ If the remote has "pull request" functionality to associate merges with issues a
     git merge subseq-optimization
     git push origin master
 
-If you're starting a new project from a template released on GitHub, you can fork it *unless* the repository is your own. If it's yours, you have to manually [check it out and check it in as a different project](http://bitdrift.com/post/4534738938/fork-your-own-project-on-github). First create `my-game` as an empty repository on GitHub. Then clone your existing project into a new folder:
+If you're starting a new project from a template released on GitHub, you can fork it *unless* the repository is your own. If it's yours, you have to manually [check it out and check it in as a different project](https://web.archive.org/web/20170114224227/http://bitdrift.com/post/4534738938/fork-your-own-project-on-github). First create `my-game` as an empty repository on GitHub. Then clone your existing project into a new folder:
 
     git clone https://github.com/pinobatch/nrom-template.git PROJECT
     cd PROJECT
