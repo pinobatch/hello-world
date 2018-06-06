@@ -15,13 +15,38 @@ In a PowerShell window, install a few Python packages from PyPI:
     py -m pip install pillow
 
 To install:
-Audacity, LAME, oggenc, FFmpeg, VLC
+Audacity, LAME, oggenc, FFmpeg, VLC media player
 
 For command-line zipfile support, install Zip and UnZip programs published by
 [Info-ZIP].  But handle `unz600xn.exe` carefully, as it's a self-extracting
 filebomb that produces multiple files in the current working directory.
 
 [Info-ZIP]: ftp://ftp.info-zip.org/pub/infozip/win32/
+
+Configure Windows
+-----------------
+Many Windows laptops come set to switch from sleep (suspend to RAM)
+to hibernation (suspend to HDD) too soon.  Michael Linenberger
+described some [power settings to change].
+
+* In Start > Settings > System > Power & sleep > Additional Power
+  Settings > Change plan settings > Change advanced power settings >
+  Sleep > Hibernate after, change "Plugged in" to 1440 minutes (one
+  day) and "On battery" to 600 minutes (ten hours).  Ten hours should
+  be long enough to span a full-time work day for a laptop stored in
+  a locker during that time.
+* In Start > Settings > System > Power & sleep > Additional Power
+  Settings > Choose what the power buttons do, turn on "Change
+  settings that are currently unavailable" and "Hibernate: Show in
+  Power menu".  This lets you manually suspend to disk if you know
+  you aren't going to be using your laptop for quite a while.
+* Some laptops lack a fan, such as the Dell Inspiron 11 3000
+  series.  These laptops can be passively cooled because they draw
+  so little power.  For these, it may be convenient to increase the
+  "When plugged in, PC goes to sleep after" time to an hour or more,
+  especially if you often use it on a desk with an external monitor.
+
+[power settings to change]: https://www.michaellinenberger.com/blog/four-windows-10-power-settings-you-should-probably-change-hibernation-and-sleep/
 
 Install Git and MSYS
 --------------------
@@ -52,6 +77,12 @@ In Notepad++, open Settings > Preferences and change these:
 
 * Editing > Vertical Edge Settings > Show vertical edge, line mode, 69 columns
 * [Auto-Completion] > From `3` th character
+* Language > Tab Settings > [Default] > Turn on "Replace by space".
+  Notepad++ always uses [Default] tab settings for user-defined
+  languages, such as assembly languages for 8-bit CPUs.
+* Language > Tab Settings > makefile > Turn off "Use default value"
+  and "Replace by space".  Make is the only language for which I
+  use tabs instead of spaces.
 
 Open Settings > Style Configurator > Language: Global Styles > Style: Default
 Style, and change Font Style to Consolas 9.
