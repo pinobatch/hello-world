@@ -35,24 +35,21 @@ and using it to reexporting the original FLA to HTML5.
 
 Then install useful free software:
 
-    sudo apt install build-essential git vorbis-tools audacity ffmpeg
-    sudo apt install python3-numpy hexchat python3-pil idle3 ghex sox
-    sudo apt install libreoffice-impress libreoffice-draw sqlite3 vlc
-    sudo apt install oidentd advancecomp gksu gnome-font-viewer whois
-    sudo apt install gimp p7zip-full guvcview python3-pip lame flac
-    sudo apt install inkscape libjpeg-turbo-progs
+    sudo apt install build-essential git vorbis-tools audacity ghex \
+      python3-numpy hexchat python3-pil idle3 ffmpeg sox \
+      libreoffice-impress libreoffice-draw sqlite3 vlc \
+      oidentd advancecomp gnome-font-viewer whois \
+      gimp p7zip-full guvcview python3-pip lame flac \
+      inkscape libjpeg-turbo-progs sqlitebrowser
+    # 125 MB download, 607 MB disk space
 
 Interestingly enough, as of 16.04, `python3-pil` is installed by
 default to support HP printers, but the built-in Printers control
 panel doesn't support reading ink level.  So install compatibility
-with Qt 4 applications, which adds 64 MB to the HDD footprint:
+with Qt 5 applications:
 
-    sudo apt install hplip-gui
-
-Also Install compatibility with Qt 5 applications, which adds 123 MB
-to the HDD footprint:
-
-    sudo apt install retext sqlitebrowser
+    sudo apt install hplip-gui sqlitebrowser
+    # 6 MB download, 24 MB disk space
 
 [deprecated SWF]: https://blogs.adobe.com/conversations/2017/07/adobe-flash-update.html
 
@@ -121,9 +118,6 @@ Make sure `Jester.ttf` shows up in the list.  Then spray it over
 the rest of the UI:
 
 * In Appearance, set the default font to Jester 10.
-* In Configure Wine > Desktop Integration > Appearance, change
-  Active Title Text, Menu Text, Message Box, and Tooltip Text to
-  Jester Regular 9.
 * In Window Manager, set the title font to Jester Bold 10 and the
   theme to Daloa, which has frames thicker than 1 pixel to allow
   practical resizing.
@@ -300,8 +294,8 @@ Build cc65, an assembler targeting the NES, Super NES, and other
 The last step should show `/home/<username>/.local/bin/cc65`.  If it
 does not, add `~/.local/bin` to your `PATH` for next time you log in.
 And while you're at it, add a path for locally installed shared
-libraries and a path for header files belonging to locally installed
-compilers and assemblers.
+libraries and manual pages and a path for header files belonging to
+locally installed compilers and assemblers.
 
     mousepad ~/.bashrc
 
@@ -310,6 +304,9 @@ compilers and assemblers.
     fi
     if [ -d "$HOME/.local/lib" ] ; then
         export LD_LIBRARY_PATH="$HOME/.local/lib/:${LD_LIBRARY_PATH}"
+    fi
+    if [ -d "$HOME/.local/man" ] ; then
+        export MANPATH="$HOME/.local/man:$MANPATH"
     fi
     if [ -d "$HOME/.local/share/cc65" ] ; then
         export CC65_HOME="$HOME/.local/share/cc65"
@@ -449,6 +446,12 @@ Install compatibility with 32- and 64-bit Windows applications, which
 adds 735 MB to the HDD footprint:
 
     sudo apt install wine
+
+Make some customizations:
+
+* In Configure Wine > Desktop Integration > Appearance, change
+  Active Title Text, Menu Text, Message Box, and Tooltip Text to
+  Jester Regular 9.
 
 The things I'm most likely to run in Wine:
 
