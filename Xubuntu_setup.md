@@ -1,5 +1,8 @@
 Once Xubuntu is installed, it's time to set it up.
 
+Fixing laptop keyboards
+-----------------------
+
 **Before you shut down your computer for the first time,** the
 absolute first thing if you have a Dell laptop whose keyboard isn't
 backlit is to turn off keyboard backlighting.  Otherwise, a bug
@@ -8,7 +11,30 @@ in Linux itself causes the system to hang during the second boot
 
     sudo systemctl mask systemd-backlight@leds\:dell\:\:kbd_backlight.service
 
+If your laptop is a Dell Inspiron 11 3000 series, its keyboard
+controller has a [hardware bug], where Home (Fn+Left), End
+(Fn+Right), Page Up (Fn+Up), and Page Down (Fn+Down) send only make
+(key down) scancodes, not break (key up) scancodes.  Because of how
+X11 works, this means these keys work only once after a restart.
+It's broken in some Windows applications as well, but Windows treats
+repeated makes without break differently in general.
+(Also [reported in Manjaro].)
+
+    sudo nano /etc/udev/hwdb.d/95-custom-keyboard.hwdb
+
+    # Dell Inspiron 3179
+    # That's one space before each `KEYBOARD_KEY` and no blank lines
+    evdev:atkbd:dmi:bvn*:bvr*:bd*
+     KEYBOARD_KEY_c7=!home
+     KEYBOARD_KEY_cf=!end
+     KEYBOARD_KEY_c9=!pageup
+     KEYBOARD_KEY_d1=!pagedown
+
+    sudo sh -c "udevadm hwdb --update && udevadm trigger"
+
 [Bug 107651]: https://bugzilla.kernel.org/show_bug.cgi?id=107651
+[hardware bug]: https://www.dell.com/community/Linux-General/Dell-Inspiron-3179-keyboard-not-sends-KEY-RELEASE-events-key-up/td-p/5114299
+[reported in Manjaro]: https://forum.manjaro.org/t/dell-inspiron-3162-keyboard-issue-fn-key-keyrelease-event-not-triggered/15524
 
 First round of apt-get
 ----------------------
@@ -149,7 +175,7 @@ move the insertion point or (worse) focus.  Add this to the end of
     synclient PalmDetect=1
 
 If that doesn't work, in Settings > Mouse and Touchpad, have it
-freeze for 0.3 seconds after typing.
+disable the touchpad for 0.5 seconds after typing.
 
 GIMP:
 
@@ -280,11 +306,12 @@ Disconnect's list for the benefit of members.
 
 Building applications from source
 ---------------------------------
-Install prerequisites to build cc65, FCEUX, and RGBDS from source.
+Install prerequisites to build cc65, FCEUX, RGBDS, Scale2x, and
+gmewav from source code.
 
     sudo apt install byacc flex pkg-config libpng-dev git-svn scons \
-      libsdl-image1.2-dev libgtk2.0-dev
-    # 34 MB download, 158 MB disk space
+      libsdl-image1.2-dev libgtk2.0-dev libdumb1-dev libgme-dev
+    # 34 MB download, 159 MB disk space
 
 Build cc65, an assembler targeting the NES, Super NES, and other
 6502 and 65816 platforms.
@@ -327,22 +354,23 @@ Build RGBDS, an assembler targeting the Game Boy.
     make install PREFIX="$HOME/.local"
     man rgbds
 
-Build Scale2x to enlarge PNG images:
+Build Scale2x to enlarge PNG images.  The repository uses Autotools
+to generate the `./configure` file but doesn't describe how to run
+the Autotools to build from the repository rather than from a
+source tarball.
 
-    # sudo apt install libpng12-dev
     cd ~/develop
-    git clone https://github.com/amadvance/scale2x.git
-    # wget https://github.com/amadvance/scale2x/releases/download/v4.0/scale2x-4.0.tar.gz
-    # tar zxf scale2x-4.0.tar.gz
-    # cd scale2x-4.0
-    cd scale2x
+    wget https://github.com/amadvance/scale2x/releases/download/v4.0/scale2x-4.0.tar.gz
+    tar zxf scale2x-4.0.tar.gz
+    cd scale2x-4.0
     ./configure --prefix=$HOME/.local
-    make
+    nice make -j2
     make install
 
 Build FCEUX (SDL) from source because the version in SVN is newer
 than the one in Ubuntu's repository.  Cloning an SVN repository
-takes a while; don't start it if you have to be out the door soon.
+takes a while to download each individual commit, so don't start it
+if you have to be out the door soon.
 
     cd ~/develop
     git svn clone svn://svn.code.sf.net/p/fceultra/code/fceu/trunk fceux
@@ -357,22 +385,16 @@ Once a month, track latest changes:
     nice scons -j2
     scons --prefix=$HOME/.local install
 
-Build *NetPuzzleArena*, a work-in-progress *Puzzle League* clone by
-Josh "NovaSquirrel" Hoffman:
-
-    sudo apt install libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
-    cd ~/develop
-    git clone https://github.com/NovaSquirrel/NetPuzzleArena.git
-    cd NetPuzzleArena
-    make -j2
-
-Good news: Debian and Ubuntu package the free Game Boy Color and Game
-Boy Advance emulator mGBA.  Bad news: The distro's repository has an
-outdated version.  Good news: Even the outdated version has useful
-build dependency information.
+Debian and Ubuntu package the free Game Boy Color and Game Boy
+Advance emulator mGBA as `mgba-qt`.  Its GBA emulation is great.
+Its GBC emulation needs work (to put it nicely) but is good enough
+for game logic if your device can't run Wine or proprietary software.
+Even if your distribution has outdated mGBA, you can still
+grab build prerequisites if your `sources.list` has source URIs.
+(Debian appears to provide source URIs by default; Ubuntu doesn't.)
 
     # TODO: Get source URIs in sources.list
-    sudo apt build-dep mgba
+    sudo apt build-dep mgba-qt
     cd ~/develop
     git clone https://github.com/mgba-emu/mgba.git
     cd mgba
@@ -384,12 +406,20 @@ build dependency information.
 
 Build the NSF, GBS, and S3M to WAVE converter [gmewav]:
 
-    sudo apt install libdumb1-dev libgme-dev
     mkdir -p ~/develop/gmewav
     wget -O gmewav.zip https://forums.nesdev.com/download/file.php?id=9899
     unzip gmewav.zip
     make
     cp ./gmewav ~/.local/bin
+
+Build *NetPuzzleArena*, a work-in-progress *Puzzle League* clone by
+Josh "NovaSquirrel" Hoffman:
+
+    sudo apt install libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
+    cd ~/develop
+    git clone https://github.com/NovaSquirrel/NetPuzzleArena.git
+    cd NetPuzzleArena
+    make -j2
 
 As of 2017-07-01, Microsoft has ended service for the previous Skype
 client (version 4.3), and versions 5 and later run in Electron, a
@@ -433,6 +463,7 @@ pasting without the address changed.)
 
     #git config --global user.email "jdoe@example.com"
     #git config --global user.name "John Doe"
+    #git config --global core.editor "nano"
 
 [gmewav]: https://forums.nesdev.com/viewtopic.php?p=200347#p200347
 [skype4pidgin]: https://github.com/EionRobb/skype4pidgin
