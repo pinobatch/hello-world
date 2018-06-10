@@ -473,9 +473,10 @@ Wine is not an emulator
 -----------------------
 Install Microsoft proprietary fonts needed for some applications and
 websites.  Ubuntu has a package for this, but the download locations
-in its package are out of date.  This causes configuration to fail,
-which in turn causes Update Notifier to make repeated pop-ups.
-So install Debian's newer package.
+in Ubuntu 16.04's package are out of date.  This causes configuration
+to fail, which in turn causes Update Notifier to make repeated
+pop-ups.  So if you use 16.04, install Debian's newer package.
+(This is fixed in 18.04.)
 
     wget http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.6_all.deb
     sudo dpkg -i ttf-mscorefonts-installer_3.6_all.deb
@@ -487,11 +488,13 @@ installing older `wine-stable` and newer `wine-development`.
     sudo apt install wine-development
     # 103 MB download, 743 MB disk space
 
+Run `winecfg` to create a Wine prefix.  This may take a couple
+minutes, much like the "Hi" screen the first time you log in to a
+Windows account after installing a service pack or feature update.
 Make some customizations:
 
-* In Configure Wine > Desktop Integration > Appearance, change
-  Active Title Text, Menu Text, Message Box, and Tooltip Text to
-  Jester Regular 9.
+* In Desktop Integration > Appearance, change Active Title Text,
+  Menu Text, Message Box Text, and Tooltip Text to Jester Regular 9.
 
 The things I'm most likely to run in Wine:
 
