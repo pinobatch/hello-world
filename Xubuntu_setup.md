@@ -280,6 +280,12 @@ Disconnect's list for the benefit of members.
 
 Building applications from source
 ---------------------------------
+Install prerequisites to build cc65, FCEUX, and RGBDS from source.
+
+    sudo apt install byacc flex pkg-config libpng-dev git-svn scons \
+      libsdl-image1.2-dev libgtk2.0-dev
+    # 34 MB download, 158 MB disk space
+
 Build cc65, an assembler targeting the NES, Super NES, and other
 6502 and 65816 platforms.
 
@@ -314,7 +320,6 @@ locally installed compilers and assemblers.
 
 Build RGBDS, an assembler targeting the Game Boy.
 
-    sudo apt install byacc flex pkg-config libpng-dev
     cd ~/develop
     git clone https://github.com/rednex/rgbds.git
     cd rgbds
@@ -324,20 +329,21 @@ Build RGBDS, an assembler targeting the Game Boy.
 
 Build Scale2x to enlarge PNG images:
 
-    sudo apt install libpng12-dev
+    # sudo apt install libpng12-dev
     cd ~/develop
-    wget https://github.com/amadvance/scale2x/releases/download/v4.0/scale2x-4.0.tar.gz
-    tar zxf scale2x-4.0.tar.gz
-    cd scale2x-4.0
+    git clone https://github.com/amadvance/scale2x.git
+    # wget https://github.com/amadvance/scale2x/releases/download/v4.0/scale2x-4.0.tar.gz
+    # tar zxf scale2x-4.0.tar.gz
+    # cd scale2x-4.0
+    cd scale2x
     ./configure --prefix=$HOME/.local
     make
     make install
 
 Build FCEUX (SDL) from source because the version in SVN is newer
-than the one in Ubuntu's repository.
+than the one in Ubuntu's repository.  Cloning an SVN repository
+takes a while; don't start it if you have to be out the door soon.
 
-    sudo apt install git-svn scons libsdl-image1.2-dev libgtk2.0-dev
-    sudo apt install libgd-dev liblua5.1-0-dev
     cd ~/develop
     git svn clone svn://svn.code.sf.net/p/fceultra/code/fceu/trunk fceux
     cd fceux
@@ -365,6 +371,7 @@ Boy Advance emulator mGBA.  Bad news: The distro's repository has an
 outdated version.  Good news: Even the outdated version has useful
 build dependency information.
 
+    # TODO: Get source URIs in sources.list
     sudo apt build-dep mgba
     cd ~/develop
     git clone https://github.com/mgba-emu/mgba.git
