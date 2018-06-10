@@ -442,10 +442,12 @@ So install Debian's newer package.
     wget http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.6_all.deb
     sudo dpkg -i ttf-mscorefonts-installer_3.6_all.deb
 
-Install compatibility with 32- and 64-bit Windows applications, which
-adds 735 MB to the HDD footprint:
+Install compatibility with 32- and 64-bit Windows applications.
+As of Ubuntu 18.04, the administrator must explicitly choose between
+installing older `wine-stable` and newer `wine-development`.
 
-    sudo apt install wine
+    sudo apt install wine-development
+    # 103 MB download, 743 MB disk space
 
 Make some customizations:
 
