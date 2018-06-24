@@ -233,3 +233,30 @@ To sync changes from the parent project:
 
     git pull upstream master
     git push origin master
+
+## Working with non-text file types
+
+Git is designed for file types that can be represented as a sequence of lines of text. This includes program source code, HTML, CSS, and Scalable Vector Graphics (SVG).
+
+Many video games and other applications include images that the program displays while it is running, and not all of them are SVG. In the [gbdev Discord server](https://github.com/avivace/awesome-gbdev), [eevee](https://eev.ee/) (of "PHP: a fractal of bad design" fame) provided a formula to `git diff` to run common image types through ImageMagick.  Her formula might not help much with a merge, but it should still help you spot-check changes that you're about to commit.
+
+` ~/.local/bin/git-imgdiff`:
+
+    #!/bin/sh
+    compare -metric PHASH "$2" "$1" png:- \
+      | montage -tile 1x -geometry +4+4 "$2" - "$1" png:- \
+      | display -title "$1" -
+
+`~/.gitattributes-global`:
+
+    *.gif diff=image
+    *.jpeg diff=image
+    *.jpg diff=image
+    *.png diff=image
+
+`~/.gitconfig`:
+
+    [core]
+        attributesfile = ~/.gitattributes-global
+    [diff "image"]
+        command = ~/.local/bin/git-imgdiff
