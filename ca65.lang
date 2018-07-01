@@ -15,7 +15,7 @@ Installation:
 Then restart Mousepad
 
 -->
-<language id="ca65" _name="ca65" version="2.0" _section="Source">
+<language id="ca65" _name="ca65" version="2.0" _section="Sources">
 <metadata>
 <!--  <property name="mimetypes">text/x-c;text/x-csrc</property> -->
   <property name="globs">*.s;*.asm;*.inc</property>

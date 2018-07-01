@@ -206,6 +206,15 @@ Mousepad:
 * Colors: Kate
 * Font: Ubuntu Mono 9
 
+Mousepad languages:
+
+1. Download <https://gist.github.com/Sanqui/5176862> as `rgbasm.lang`
+2. Change the text inside `<property name="globs">` to `*.asm;*.z80`
+3. Copy `ca65.lang` (from this repository) and `rgbasm.lang` to where
+   GTKSourceView looks for languages:
+   `~/.local/share/gtksourceview-2.0/language-specs`
+   and `~/.local/share/gtksourceview-3.0/language-specs`
+
 ReText:
 
 * Editor font: Ubuntu Mono 9
