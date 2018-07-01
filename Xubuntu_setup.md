@@ -318,7 +318,7 @@ Building applications from source
 Install prerequisites to build cc65, FCEUX, RGBDS, Scale2x, and
 gmewav from source code.
 
-    sudo apt install byacc flex pkg-config libpng-dev git-svn scons \
+    sudo apt install byacc flex pkg-config libpng-dev scons \
       libsdl-image1.2-dev libgtk2.0-dev libdumb1-dev libgme-dev
     # 34 MB download, 159 MB disk space
 
@@ -376,21 +376,15 @@ source tarball.
     nice make -j2
     make install
 
-Build FCEUX (SDL) from source because the version in SVN is newer
-than the one in Ubuntu's repository.  Cloning an SVN repository
-takes a while to download each individual commit, so don't start it
-if you have to be out the door soon.
+Build FCEUX (SDL) from source because the version in Git is newer
+than the one in Ubuntu's repository.  Until April 2018, FCEUX was
+maintained in an SVN repository on SourceForge, and cloning SVN was
+very slow because `git svn` works revision by revision.  But now it's
+in a Git repository on GitHub.
 
     cd ~/develop
-    git svn clone svn://svn.code.sf.net/p/fceultra/code/fceu/trunk fceux
+    git clone https://github.com/TASVideos/fceux.git
     cd fceux
-    nice scons -j2
-    scons --prefix=$HOME/.local install
-
-Once a month, track latest changes:
-
-    cd ~/develop/fceux
-    git svn rebase
     nice scons -j2
     scons --prefix=$HOME/.local install
 
