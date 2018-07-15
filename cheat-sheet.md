@@ -200,6 +200,23 @@ This can be incorporated into a makefile:
     	git ls-files | grep -e "^[^.]" > $@
     	echo zip.in >> $@
 
+## Working with out-of-band change submissions
+
+Review a folder containing individual files that you modified while
+on break on someone else's computer where you do not have the full
+repository cloned.  This folder in your Dropbox or extracted using
+`unzip` contains only those files that were modified.  (The `-D` flag
+allows `git diff` to produce "irreversible deletes".  Without `-D`,
+the diff includes the full text of each unmodified file.)
+
+    git diff -D src ~/Dropbox/myproject/changes
+
+Then merge the changes into your working copy.
+
+    cp ~/Dropbox/myproject/changes/* src
+
+TODO: `git request-pull` and how it differs from GitHub pull request
+
 ## Working with remote repositories (such as GitHub)
 
 The first time you contribute to a project, copy its repository to your computer.  This downloads its contents and sets up the `origin` link, which lets you keep up to date with changes to a remote repository.
