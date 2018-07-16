@@ -17,8 +17,9 @@ controller has a [hardware bug], where Home (Fn+Left), End
 (key down) scancodes, not break (key up) scancodes.  Because of how
 X11 works, this means these keys work only once after a restart.
 It's broken in some Windows applications as well, but Windows treats
-repeated makes without break differently in general.
-(Also [reported in Manjaro].)
+repeated makes without break differently in general.  (Also
+[reported in Manjaro].)  The file you edit to fix this is fairly
+[sensitive to formatting].
 
     sudo nano /etc/udev/hwdb.d/95-custom-keyboard.hwdb
 
@@ -35,6 +36,7 @@ repeated makes without break differently in general.
 [Bug 107651]: https://bugzilla.kernel.org/show_bug.cgi?id=107651
 [hardware bug]: https://www.dell.com/community/Linux-General/Dell-Inspiron-3179-keyboard-not-sends-KEY-RELEASE-events-key-up/td-p/5114299
 [reported in Manjaro]: https://forum.manjaro.org/t/dell-inspiron-3162-keyboard-issue-fn-key-keyrelease-event-not-triggered/15524
+[sensitive to formatting]: https://wiki.archlinux.org/index.php/Dell_Inspiron_11_3000_(3162)#Keyboard
 
 First round of apt-get
 ----------------------
@@ -342,7 +344,7 @@ locally installed compilers and assemblers.
     mousepad ~/.bashrc
 
     if [ -d "$HOME/.local/bin" ] ; then
-        PATH="$HOME/.local/bin:$PATH"
+        export PATH="$HOME/.local/bin:$PATH"
     fi
     if [ -d "$HOME/.local/lib" ] ; then
         export LD_LIBRARY_PATH="$HOME/.local/lib/:${LD_LIBRARY_PATH}"
@@ -486,9 +488,11 @@ pop-ups.  So if you use 16.04, install Debian's newer package.
 
 Install compatibility with 32- and 64-bit Windows applications.
 As of Ubuntu 18.04, the administrator must explicitly choose between
-installing older `wine-stable` and newer `wine-development`.
+installing older `wine-stable` and newer `wine-development`.  The
+`wine-binfmt` package makes running Wine programs from the terminal
+more convenient.
 
-    sudo apt install wine-development
+    sudo apt install wine-development wine-binfmt
     # 103 MB download, 743 MB disk space
 
 Run `winecfg` to create a Wine prefix.  This may take a couple
@@ -508,9 +512,23 @@ The things I'm most likely to run in Wine:
   an Atom unlike bsnes-plus)
 * BGB (proprietary Game Boy emulator)
 
+To make launching Windows program from the terminal more convenient,
+put a shell script in `~/.local/bin` that handles slash conversion.
+
+    nano ~/.local/bin/famitracker
+
+    #!/bin/sh
+    filetoopen=$1
+    if [ -n "$filetoopen" ]; then
+        filetoopen=`winepath -w "$filetoopen"`
+    fi
+    '/home/pino/.wine/drive_c/Program Files (x86)/FamiTracker/j0CC-Famitracker-j0.5.3.exe' "$filetoopen"
+
+    chmod +x ~/.local/bin/famitracker
+
 Proprietary crap
 ----------------
-Get the Ubuntu .deb from for [Dropbox] matching your distribution.
+Get the Ubuntu .deb matching your distribution from [Dropbox].
 
 Install it and fetch its dependencies:
 
