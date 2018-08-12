@@ -170,6 +170,10 @@ Switch back to master and **merge** changes from the branch.
 
     git checkout master && git merge subseq-optimization
 
+**Delete a branch** that has been merged.
+
+    git branch -d subseq-optimization
+
 Scoot back and admire your work by viewing the **commit log**.
 
     git log -10
