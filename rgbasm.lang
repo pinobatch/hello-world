@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ Author: Sanky
+ License: Public domain
+
+-->
+<language id="gbz80asm" _name="gbz80asm" version="2.0" _section="Sources">
+  <metadata>
+    <property name="mimetypes">text/x-z80asm</property>
+    <property name="globs">*.asm;*.z80</property>
+    <property name="line-comment-start">;</property>
+  </metadata>
+
+  <styles>
+    <style id="instruction"     _name="instruction" map-to="def:statement"/>
+    <style id="keyword"         _name="keyword" map-to="def:function"/>
+    <style id="comment"         _name="comment" map-to="def:comment"/>
+    <style id="string"          _name="string" map-to="def:string"/>
+    <style id="num"             _name="num" map-to="def:base-n-integer"/>
+    <style id="meta"            _name="meta" map-to="def:keyword"/>
+    
+    <style id="label"            _name="label" map-to="def:constant"/>
+  </styles>
+
+  <definitions>
+    <context id="gbz80asm">
+        <include>
+            <context id="comment" style-ref="comment">
+                <start>;</start>
+                <end>$</end>
+            </context>
+            
+            <context id="string" end-at-line-end="true" style-ref="string">
+                <start>"</start>
+                <end>"</end>
+            </context>
+            
+            <context id="binary" style-ref="num">
+                <match extended="true">
+                  (?&lt;![\w\.]) %[01]+ (?![\w\.])
+                </match>
+            </context>
+            
+            <context id="hexadecimal" style-ref="num">
+                <match extended="true">
+                  (?&lt;![\w\.]) \$[0-9a-fA-F]+ (?![\w\.])
+                </match>
+            </context>
+            
+            <context id="decimal" style-ref="num">
+                <match extended="true">
+                  (?&lt;![\w\.]) [0-9]+ (?![\w\.])
+                </match>
+            </context>
+            
+            <context id="instructions" style-ref="instruction">
+              <keyword>ld</keyword>
+              <keyword>push</keyword>
+              <keyword>pop</keyword>
+              <keyword>add</keyword>
+              <keyword>adc</keyword>
+              <keyword>sub</keyword>
+              <keyword>sbc</keyword>
+              <keyword>and</keyword>
+              <keyword>or</keyword>
+              <keyword>xor</keyword>
+              <keyword>cp</keyword>
+              <keyword>inc</keyword>
+              <keyword>dec</keyword>
+              <keyword>rlca</keyword>
+              <keyword>rla</keyword>
+              <keyword>rrca</keyword>
+              <keyword>rra</keyword>
+              <keyword>jp</keyword>
+              <keyword>jr</keyword>
+              <keyword>call</keyword>
+              <keyword>ret</keyword>
+              <keyword>reti</keyword>
+              <keyword>rst</keyword>
+              <keyword>daa</keyword>
+              <keyword>cpl</keyword>
+              <keyword>nop</keyword>
+              <keyword>halt</keyword>
+              <keyword>stop</keyword>
+              <keyword>di</keyword>
+              <keyword>ei</keyword>
+              <keyword>scf</keyword>
+              <keyword>ccf</keyword>
+              <keyword>rlc</keyword>
+              <keyword>rl</keyword>
+              <keyword>rrc</keyword>
+              <keyword>rr</keyword>
+              <keyword>sla</keyword>
+              <keyword>sra</keyword>
+              <keyword>srl</keyword>
+              <keyword>swap</keyword>
+              <keyword>bit</keyword>
+              <keyword>set</keyword>
+              <keyword>res</keyword>
+            </context>
+
+            <context id="data" style-ref="instruction">
+              <keyword>db</keyword>
+              <keyword>dw</keyword>
+              <keyword>dbw</keyword>
+              <keyword>dwb</keyword>
+            </context>
+
+            <context id="registers" style-ref="keyword">
+              <keyword>a</keyword>
+              <keyword>f</keyword>
+              <keyword>b</keyword>
+              <keyword>c</keyword>
+              <keyword>d</keyword>
+              <keyword>e</keyword>
+              <keyword>h</keyword>
+              <keyword>l</keyword>
+              
+              <keyword>af</keyword>
+              <keyword>sp</keyword>
+              
+              <keyword>z</keyword>
+              <keyword>nz</keyword>
+              <keyword>c</keyword>
+              <keyword>nc</keyword>
+            </context>
+            
+            <context id="registers16" style-ref="keyword">
+              <prefix>\[?</prefix>
+              <suffix>\]?</suffix>
+              <keyword>bc</keyword>
+              <keyword>de</keyword>
+              <keyword>hli</keyword>
+              <keyword>hld</keyword>
+              <keyword>hl</keyword>
+            </context>
+
+            <context id="meta" style-ref="meta">
+              <keyword>INCLUDE</keyword>
+              <keyword>INCBIN</keyword>
+              <keyword>EQU</keyword>
+              <keyword>MACRO</keyword>
+              <keyword>SECTION</keyword>
+              <keyword>BANK</keyword>
+              <keyword>HOME</keyword>
+              <keyword>DATA</keyword>
+            </context>
+            
+            <!-- anything else is a label.  not very smart, but works. -->
+            
+            <context id="label" style-ref="label">
+                <match extended="true">
+                  (?&lt;![\w\.]) \.?[a-zA-Z#_][0-9a-zA-Z@#_]*:? (?![\w\.])
+                </match>
+            </context>
+
+        </include>
+    </context>
+  </definitions>
+</language>
