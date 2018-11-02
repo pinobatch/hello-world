@@ -390,12 +390,21 @@ Debian and Ubuntu package the free Game Boy Color and Game Boy
 Advance emulator mGBA as `mgba-qt`.  Its GBA emulation is great.
 Its GBC emulation needs work (to put it nicely) but is good enough
 for game logic if your device can't run Wine or proprietary software.
-Even if your distribution has outdated mGBA, you can still
-grab build prerequisites if your `sources.list` has source URIs.
-(Debian appears to provide source URIs by default; Ubuntu doesn't.)
+Even if your distribution has outdated mGBA, if your `sources.list`
+has source URIs, you can use `sudo apt build-dep mgba-qt` to grab
+build prerequisites.  (Debian appears to provide source URIs by
+default; Ubuntu doesn't.)  If not, use the dependencies listed at
+[Debian source package mgba].  These ended up using 225 MB of space.
 
     # TODO: Get source URIs in sources.list
     sudo apt build-dep mgba-qt
+    # or
+    sudo apt install cmake debhelper desktop-file-utils libavcodec-dev \
+      libavformat-dev libavresample-dev libavutil-dev libedit-dev \
+      libmagickwand-dev libpng-dev libqt5opengl5-dev libsdl2-dev \
+      libsqlite3-dev libswscale-dev libzip-dev pkg-config \
+      qtbase5-dev qtmultimedia5-dev qttools5-dev-tools zlib1g-dev
+
     cd ~/develop
     git clone https://github.com/mgba-emu/mgba.git
     cd mgba
@@ -466,6 +475,7 @@ pasting without the address changed.)
     #git config --global user.name "John Doe"
     #git config --global core.editor "nano"
 
+[Debian source package mgba]: https://packages.debian.org/source/sid/mgba
 [gmewav]: https://forums.nesdev.com/viewtopic.php?p=200347#p200347
 [skype4pidgin]: https://github.com/EionRobb/skype4pidgin
 [Purple Discord]: https://github.com/EionRobb/purple-discord
