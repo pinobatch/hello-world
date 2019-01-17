@@ -331,6 +331,14 @@ Build cc65, an assembler targeting the NES, Super NES, and other
     make install PREFIX="$HOME/.local"
     which cc65
 
+Build ASM6, a simpler non-linking assembler targeting 6502 platforms.
+
+    mkdir ~/develop/asm6
+    cd ~/develop/asm6
+    wget https://3dscapture.com/NES/asm6.zip
+    unzip asm6.zip asm6.c
+    gcc -Os asm6.c -o ~/.local/bin/asm6
+
 The last step should show `/home/<username>/.local/bin/cc65`.  If it
 does not, add `~/.local/bin` to your `PATH` for next time you log in.
 And while you're at it, add a path for locally installed shared
