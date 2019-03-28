@@ -1,0 +1,13 @@
+#!/bin/sh
+# Pull all Git repositories in all subdirectories of the
+# current working directory
+#
+# Copyright 2019 Damian Yerrick
+# Copying and distribution of this file, with or without modification,
+# are permitted in any medium without royalty provided the copyright
+# notice and this notice are preserved.  This file is offered as-is,
+# without any warranty.
+
+set -e
+
+find . -name .git -type d -print -execdir git pull \;
