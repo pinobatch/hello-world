@@ -132,6 +132,35 @@ match [keyboard shortcuts in Windows], which I use at my day job:
 
 [keyboard shortcuts in Windows]: https://support.microsoft.com/en-us/help/126449/keyboard-shortcuts-for-windows
 
+Timidity conflict
+-----------------
+There are reports that after upgrading to Debian 10 "buster", the
+MIDI synthesizer service (Timidity or FluidSynth) grabs the sound
+card before PulseAudio has a chance to. (See [Debian bug 901148] and
+[PulseAudio troubleshooting on ArchWiki].)  If the Output Devices
+pane of PulseAudio mixer (`pavucontrol`)  shows "Dummy output" under
+"All Output Devices" or "No output devices available" under "Hardware
+Output Devices", check if Timidity is installed.  Then try stopping
+Timidity and restarting PulseAudio.
+
+    # Ensure ALSA is detecting your sound card
+    aplay -L
+    # Try playing sound, changing -D as needed
+    aplay -D sysdefault:CARD=Intel /path/to/some/file.wav
+    
+    # See what owns the output devices
+    sudo fuser -v /dev/snd/*
+    
+    # If Timidity entries exist but no PulseAudio entries, continue
+    sudo service timidity stop
+    pulseaudio --kill
+    pulseaudio --start
+
+Then attempt to reconfigure the service to use PulseAudio.
+
+[Debian bug 901148]: https://bugs.debian.org/901148
+[PulseAudio troubleshooting on ArchWiki]: https://wiki.archlinux.org/index.php/PulseAudio/Troubleshooting
+
 Other personalizations
 ----------------------
 
