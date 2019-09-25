@@ -41,10 +41,10 @@ freely, subject to the following restrictions:
 
 /*
 
-; The logo is compressed using PB8, a form of unary RLE.
-; Each block representing 8 bytes consists of a control byte, where
-; each bit (big endian) is 0 for literal or 1 for repeat previous,
-; followed by the literals in that block.
+; The logo is compressed using PB8, a form of RLE with unary-coded
+; run lengths.  Each block representing 8 bytes consists of a control
+; byte, where each bit (MSB to LSB) is 0 for literal or 1 for repeat
+; previous, followed by the literals in that block.
 
 SameBoyLogo_dst = $8080
 SameBoyLogo_length = (128 * 24) / 64
@@ -54,34 +54,34 @@ LoadTileset:
     ld de, SameBoyLogo_dst
     ld c, SameBoyLogo_length
 .pb8BlockLoop:
-    ; Register map:
+    ; Register map for PB8 decompression
     ; HL: source address in boot ROM
     ; DE: destination address in VRAM
     ; A: Current literal value
     ; B: Repeat bits, terminated by 1000...
     ; C: Number of 8-byte blocks left in this block
-    ; The source address has to be HL so that repeat bit loads
-    ; can go straight to B, bypassing A.
+    ; Source address in HL lets the repeat bits go straight to B,
+    ; bypassing A and avoiding spilling registers to the stack.
     ld b, [hl]
     inc hl
 
     ; Shift a 1 into lower bit of shift value.  Once this bit
-    ; becomes 0, the byte is over
+    ; reaches the carry, B becomes 0 and the byte is over
     scf
     rl b
 
 .pb8BitLoop:
+    ; If not a repeat, load a literal byte
     jr c,.pb8Repeat
     ld a, [hli]
 .pb8Repeat:
-    ; Decompressed data uses colors 0 and 3, so write twice
+    ; Decompressed data uses colors 0 and 1, so write once, inc twice
     ld [de], a
     inc de
-    ld [de], a
     inc de
-    rl b
+    sla b
     jr nz, .pb8BitLoop
-    
+
     dec c
     jr nz, .pb8BlockLoop
     ret
