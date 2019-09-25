@@ -451,6 +451,32 @@ default; Ubuntu doesn't.)  If not, use the dependencies listed at
     make -j2
     make install
 
+Mozilla maintains a fork of the JPEG image encoder library
+libjpeg-turbo, called [MozJPEG].  It improves the rate-distortion
+performance compared to libjpeg with trellis quantization and
+smarter progressive coding, reducing size by 5% at a given quality
+level. Images containing both black-on-white text or line art and
+photo elements fare even better thanks to [deringing] work by
+Kornel Lesiński.
+
+The MozJPEG distribution includes counterparts to the `cjpeg`,
+`djpeg`, and `jpegtran` command-line tools included with libjpeg.
+Mozilla intends that image editor developers add MozJPEG as their
+JPEG export plug-in, but GIMP in Ubuntu 18.04 has not.  In the
+meantime, build the command-line tools from source.  These
+instructions are based on [MozJPEG instructions] by Andrew Welch.
+
+    sudo apt install autoconf automake libtool nasm libpng-dev
+    cd ~/develop
+    git clone https://github.com/mozilla/mozjpeg.git
+    cd mozjpeg
+    mkdir build
+    cd build
+    cmake -G"Unix Makefiles" ../
+    cp cjpeg ~/.local/bin/mozcjpeg
+    cp djpeg ~/.local/bin/mozdjpeg
+    cp jpegtran ~/.local/bin/mozjpegtran
+
 Build the NSF, GBS, and S3M to WAVE converter [gmewav]:
 
     mkdir -p ~/develop/gmewav
@@ -513,6 +539,9 @@ pasting without the address changed.)
     #git config --global core.editor "nano"
 
 [Debian source package mgba]: https://packages.debian.org/source/sid/mgba
+[MozJPEG]: https://github.com/mozilla/mozjpeg
+[deringing]: https://kornel.ski/deringing/
+[MozJPEG instructions]: https://nystudio107.com/blog/installing-mozjpeg-on-ubuntu-16-04-forge
 [gmewav]: https://forums.nesdev.com/viewtopic.php?p=200347#p200347
 [skype4pidgin]: https://github.com/EionRobb/skype4pidgin
 [Purple Discord]: https://github.com/EionRobb/purple-discord
