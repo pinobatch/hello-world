@@ -454,10 +454,10 @@ default; Ubuntu doesn't.)  If not, use the dependencies listed at
 Mozilla maintains a fork of the JPEG image encoder library
 libjpeg-turbo, called [MozJPEG].  It improves the rate-distortion
 performance compared to libjpeg with trellis quantization and
-smarter progressive coding, reducing size by 5% at a given quality
-level. Images containing both black-on-white text or line art and
-photo elements fare even better thanks to [deringing] work by
-Kornel Lesiński.
+smarter progressive coding, reducing size by 5% at a given
+quality level.  Images containing both photographic elements
+and black-on-white text or line art fare even better thanks to
+[deringing] work by Kornel Lesiński.
 
 The MozJPEG distribution includes counterparts to the `cjpeg`,
 `djpeg`, and `jpegtran` command-line tools included with libjpeg.
@@ -466,16 +466,29 @@ JPEG export plug-in, but GIMP in Ubuntu 18.04 has not.  In the
 meantime, build the command-line tools from source.  These
 instructions are based on [MozJPEG instructions] by Andrew Welch.
 
-    sudo apt install autoconf automake libtool nasm libpng-dev
+    sudo apt install libtool nasm libpng-dev
     cd ~/develop
     git clone https://github.com/mozilla/mozjpeg.git
     cd mozjpeg
     mkdir build
     cd build
     cmake -G"Unix Makefiles" ../
-    cp cjpeg ~/.local/bin/mozcjpeg
-    cp djpeg ~/.local/bin/mozdjpeg
-    cp jpegtran ~/.local/bin/mozjpegtran
+    make -j2
+    strip cjpeg-static jpegtran-static
+    cp cjpeg-static ~/.local/bin/mozcjpeg
+    cp jpegtran-static ~/.local/bin/mozjpegtran
+
+Then it can be used as follows:
+
+    # This produces output with 4:2:0 chroma subsampling
+    mozcjpeg -quality 75 kitten.png > kitten.jpg
+    # This produces output with full-resolution chroma,
+    # useful for pictures containing both hard edges
+    mozcjpeg -quality 75 -sample 1x1 kitten.png > kitten.jpg
+    # Recompressing an existing JPEG image, as with AdvanceCOMP
+    # (but you won't get the trellis quantization)
+    mozjpegtran -progressive -optimize puppy.jpg > puppy-opt.jpg
+    mozjpegtran -progressive -optimize -outfile puppy.jpg puppy.jpg
 
 Build the NSF, GBS, and S3M to WAVE converter [gmewav]:
 
