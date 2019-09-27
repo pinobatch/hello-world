@@ -156,7 +156,8 @@ Timidity and restarting PulseAudio.
     pulseaudio --kill
     pulseaudio --start
 
-Then attempt to reconfigure the service to use PulseAudio.
+Look at the mixer again.  If this caused your sound card to appear,
+attempt to reconfigure the service to use PulseAudio.
 
 [Debian bug 901148]: https://bugs.debian.org/901148
 [PulseAudio troubleshooting on ArchWiki]: https://wiki.archlinux.org/index.php/PulseAudio/Troubleshooting
