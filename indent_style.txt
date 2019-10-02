@@ -1,0 +1,25 @@
+My C and PHP indent style is similar to the K&R-based style specified for Oracle for Java.
+
+* Source code encoded in UTF-8 without byte order mark.
+* Lines limited to 79 characters, except URLs in comments and long identifiers such as Java `package` and `import`.
+* Lines containing multi-line comments limited to 69 characters, other than URLs.
+* Indent with spaces, not tabs.
+* Two spaces indentation in C, PHP, JavaScript, and assembly; four spaces in Java and Python.
+* Operators `,` precede a line break. Others follow it.
+* Don't break adjacent to `=`. Instead, end the line with `= (`.
+* Prefer line breaks at a higher level if possible, such as outside parentheses rather than inside and near outer-precedence operators. If an expression in parentheses or other delimiters is broken, break again after the closing delimiter such as `)`.
+* After a line break, align the next term of an expression horizontally with the start of the same expression, or 4 spaces if that is impractical or if the expression starts on a new line.
+* In languages that can be written without semicolons, such as Python and JavaScript, prefer parentheses to line-continuation.
+* One statement per line, except possibly after the initialization and condition of a `for` in C, C++, PHP, and Java.
+* No single space immediately inside brackets, except the closing angle bracket of a C++ template within a template. (Brackets mean parentheses, square brackets, braces, or angle brackets.)
+* Compound statements (`if`, `else`, `while`, `do`, `for`, `switch`, `try`, `catch`): `finally`) in curly brace languages:
+    * In C, C++, PHP, and Java, all require braces and a line break.
+    * Exception: An `if` that lacks an `else` and whose entire content is a `break`, `continue`, or `return` may have the statement on the same line as the `if` without braces.
+    * One space between the keyword and the bracket: `if (`, `) {`, `} else {`, `while (`, `do {`, `for (`, `try {`, `} catch`, `} finally {`. This implies K&R style.
+    * `}` aligned horizontally with opening keyword.
+    * An empty compound statement can be `{}` unless it forms part of a multiple-block statement (`if` with `else` or `try`).
+* Prefer C99 or newer over C89, except when targeting 8-bit microprocessors.
+* Prefer declaring variables soon before their first use rather than declaring them early in the block, except in C89.
+* At least two spaces between code and a line comment (`#` in Python, `;` in 6502 assembly, `//` elsewhere) on the same line.
+* 68000 assembly uses the bitwise OR assembly option and a preprocessor to remove `//` comments.
+* Assembly for SM83 (Game Boy CPU) and other ISAs whose common assembler requires labels to start in column 1 uses a preprocessor to remove indentation from labels.
