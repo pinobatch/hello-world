@@ -261,12 +261,13 @@ Git is designed for file types that can be represented as a sequence of lines of
 
 Many video games and other applications include images that the program displays while it is running, and not all of them are SVG. In the [gbdev Discord server](https://github.com/avivace/awesome-gbdev), [eevee](https://eev.ee/) (of "PHP: a fractal of bad design" fame) provided a formula to `git diff` to run common image types through ImageMagick.  Her formula might not help much with a merge, but it should still help you spot-check changes that you're about to commit.
 
-` ~/.local/bin/git-imgdiff`:
+`~/.local/bin/git-imgdiff`:
 
     #!/bin/sh
     compare -metric PHASH "$2" "$1" png:- \
       | montage -tile 1x -geometry +4+4 "$2" - "$1" png:- \
       | display -title "$1" -
+    # don't forget to chmod +x ~/.local/bin/git-imgdiff
 
 `~/.gitattributes-global`:
 

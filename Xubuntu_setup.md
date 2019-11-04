@@ -1,8 +1,7 @@
 Once Xubuntu is installed, it's time to set it up.
 
-Fixing laptop keyboards
------------------------
-
+Fixing Dell laptops
+-------------------
 **Before you shut down your computer for the first time,** the
 absolute first thing if you have a Dell laptop whose keyboard isn't
 backlit is to turn off keyboard backlighting.  Otherwise, a bug
@@ -33,10 +32,19 @@ repeated makes without break differently in general.  (Also
 
     sudo sh -c "udevadm hwdb --update && udevadm trigger"
 
+Some Dell Inspiron models have a quirky XHCI (USB host) driver that
+occasionally prevents the laptop from going to sleep properly.
+When this occurs, the laptop will become unresponsive after opening
+the lid, instead needing a hard power cycle.  To work around this,
+add [ioggstream's sleep fix script] to the
+`/usr/lib/systemd/system-sleep` folder.  (For convenience, I have
+mirrored it as `system-sleep-xkci.sh`.)
+
 [Bug 107651]: https://bugzilla.kernel.org/show_bug.cgi?id=107651
 [hardware bug]: https://www.dell.com/community/Linux-General/Dell-Inspiron-3179-keyboard-not-sends-KEY-RELEASE-events-key-up/td-p/5114299
 [reported in Manjaro]: https://forum.manjaro.org/t/dell-inspiron-3162-keyboard-issue-fn-key-keyrelease-event-not-triggered/15524
 [sensitive to formatting]: https://wiki.archlinux.org/index.php/Dell_Inspiron_11_3000_(3162)#Keyboard
+[ioggstream's sleep fix script]: https://gist.github.com/ioggstream/8f380d398aef989ac455b93b92d42048
 
 First round of apt-get
 ----------------------
@@ -578,7 +586,7 @@ installing older `wine-stable` and newer `wine-development`.  The
 `wine-binfmt` package makes running Wine programs from the terminal
 more convenient.
 
-    sudo apt install wine-development wine-binfmt
+    sudo apt install wine-development wine-binfmt winetricks
     # 103 MB download, 743 MB disk space
 
 Run `winecfg` to create a Wine prefix.  This may take a couple
@@ -595,8 +603,9 @@ The things I'm most likely to run in Wine:
 * FCEUX (free NES emulator with debugger)
 * FamiTracker (free NES music editor)
 * NO$SNS (proprietary Super NES emulator, which runs at full speed on
-  an Atom unlike bsnes-plus)
+  an Atom unlike bsnes-plus or Mesen-S)
 * BGB (proprietary Game Boy emulator)
+* Gens Kmod (Genesis/Mega Drive emulator with debugging)
 
 To make launching Windows program from the terminal more convenient,
 put a shell script in `~/.local/bin` that handles slash conversion.
@@ -611,6 +620,20 @@ put a shell script in `~/.local/bin` that handles slash conversion.
     '/home/pino/.wine/drive_c/Program Files (x86)/FamiTracker/j0CC-Famitracker-j0.5.3.exe' "$filetoopen"
 
     chmod +x ~/.local/bin/famitracker
+
+Some software, such as NO$SNS, doesn't play nice with PulseAudio in
+Wine 3.6, giving an error like this followed by a crash:
+
+    Assertion 'pa_sample_spec_valid(spec)' failed at pulse/sample.c:67,
+    function pa_frame_size(). Aborting.
+
+To fix this, try [changing Wine's audio output API] from PulseAudio
+to ALSA.  Other programs may work better with PulseAudio.
+
+    winetricks sound=alsa
+    winetricks sound=pulse
+
+[changing Wine's audio output API]: https://askubuntu.com/q/77210/232993
 
 Proprietary crap
 ----------------
