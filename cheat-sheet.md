@@ -4,8 +4,8 @@ Before you do anything else, install Git and associate your commits
 with your name.  Some lines are commented out to discourage copying
 and pasting without the address changed.  If your favorite text
 editor is graphical, you may have to configure it to wait for you
-to close the file using a
-[command line option](https://stackoverflow.com/a/2596835/2738262).
+to close the file using a command-line option
+(per [digitaldreamer's answer]).
 
     sudo apt update
     sudo apt install git build-essential
@@ -13,11 +13,14 @@ to close the file using a
     #git config --global user.name "John Doe"
     #git config --global core.editor "nano"
 
+[digitaldreamer's answer]: https://stackoverflow.com/a/2596835/2738262
+
 ## Import a project
 
-Based on an [answer to "Import existing source code to Github" by Peter](https://stackoverflow.com/a/8012698/2738262):
+Based on [Peter's answer] to "Import existing source code to Github":
 
-1. On GitHub, create the remote repository and get the HTTPS URL of the repository.
+1. On GitHub, create the remote repository and get the HTTPS URL of
+   the repository.
 2. Unzip the zip distribution into a new folder.
 3. Clean up the distribution.
 4. Convert any documentation to Markdown.
@@ -27,13 +30,12 @@ Based on an [answer to "Import existing source code to Github" by Peter](https:/
         git add .
         git commit -m "Imported version X.Y.Z from ZIPURL"
 
-Or if your working copy has files that shouldn't be tracked
-quite yet, but you have a newline-separated list of files that
-should, you can pass this manifest file to Git
-[using `xargs`](https://unix.stackexchange.com/a/244172/119806).
+Or if your working copy has files that shouldn't be tracked quite
+yet, but you have a newline-separated list of files that should,
+you can pass this manifest file to Git (per [David King's answer]).
 But make sure to do this *before* you set up a `.gitignore` that
-includes the manifest file.  Otherwise, Git will complain that you're
-adding an ignored file and refuse to do anything.
+includes the manifest file.  Otherwise, Git will complain that
+you're adding an ignored file and refuse to do anything.
 
     git init
     xargs -d \\012 git add < zip.in
@@ -66,7 +68,9 @@ An alternate method is to clone the GitHub repository first.
 
 ## Create a feature branch locally and merge it locally
 
-Say you've got the idea for a bug fix or new feature while riding the bus. For this, you create a branch of the tree, sometimes called a feature branch or topic branch.
+Say you've got the idea for a bug fix or new feature while riding
+the bus.  For this, you create a branch of the tree, sometimes
+called a feature branch or topic branch.
 
 **List** the existing branches and show which is checked out.
 
@@ -76,12 +80,15 @@ Say you've got the idea for a bug fix or new feature while riding the bus. For t
 
     git checkout -b subseq-optimization
 
-Make changes inside the branch. This can actually be done before or after creating the branch ([thanks knittl](https://stackoverflow.com/a/1394804/2738262)).
+Make changes inside the branch.  This can be done before or after
+creating the branch (per [knittl's answer]).
 
     mousepad src/pentlymusic.s &
     make
 
-**Add new or changed files** to the cart. Git commits changed files only if they are in the "staging area", which is analogous to a shopping cart.
+**Add new or changed files** to the cart. Git commits changed files
+only if they are in the "staging area", which is analogous to a
+shopping cart.
 
     git add src/somenewfile.s
 
@@ -97,7 +104,8 @@ Or just add all additions and removals to the cart.
 
     git add -A .
 
-**Remove a file** from the cart as if it had not been changed ([thanks genehack](https://stackoverflow.com/a/348234/2738262)).
+**Remove a file** from the cart as if it had not been changed
+(per [genehack's answer]).
 
     git reset src/notready.s
 
@@ -113,11 +121,12 @@ Empty the cart.
 
     git mv mispeld.s spellcheck.s
 
-**Rename all files in a directory** so that syntax highlighting can recognize them ([thanks thkala](https://stackoverflow.com/a/4509530/2738262)).
+**Rename all files in a directory** so that syntax highlighting can
+recognize them (per [thkala's answer]).
 
     find -type f -name '*.s' | while read f; do git mv "$f" "${f%.s}.z80"; done
     # Or the following if a filename contains newlines, which
-	# shouldn't happen in a well-behaved repository
+    # shouldn't happen in a well-behaved repository
     find -type f -name '*.s' -print0 | while read -d $'\0' f; do git mv "$f" "${f%.s}.z80"; done
 
 **Show a summary of what has been changed** since the last commit.
@@ -184,7 +193,8 @@ Scoot back and admire your work by viewing the **commit log**.
 
     git tag v0.05wip4
 
-Remove outdated files and **estimate the total size** of the repository ([thanks VonC](https://stackoverflow.com/a/16163608/2738262)).
+Remove outdated files and **estimate the total size** of the
+repository (per [VonC's answer]).
 
     git gc
     git count-objects -vH | grep size-pack
@@ -203,6 +213,13 @@ This can be incorporated into a makefile:
     zip.in:
     	git ls-files | grep -e "^[^.]" > $@
     	echo zip.in >> $@
+
+[Peter's answer]: https://stackoverflow.com/a/8012698/2738262)
+[David King's answer]: https://unix.stackexchange.com/a/244172/119806
+[knittl's answer]: https://stackoverflow.com/a/1394804/2738262
+[genehack's answer]: https://stackoverflow.com/a/348234/2738262
+[thkala's answer]: https://stackoverflow.com/a/4509530/2738262
+[VonC's answer]: https://stackoverflow.com/a/16163608/2738262
 
 ## Working with out-of-band change submissions
 
@@ -227,7 +244,9 @@ The first time you contribute to a project, copy its repository to your computer
 
     git clone GITHUBURL
 
-Once it's cloned, you can branch and commit locally.  To publish the new branch to the remote, use the [`-u` switch](https://stackoverflow.com/a/6232535/2738262), added in Git 1.7, to set up the connection.
+Once it's cloned, you can branch and commit locally.
+To publish the new branch to the remote, use the `-u` switch (per
+[Daniel Ruoso's answer]), added in Git 1.7, to set up the connection.
 
     git push -u origin subseq-optimization
 
@@ -242,7 +261,11 @@ If the remote has "pull request" functionality to associate merges with issues a
     git merge subseq-optimization
     git push origin master
 
-If you're starting a new project from a template released on GitHub, you can fork it *unless* the repository is your own. If it's yours, you have to manually [check it out and check it in as a different project](https://web.archive.org/web/20170114224227/http://bitdrift.com/post/4534738938/fork-your-own-project-on-github). First create `my-game` as an empty repository on GitHub. Then clone your existing project into a new folder:
+The "Fork" button on GitHub is for projects where you plan to submit
+your changes upstream.  If you're starting a new project from a
+template repository, it's better to [clone it as a new project].
+First create `my-game` as an empty repository on GitHub.  Then
+clone your existing project into a new folder:
 
     git clone https://github.com/pinobatch/nrom-template.git PROJECT
     cd PROJECT
@@ -255,11 +278,24 @@ To sync changes from the parent project:
     git pull upstream master
     git push origin master
 
+[Daniel Ruoso's answer]: https://stackoverflow.com/a/6232535/2738262
+[clone it as a new project]: https://web.archive.org/web/20170114224227/http://bitdrift.com/post/4534738938/fork-your-own-project-on-github
+
 ## Working with non-text file types
 
-Git is designed for file types that can be represented as a sequence of lines of text. This includes program source code, HTML, CSS, and Scalable Vector Graphics (SVG).
+Git is designed for file types that can be represented as a sequence
+of lines of text.  This includes program source code, HTML, CSS,
+and Scalable Vector Graphics (SVG).  These formats are "diffable,"
+meaning that a program can calculate differences and apply those
+differences when merging changes.
 
-Many video games and other applications include images that the program displays while it is running, and not all of them are SVG. In the [gbdev Discord server](https://github.com/avivace/awesome-gbdev), [eevee](https://eev.ee/) (of "PHP: a fractal of bad design" fame) provided a formula to `git diff` to run common image types through ImageMagick.  Her formula might not help much with a merge, but it should still help you spot-check changes that you're about to commit.
+Many video games and other applications include images that the
+program displays while it is running, and not all are in a diffable
+format such as SVG.  In the [gbdev Discord server], [Eevee] (of "PHP:
+a fractal of bad design" fame) provided a formula to have `git diff`
+run common image types through ImageMagick.  Her formula might not
+help much with a merge, but it should still help you spot-check
+changes that you're about to commit.
 
 `~/.local/bin/git-imgdiff`:
 
@@ -282,3 +318,6 @@ Many video games and other applications include images that the program displays
         attributesfile = ~/.gitattributes-global
     [diff "image"]
         command = ~/.local/bin/git-imgdiff
+
+[gbdev Discord server]: https://github.com/avivace/awesome-gbdev
+[Eevee]: https://eev.ee/
