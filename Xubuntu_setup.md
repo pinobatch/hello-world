@@ -37,14 +37,17 @@ occasionally prevents the laptop from going to sleep properly.
 When this occurs, the laptop will become unresponsive after opening
 the lid, instead needing a hard power cycle.  To work around this,
 add [ioggstream's sleep fix script] to the
-`/usr/lib/systemd/system-sleep` folder.  (For convenience, I have
-mirrored it as `system-sleep-xkci.sh`.)
+`/lib/systemd/system-sleep` folder.  (A comment to
+[Chris Smart's article] points out that Debian and Ubuntu place it
+in `/lib`, not `/usr/lib` where other distributions put it.)
+For convenience, I have mirrored it as `system-sleep-xkci.sh`.
 
 [Bug 107651]: https://bugzilla.kernel.org/show_bug.cgi?id=107651
 [hardware bug]: https://www.dell.com/community/Linux-General/Dell-Inspiron-3179-keyboard-not-sends-KEY-RELEASE-events-key-up/td-p/5114299
 [reported in Manjaro]: https://forum.manjaro.org/t/dell-inspiron-3162-keyboard-issue-fn-key-keyrelease-event-not-triggered/15524
 [sensitive to formatting]: https://wiki.archlinux.org/index.php/Dell_Inspiron_11_3000_(3162)#Keyboard
 [ioggstream's sleep fix script]: https://gist.github.com/ioggstream/8f380d398aef989ac455b93b92d42048
+[Chris Smart's article]: https://blog.christophersmart.com/2016/05/11/running-scripts-before-and-after-suspend-with-systemd/
 
 First round of apt-get
 ----------------------
@@ -72,17 +75,15 @@ and using it to reexporting the original FLA to HTML5.
 Then install useful free software:
 
     sudo apt install build-essential git vorbis-tools audacity ghex \
-      python3-numpy hexchat python3-pil idle3 ffmpeg sox \
-      libreoffice-impress libreoffice-draw sqlite3 vlc \
-      oidentd advancecomp gnome-font-viewer whois \
-      gimp p7zip-full guvcview python3-pip lame flac \
-      inkscape libjpeg-turbo-progs sqlitebrowser
+      python3-numpy hexchat python3-pil idle3 ffmpeg sox p7zip-full \
+      libreoffice-impress libreoffice-draw sqlite3 flac advancecomp \
+      oidentd gnome-font-viewer whois vlc guvcview python3-pip gimp \
+      lame inkscape libjpeg-turbo-progs
     # 125 MB download, 607 MB disk space
 
-Interestingly enough, as of 16.04, `python3-pil` is installed by
-default to support HP printers, but the built-in Printers control
-panel doesn't support reading ink level.  So install compatibility
-with Qt 5 applications:
+Ubuntu since 16.04 installs `python3-pil` by default to support HP
+printers, but the built-in Printers control panel doesn't support
+reading ink level.  So install compatibility with Qt 5 applications:
 
     sudo apt install hplip-gui sqlitebrowser
     # 6 MB download, 24 MB disk space
@@ -93,7 +94,7 @@ Set up the panel
 ----------------
 
 Add a second panel, semi-inspired by a cross between Unity's panel
-and my LCARS mockup:
+and my [LCARS mockup]:
 
 1. Deskbar orientation, always autohide, 128px wide, 75% length;
    appearance: 75% background alpha.
@@ -117,6 +118,8 @@ on the top panel:
 3. Add CPU Graph to the right of the big separator, and set update
    interval to 1 s, width to 30, and no current usage bars.
 4. Change the clock's format to a custom format: `%a %m-%d %H:%M`
+
+[LCARS mockup]: https://pineight.com/mw/index.php?title=File:Lcars_taskbar_shown.png
 
 Keyboard shortcuts
 ------------------
