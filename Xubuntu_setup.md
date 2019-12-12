@@ -410,6 +410,17 @@ Build RGBDS, an assembler targeting the Game Boy.
     make install PREFIX="$HOME/.local"
     man rgbds
 
+Build WLA DX, an assembler targeting Z80 machines among others.
+The final call to `cmake` works around its makefile's inability to
+receive a `$PREFIX` from the environment ([WLA DX issue #265]).
+
+    cd ~/develop
+    git clone https://github.com/vhelin/wla-dx.git
+    cd wla-dx
+    cmake -G "Unix Makefiles" .
+    make -j4
+    cmake -D CMAKE_INSTALL_PREFIX="$HOME/.local" -P cmake_install.cmake
+
 Build Scale2x to enlarge PNG images.  The repository uses Autotools
 to generate the `./configure` file but doesn't describe how to run
 the Autotools to build from the repository rather than from a
@@ -563,6 +574,7 @@ pasting without the address changed.)
     #git config --global user.name "John Doe"
     #git config --global core.editor "nano"
 
+[WLA DX issue #265]: https://github.com/vhelin/wla-dx/issues/265
 [Debian source package mgba]: https://packages.debian.org/source/sid/mgba
 [MozJPEG]: https://github.com/mozilla/mozjpeg
 [deringing]: https://kornel.ski/deringing/

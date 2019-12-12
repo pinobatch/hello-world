@@ -214,7 +214,7 @@ This can be incorporated into a makefile:
     	git ls-files | grep -e "^[^.]" > $@
     	echo zip.in >> $@
 
-[Peter's answer]: https://stackoverflow.com/a/8012698/2738262)
+[Peter's answer]: https://stackoverflow.com/a/8012698/2738262
 [David King's answer]: https://unix.stackexchange.com/a/244172/119806
 [knittl's answer]: https://stackoverflow.com/a/1394804/2738262
 [genehack's answer]: https://stackoverflow.com/a/348234/2738262
