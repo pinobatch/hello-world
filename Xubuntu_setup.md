@@ -446,6 +446,22 @@ in a Git repository on GitHub.
     nice scons -j2
     scons --prefix=$HOME/.local install
 
+Build MEKA, a ColecoVision, Sega Master System, and Game Gear
+emulator.  The `sed` line changes the makefile from requiring
+Allegro version 5.0 to allowing any 5.x, including the 5.2
+included in Ubuntu 18.04.
+
+(Install instructions are currently not available, nor are
+instructions to make MEKA play nicely with smaller monitors.)
+
+    sudo apt install liballegro5-dev
+    # 2 MB download, 9 MB disk
+    git clone --recursive https://github.com/ocornut/meka.git
+    cd meka/meka/srcs
+    sed -e 's/-5[.]0/-5/g' Makefile > Makefile_
+    mv Makefile_ Makefile
+    make -j3
+
 Debian and Ubuntu package the free Game Boy Color and Game Boy
 Advance emulator mGBA as `mgba-qt`.  Its GBA emulation is great.
 Its GBC emulation needs work (to put it nicely) but is good enough
