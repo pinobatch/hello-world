@@ -312,6 +312,14 @@ of the quit action, documented in [bug 502908 comment 40] and
 [bug 1325692 comment 26].  I assume these were intended to reduce
 alert box fatigue for users of Restore Previous Session.
 
+Some of Firefox's default settings are thought to waste Internet
+data transfer allowance and trigger denial of service  mitigations
+on overly sensitive firewalls. To keep Firefox from hitting your ISP
+cap or causing a SYN flood, change these settings in `about:config`:
+
+- Reduce `network.http.speculative-parallel-limit` to `0`
+- Change `network.prefetch-next` to `false`
+
 Some websites are deliberately incompatible with Firefox tracking
 protection for one of two reasons.  One, as seen on MIT Tech Review,
 is to strengthen user identity measurement when enforcing a metered
