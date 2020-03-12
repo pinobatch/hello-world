@@ -537,11 +537,12 @@ Then it can be used as follows:
     mozjpegtran -progressive -optimize puppy.jpg > puppy-opt.jpg
     mozjpegtran -progressive -optimize -outfile puppy.jpg puppy.jpg
 
-Build the NSF, GBS, and S3M to WAVE converter [gmewav]:
+Build the NSF, GBS, and S3M to WAVE converter [gmewav], which is
+part of the [little things] collection:
 
-    mkdir -p ~/develop/gmewav
-    wget -O gmewav.zip https://forums.nesdev.com/download/file.php?id=9899
-    unzip gmewav.zip
+    cd ~/develop
+    git clone https://github.com/pinobatch/little-things-nes.git
+    cd little-things-nes/gmewav
     make
     cp ./gmewav ~/.local/bin
 
@@ -604,6 +605,7 @@ pasting without the address changed.)
 [deringing]: https://kornel.ski/deringing/
 [MozJPEG instructions]: https://nystudio107.com/blog/installing-mozjpeg-on-ubuntu-16-04-forge
 [gmewav]: https://forums.nesdev.com/viewtopic.php?p=200347#p200347
+[little things]: https://github.com/pinobatch/little-things-nes
 [skype4pidgin]: https://github.com/EionRobb/skype4pidgin
 [Purple Discord]: https://github.com/EionRobb/purple-discord
 
