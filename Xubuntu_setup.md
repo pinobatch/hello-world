@@ -88,6 +88,10 @@ reading ink level.  So install compatibility with Qt 5 applications:
     sudo apt install hplip-gui sqlitebrowser
     # 6 MB download, 24 MB disk space
 
+This additional Qt 5 application hasn't been measured yet:
+
+    sudo apt install wireshark
+
 [deprecated SWF]: https://blogs.adobe.com/conversations/2017/07/adobe-flash-update.html
 
 Set up the panel
@@ -296,29 +300,33 @@ Change these preferences:
 
 Install these extensions: [Stylus] and [HTTPS Everywhere]
 
-Firefox 57 has Ctrl+Q as a shortcut for Quit.  Ctrl+Q is fine for
-applications with only one window, not a [tabbed MDI] like that
-of most web browsers since NetCaptor.  When the user reaches for
-Ctrl+Tab or Ctrl+W, he may accidentally press Ctrl+Q and lose data in
-those HTML forms that Restore Previous Session cannot restore.  The
-extension that's supposed to fix this ([Disable Ctrl-Q and Cmd-Q])
-is not compatible with GNU/Linux because of [bug 1325692].
+Firefox for Linux has Ctrl+Q as a shortcut for Quit.  Ctrl+Q is
+fine for applications with only one window, not a [tabbed MDI]
+like that of most web browsers since NetCaptor.  When the user
+reaches for Ctrl+Tab or Ctrl+W, the user may accidentally press
+Ctrl+Q and lose data in those HTML forms that Restore Previous
+Session cannot restore.  The extension that's supposed to fix this
+([Disable Ctrl-Q and Cmd-Q]) is not compatible with GNU/Linux
+because of [bug 1325692] that has lingered unfixed for years.
 
-The workaround is to open `about:config`
-and set the preferences `browser.showQuitWarning` and
-`browser.warnOnQuit` to `true`.
+The workaround is to open `about:config` and set the preferences
+`browser.showQuitWarning` and `browser.warnOnQuit` to `true`.
 Both must be set because of obscure decisions about the logic
 of the quit action, documented in [bug 502908 comment 40] and
 [bug 1325692 comment 26].  I assume these were intended to reduce
 alert box fatigue for users of Restore Previous Session.
 
 Some of Firefox's default settings are thought to waste Internet
-data transfer allowance and trigger denial of service  mitigations
-on overly sensitive firewalls. To keep Firefox from hitting your ISP
-cap or causing a SYN flood, change these settings in `about:config`:
+data transfer allowance and trigger denial of service mitigations
+on overly sensitive firewalls.  This appears in Wireshark as a
+[SYN, SYN-ACK, RST sequence].  To keep Firefox from hitting your ISP
+cap or causing a SYN flood, disable the [Race Cache with Network]
+feature.  Open `about:config` and change `network.http.rcwn.enabled`
+to `false`.  If that doesn't help, try these additional settings:
 
 - Reduce `network.http.speculative-parallel-limit` to `0`
 - Change `network.prefetch-next` to `false`
+- Change `browser.urlbar.speculativeConnect.enabled` to `false`
 
 Some websites are deliberately incompatible with Firefox tracking
 protection for one of two reasons.  One, as seen on MIT Tech Review,
@@ -355,6 +363,8 @@ Disconnect's list for the benefit of members.
 [bug 1325692 comment 26]: https://bugzilla.mozilla.org/show_bug.cgi?id=1325692#c26
 [Stylus]: https://addons.mozilla.org/en-US/firefox/addon/styl-us/
 [HTTPS Everywhere]: https://addons.mozilla.org/en-US/firefox/addon/https-everywhere/
+[SYN, SYN-ACK, RST sequence]: https://stackoverflow.com/q/55708231/2738262
+[Race Cache with Network]: https://support.mozilla.org/en-US/questions/1267945
 [ads that don't track]: https://blogs.harvard.edu/doc/2016/04/15/get-it-right-forbes/
 [three times as much]: http://images.politico.com/global/2014/02/09/beales_eisenach_daa_study.pdf
 [JavaScript switcher]: https://addons.mozilla.org/en-US/firefox/addon/quick-js-switcher/
