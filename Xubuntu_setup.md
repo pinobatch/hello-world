@@ -342,7 +342,7 @@ Others are social networks that build a [shadow profile] (a dossier
 about non-members' viewing habits), but which are left out of
 Disconnect's list for the benefit of members.
 
-    gksudo mousepad /etc/hosts
+    pkexec mousepad /etc/hosts
     
     # Sites deliberately incompatible with tracking protection
     0.0.0.0 www.wired.com
@@ -453,10 +453,10 @@ source tarball.
     make install
 
 Build FCEUX (SDL) from source because the version in Git is newer
-than the one in Ubuntu's repository.  Until April 2018, FCEUX was
-maintained in an SVN repository on SourceForge, and cloning SVN was
-very slow because `git svn` works revision by revision.  But now it's
-in a Git repository on GitHub.
+than the one in Ubuntu's repository.  On April 2018, the FCEUX team
+switched from SVN on SourceForge to Git on GitHub.  The following
+`git clone` command downloads 144 MiB as of second quarter 2020,
+so run it on an unmetered connection.
 
     cd ~/develop
     git clone https://github.com/TASVideos/fceux.git
@@ -481,8 +481,8 @@ instructions to make MEKA play nicely with smaller monitors.)
     make -j3
 
 Debian and Ubuntu package the free Game Boy Color and Game Boy
-Advance emulator mGBA as `mgba-qt`.  Its GBA emulation is great.
-Its GBC emulation needs work (to put it nicely) but is good enough
+Advance emulator mGBA as `mgba-qt`.  Its GBA emulation is great.  Its
+GBC emulation is progressing (to put it nicely) but is good enough
 for game logic if your device can't run Wine or proprietary software.
 Even if your distribution has outdated mGBA, if your `sources.list`
 has source URIs, you can use `sudo apt build-dep mgba-qt` to grab
