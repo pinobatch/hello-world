@@ -189,6 +189,15 @@ Scoot back and admire your work by viewing the **commit log**.
     git log --since='3 days ago'
     git log --until=2015-12-31
 
+View the commit messages of commits that changed a file
+(per [Richard and VolkA]).
+
+    git log -- kitten.txt
+
+See all diffs to a file.
+
+    git log -p kitten.txt
+
 **Tag** the latest commit with a version number. Occasionally you may want to release your software, which creates a tarball or zipfile suitable for use by people who do not use Git or even a compiler.  A tag identifies a release, and some remotes use it to associate a binary release with the corresponding source release.
 
     git tag v0.05wip4
@@ -219,6 +228,7 @@ This can be incorporated into a makefile:
 [knittl's answer]: https://stackoverflow.com/a/1394804/2738262
 [genehack's answer]: https://stackoverflow.com/a/348234/2738262
 [thkala's answer]: https://stackoverflow.com/a/4509530/2738262
+[Richard and VolkA]: https://stackoverflow.com/q/278192/2738262
 [VonC's answer]: https://stackoverflow.com/a/16163608/2738262
 
 ## Working with out-of-band change submissions
