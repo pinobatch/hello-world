@@ -154,6 +154,16 @@ Or all changes made in the last commit.  Either of these works:
     git diff HEAD^ HEAD
     git show HEAD
 
+**Exclude files or directories** from inclusion in the repository, such as intermediate object code files, converted graphics or audio, or binary releases. (See [gitignore docs] for how to specify paths and wildcards.)
+
+    nano .gitignore
+    git add .gitignore
+
+Or exclude files or directories only from your copy of the
+repository, without disclosing their paths to collaborators.
+
+    nano .git/info/exclude
+
 **Commit changes** that have been added to the cart, with a message describing the change. Some remotes watch for specially formatted messages and use them to trigger actions such as closing issue reports.
 
     git commit -m "fix #13: blah blah check if null"
@@ -228,6 +238,7 @@ This can be incorporated into a makefile:
 [knittl's answer]: https://stackoverflow.com/a/1394804/2738262
 [genehack's answer]: https://stackoverflow.com/a/348234/2738262
 [thkala's answer]: https://stackoverflow.com/a/4509530/2738262
+[gitignore docs]: https://git-scm.com/docs/gitignore
 [Richard and VolkA]: https://stackoverflow.com/q/278192/2738262
 [VonC's answer]: https://stackoverflow.com/a/16163608/2738262
 
