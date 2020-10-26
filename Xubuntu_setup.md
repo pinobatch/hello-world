@@ -92,6 +92,11 @@ This additional Qt 5 application hasn't been measured yet:
 
     sudo apt install wireshark
 
+Some Python packages are maintained outside the distribution's
+repository.  Download these using pip:
+
+    pip3 install --upgrade --user PySimpleGUI
+
 [deprecated SWF]: https://blogs.adobe.com/conversations/2017/07/adobe-flash-update.html
 
 Set up the panel
@@ -132,8 +137,9 @@ In Settings > Keyboard > Application Shortcuts, add these commands:
 
 * `xfce-taskmanager`: Ctrl+Shift+Esc
 
-In Settings > Window Manager > Keyboard, change these commands to
-match [keyboard shortcuts in Windows], which I use at my day job:
+In Settings > Window Manager > Keyboard, change these commands
+to match [keyboard shortcuts in Windows], which I have used at
+other jobs:
 
 * Switch window for same application: Alt+F6
 * Switch application: Super+Tab
@@ -485,13 +491,13 @@ Advance emulator mGBA as `mgba-qt`.  Its GBA emulation is great.  Its
 GBC emulation is progressing (to put it nicely) but is good enough
 for game logic if your device can't run Wine or proprietary software.
 Even if your distribution has outdated mGBA, if your `sources.list`
-has source URIs, you can use `sudo apt build-dep mgba-qt` to grab
+has source URIs, you can use `sudo apt build-dep mgba` to grab
 build prerequisites.  (Debian appears to provide source URIs by
 default; Ubuntu doesn't.)  If not, use the dependencies listed at
 [Debian source package mgba].  These ended up using 225 MB of space.
 
     # TODO: Get source URIs in sources.list
-    sudo apt build-dep mgba-qt
+    sudo apt build-dep mgba
     # or
     sudo apt install cmake debhelper desktop-file-utils libavcodec-dev \
       libavformat-dev libavresample-dev libavutil-dev libedit-dev \
