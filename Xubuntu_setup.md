@@ -464,16 +464,21 @@ source tarball.
     make install
 
 Build FCEUX (SDL) from source because the version in Git is newer
-than the one in Ubuntu's repository.  On April 2018, the FCEUX team
-switched from SVN on SourceForge to Git on GitHub.  The following
+than the one in Ubuntu's repository.  In April 2018, the FCEUX team
+switched from SVN on SourceForge to Git on GitHub, and in October
+2020, the team dropped SCons in favor of CMake.  The following
 `git clone` command downloads 144 MiB as of second quarter 2020,
 so run it on an unmetered connection.
 
+    sudo apt install libminizip-dev
     cd ~/develop
     git clone https://github.com/TASVideos/fceux.git
     cd fceux
-    nice scons -j2
-    scons --prefix=$HOME/.local install
+    mkdir build
+    cd build
+    cmake -DCMAKE_INSTALL_PREFIX=$HOME/.local -DCMAKE_BUILD_TYPE=Release ..
+    make -kj4
+    make install
 
 Build MEKA, a ColecoVision, Sega Master System, and Game Gear
 emulator.  The `sed` line changes the makefile from requiring
