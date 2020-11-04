@@ -103,20 +103,24 @@ Set up the panel
 ----------------
 
 Add a second panel, semi-inspired by a cross between Unity's panel
-and my [LCARS mockup]:
+and my [LCARS mockup].  It has big launcher buttons and a window list
+that appear just below the web browser's back button.
 
-1. Deskbar orientation, always autohide, 128px wide, 75% length;
-   appearance: 75% background alpha.
+
+1. Deskbar orientation, always autohide, 64px wide, 3 rows,
+   75% length; appearance: 75% background alpha.
 2. Drag it to the bottom left corner and lock it.
-3. Add a Quicklauncher to the new panel.
-4. Move the window buttons to the new panel below the Quicklauncher,
+3. Add six Launcher instances to the new panel. (As of Ubuntu 20.04,
+   [Quicklauncher has been replaced] with multiple rows of the
+   standard Launcher.)
+
+4. Move the window buttons to the new panel below the launchers,
    and turn off Show flat buttons.
 
-Quicklauncher is 2 columns:
+In each Launcher, add one application.
 
-1. `firefox` and `mousepad`
-2. `xfce4-terminal` and `gnome-calculator`
-3. `gimp` and ???
+1. Firefox, Mousepad, GNU Image Manipulation Program
+2. Terminal Emulator, Calculator, ???
 
 With the window buttons out of the way, we have room for other things
 on the top panel:
@@ -129,6 +133,7 @@ on the top panel:
 4. Change the clock's format to a custom format: `%a %m-%d %H:%M`
 
 [LCARS mockup]: https://pineight.com/mw/index.php?title=File:Lcars_taskbar_shown.png
+[Quicklauncher has been replaced]: https://www.reddit.com/r/xfce/comments/f055qc/alternative_to_xfce4quicklauncherplugin_now_that/
 
 Keyboard shortcuts
 ------------------
