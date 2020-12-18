@@ -31,7 +31,7 @@ Here, a "pitfall" may refer to a bug in the documentation.
 [Pitfall!]: https://en.wikipedia.org/wiki/Pitfall!
 [Pitfall seed]: https://nookipedia.com/wiki/Pitfall_seed
 [Animal Crossing]: https://en.wikipedia.org/wiki/Animal_Crossing_%28video_game%29
-[issue icon]: https://octicons.github.com/icon/issue-opened/
+[issue icon]: https://primer.style/octicons/issue-opened-16
 [Brawl pitfall]: http://www.ssbwiki.com/pitfall
 
 Unova
