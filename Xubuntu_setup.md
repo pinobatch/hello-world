@@ -572,8 +572,27 @@ part of the [little things] collection:
     make
     cp ./gmewav ~/.local/bin
 
+Build the demo program for [Blargg's snes_ntsc] library to preview
+composite artifacts from the NES or Super NES PPU.  As it was last
+updated in January 2007, it uses SDL 1.2.  So install `libsdl1.2-dev`
+if you haven't.
+
+    mkdir snes_ntsc
+    cd snes_ntsc
+    wget http://blargg.parodius.com/libs/snes_ntsc-0.2.2.zip
+    unzip snes_ntsc-0.2.2.zip
+    cd snes_ntsc-0.2.2
+    gcc -Wall -O snes_ntsc.c demo.c `sdl-config --cflags --libs` -lm -o snes_ntsc
+
+Because the demo program does not use SDL_image, it can load and
+save only Windows bitmap files.  Work around that with ImageMagick.
+
+    convert /path/to/something.png -colorspace rgb something.bmp
+    ./snes_ntsc something.bmp
+    convert filtered.bmp something.png
+
 Build *NetPuzzleArena*, a work-in-progress *Puzzle League* clone by
-Josh "NovaSquirrel" Hoffman:
+NovaSquirrel:
 
     sudo apt install libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
     cd ~/develop
@@ -632,6 +651,7 @@ pasting without the address changed.)
 [MozJPEG instructions]: https://nystudio107.com/blog/installing-mozjpeg-on-ubuntu-16-04-forge
 [gmewav]: https://forums.nesdev.com/viewtopic.php?p=200347#p200347
 [little things]: https://github.com/pinobatch/little-things-nes
+[Blargg's snes_ntsc]: https://www.slack.net/~ant/libs/ntsc.html#snes_ntsc
 [skype4pidgin]: https://github.com/EionRobb/skype4pidgin
 [Purple Discord]: https://github.com/EionRobb/purple-discord
 
