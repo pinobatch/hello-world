@@ -702,6 +702,33 @@ to ALSA.  Other programs may work better with PulseAudio.
 
 [changing Wine's audio output API]: https://askubuntu.com/q/77210/232993
 
+Changing Mono distribution
+--------------------------
+Mono is a free implementation .NET Common Language Runtime and
+Windows Forms GUI toolkit for X11/Linux systems.  On the one hand,
+some Linux distributions carry an outdated version of Mono.
+For example, Mono 4.6.2.7 in Ubuntu 18.04 lacks features needed
+by the Event Viewer in Mesen and Mesen-S.
+On the other hand, sometimes the latest version of Mono introduces
+regressions.  For example, Mono 6.12 breaks configuration dialog
+boxes in Mesen and Mesen-S emulators compared to 6.8 and 6.10,
+causing them to treat both OK and Cancel as Cancel.
+
+Upgrading from distro Mono to upstream Mono never worked for me.
+For this reason, fully uninstall Mono in order to switch between
+the version in the distribution's repository and the latest version
+in the [Mono project repository].  This procedure is based on
+[cryptoboy's answer] and UniversE's comment to the same question.
+
+    sudo apt remove --purge --auto-remove mono-runtime
+    apt list --installed '*mono*'
+    # Keep the coding fonts. Uninstall anything related to the CLR.
+    sudo apt install mono-complete
+    mono --version
+
+[Mono project repository]: https://www.mono-project.com/download/stable/
+[cryptoboy's answer]: https://askubuntu.com/a/797007/232993
+
 Proprietary crap
 ----------------
 Get the Ubuntu .deb matching your distribution from [Dropbox].

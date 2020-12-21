@@ -154,6 +154,10 @@ Or all changes made in the last commit.  Either of these works:
     git diff HEAD^ HEAD
     git show HEAD
 
+View a file from two commits ago (per [mipadi's answer]).
+
+    git show HEAD~2:src/floorvram.s
+
 **Exclude files or directories** from inclusion in the repository, such as intermediate object code files, converted graphics or audio, or binary releases. (See [gitignore docs] for how to specify paths and wildcards.)
 
     nano .gitignore
@@ -239,6 +243,7 @@ This can be incorporated into a makefile:
 [genehack's answer]: https://stackoverflow.com/a/348234/2738262
 [thkala's answer]: https://stackoverflow.com/a/4509530/2738262
 [gitignore docs]: https://git-scm.com/docs/gitignore
+[mipadi's answer]: https://stackoverflow.com/a/338470/2738262
 [Richard and VolkA]: https://stackoverflow.com/q/278192/2738262
 [VonC's answer]: https://stackoverflow.com/a/16163608/2738262
 
