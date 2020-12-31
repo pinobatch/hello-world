@@ -689,7 +689,7 @@ The things I'm most likely to run in Wine:
 * OpenMPT (free sample-based music editor, formerly ModPlug Tracker)
 * FCEUX (free NES emulator with debugger)
 * FamiTracker (free NES music editor)
-* NO$SNS (proprietary Super NES emulator, which runs at full speed on
+* No$sns (proprietary Super NES emulator, which runs at full speed on
   an Atom unlike bsnes-plus or Mesen-S)
 * BGB (proprietary Game Boy emulator)
 * Gens Kmod (Genesis/Mega Drive emulator with debugging)
@@ -724,7 +724,7 @@ to ALSA.  Other programs may work better with PulseAudio.
 
 Changing Mono distribution
 --------------------------
-Mono is a free implementation .NET Common Language Runtime and
+Mono is a free implementation of .NET Common Language Runtime and
 Windows Forms GUI toolkit for X11/Linux systems.  On the one hand,
 some Linux distributions carry an outdated version of Mono.
 For example, Mono 4.6.2.7 in Ubuntu 18.04 lacks features needed
@@ -751,6 +751,11 @@ in the [Mono project repository].  This procedure is based on
 
 Proprietary crap
 ----------------
+I don't intend "crap" to put down the work that went into this
+software.  It's just that relying on proprietary tools increases the
+chance of having to start over in your search for tools should a tool
+maintainer get [hit by a bus].
+
 Get the Ubuntu .deb matching your distribution from [Dropbox].
 
 Install it and fetch its dependencies:
@@ -765,4 +770,33 @@ repositories for unmet dependencies of recently installed packages.
 
 Then sign in to Dropbox.
 
+[Emulicious] is a proprietary emulator of five 1980s gaming platforms
+with 8080-family CPUs: Game Boy, Game Boy Color, Sega Master System,
+Game Gear, and MSX.  Its Game Boy accuracy is comparable to that of
+SameBoy.  It requires Java runtime, which is about as big as Mono:
+a 46.6 MB download and 207 MB install.
+
+    sudo apt install openjdk-14-jre
+
+The ordinary download flow requires running server-provided script,
+making it less suitable for headless operation.  Fortunately, it's
+straightforward to parse the download URL out of the HTML.
+
+    sudo apt install
+    mkdir -p ~/develop/numism/emulators/emulicious
+    cd ~/develop/numism/emulators/emulicious
+    wget -O download.html https://emulicious.net/download/emulicious/
+    wget -O Emulicious.zip "$(sed -n 's/.*downloadurl="\([^"]\+\).*/\1/p' download.html)"
+    unzip Emulicious.zip
+    rm Emulicious.zip download.html
+    java -jar Emulicious.jar ~/develop/240p-test-mini/gameboy/gb240p.gb
+
+[hit by a bus]: https://en.wikipedia.org/wiki/Bus_factor
 [Dropbox]: https://www.dropbox.com/install-linux
+[Emulicious]: https://emulicious.net/
+
+External links
+--------------
+Others have described their loadouts:
+
+- "[Linux Setup Cheat Sheet II]: let's install some software" by SteveProXNA
