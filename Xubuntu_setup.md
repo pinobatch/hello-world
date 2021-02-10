@@ -88,9 +88,14 @@ reading ink level.  So install compatibility with Qt 5 applications:
     sudo apt install hplip-gui sqlitebrowser
     # 6 MB download, 24 MB disk space
 
-This additional Qt 5 application hasn't been measured yet:
+These additional applications haven't been measured yet:
 
     sudo apt install wireshark
+
+Doxygen was big because it needed to install LLVM.
+
+    sudo apt install doxygen doxygen-doc doxygen-gui
+    # 28.1 MB download, 118 MB disk space
 
 Some Python packages are maintained outside the distribution's
 repository.  Download these using pip:
