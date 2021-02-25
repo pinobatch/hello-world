@@ -44,7 +44,8 @@ you're adding an ignored file and refuse to do anything.
     git add .gitignore
     git commit -m "Imported version X.Y.Z from ZIPURL"
 
-Then you can send this new project to GitHub.
+Then you can send this new project to GitHub.  (A shortcut for
+`--set-upstream` is `-u`.
 
     git remote add origin GITHUBURL
     git push --set-upstream origin master
@@ -298,22 +299,34 @@ If the remote has "pull request" functionality to associate merges with issues a
     git merge subseq-optimization
     git push origin master
 
-The "Fork" button on GitHub is for projects where you plan to submit
-your changes upstream.  If you're starting a new project from a
-template repository, it's better to [clone it as a new project].
-First create `my-game` as an empty repository on GitHub.  Then
-clone your existing project into a new folder:
+GitHub uses "fork" to refer to a downstream copy of someone else's
+repository used for making changes and submitting them upstream
+through pull requests.  Once you've made a fork and cloned it, add
+the upstream as an additional remote.
+
+    git remote -v
+    git remote add upstream https://github.com/gbdev/database.git
+
+Synchronize changes from the parent project.
+
+    git pull upstream master
+    git push origin master
+
+Then reapply work done in a feature branch on top of synced changes.
+
+    git checkout subseq-optimization
+    git rebase master
+
+If you're starting a new project from a template repository,
+[clone it as a new project].  First create `my-game` as an empty
+repository on GitHub and treat it as the upstream repository.
+Then clone the template into a new folder.
 
     git clone https://github.com/pinobatch/nrom-template.git PROJECT
     cd PROJECT
     git remote rename origin upstream
     git remote add origin https://github.com/USERNAME/PROJECT.git
     git push -u origin master
-
-To sync changes from the parent project:
-
-    git pull upstream master
-    git push origin master
 
 [Daniel Ruoso's answer]: https://stackoverflow.com/a/6232535/2738262
 [clone it as a new project]: https://web.archive.org/web/20170114224227/http://bitdrift.com/post/4534738938/fork-your-own-project-on-github
@@ -356,7 +369,7 @@ changes that you're about to commit.
     [diff "image"]
         command = ~/.local/bin/git-imgdiff
 
-[gbdev Discord server]: https://github.com/avivace/awesome-gbdev
+[gbdev Discord server]: https://gbdev.io/chat.html
 [Eevee]: https://eev.ee/
 
 ## Working with managers
