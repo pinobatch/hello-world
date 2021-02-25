@@ -141,9 +141,11 @@ Or only changes not added to cart.
 
     git diff
 
-Or only changes that have been added to cart. This shows what will be committed.
+Or only changes that have been added to cart.  This shows what will
+be committed.  (Both commands mean the same.)
 
     git diff --cached
+    git diff --staged
 
 Or all changes since the commit before last.
 
@@ -185,9 +187,10 @@ Do the same while adding to the commit message a signature that the changes are 
 
     git commit -a -s
 
-Or add more changes to the last commit before you push them.
+Add changes in the cart to the last commit or correct its commit
+message before you push it.
 
-    git commit -a --amend
+    git commit --amend
 
 Switch back to master and **merge** changes from the branch.
 
@@ -246,6 +249,14 @@ This can be incorporated into a makefile:
 [mipadi's answer]: https://stackoverflow.com/a/338470/2738262
 [Richard and VolkA]: https://stackoverflow.com/q/278192/2738262
 [VonC's answer]: https://stackoverflow.com/a/16163608/2738262
+
+## Fixing serious mistakes
+
+Say things go horribly wrong in your repo, and you've already
+committed.  If you haven't done `git gc` recently, you can probably
+recover your data.  Visit [Oh Shit, Git!?!] to see how.
+
+[Oh Shit, Git!?!]: https://ohshitgit.com/
 
 ## Working with out-of-band change submissions
 
