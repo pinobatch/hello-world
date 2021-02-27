@@ -424,7 +424,7 @@ locally installed compilers and assemblers.
         export LD_LIBRARY_PATH="$HOME/.local/lib/:${LD_LIBRARY_PATH}"
     fi
     if [ -d "$HOME/.local/man" ] ; then
-        export MANPATH="$HOME/.local/man:$MANPATH"
+        export MANPATH="$HOME/.local/share/man:$MANPATH"
     fi
     if [ -d "$HOME/.local/share/cc65" ] ; then
         export CC65_HOME="$HOME/.local/share/cc65"
