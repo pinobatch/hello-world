@@ -386,7 +386,7 @@ Building applications from source
 Install prerequisites to build cc65, FCEUX, RGBDS, Scale2x, and
 gmewav from source code.
 
-    sudo apt install byacc flex pkg-config libpng-dev scons \
+    sudo apt install bison flex pkg-config libpng-dev scons \
       libsdl-image1.2-dev libgtk2.0-dev libdumb1-dev libgme-dev
     # 34 MB download, 159 MB disk space
 
@@ -423,7 +423,7 @@ locally installed compilers and assemblers.
     if [ -d "$HOME/.local/lib" ] ; then
         export LD_LIBRARY_PATH="$HOME/.local/lib/:${LD_LIBRARY_PATH}"
     fi
-    if [ -d "$HOME/.local/man" ] ; then
+    if [ -d "$HOME/.local/share/man" ] ; then
         export MANPATH="$HOME/.local/share/man:$MANPATH"
     fi
     if [ -d "$HOME/.local/share/cc65" ] ; then
