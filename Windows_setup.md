@@ -50,8 +50,12 @@ described some [power settings to change].
 
 Install Git and MSYS
 --------------------
-[Git for Windows] comes with the MSYS ports of Bash and GNU Coreutils.  
-But because it omits GNU Make, follow [evanwill's instructions] to
+[Git for Windows] comes with the MSYS ports of Bash and GNU Coreutils.
+When installing Git for Windows, change the option to use the Windows
+terminal instead of the terminal included with Git in order to make
+native applications such as Python work.
+
+Because Git omits GNU Make, follow [evanwill's instructions] to
 download the latest Make without Guile from [ezwinports] and merge it
 into `C:\Program Files\Git\mingw64`.  If you go this route, it appears to
 automatically add to your Path a folder called `bin` directly inside your
@@ -67,9 +71,19 @@ unedited.
 
 (Or was adding `~/bin` a result of having tried to install devkitPro MSYS?)
 
+Generate an SSH key for this PC
+
+    ssh-keygen -t rsa
+    cat ~/.ssh/id_rsa.pub
+
+Add this public key to your keyring on your repository host and then
+test your connection by cloning one of your own repositories.
+See also [Connecting to GitHub with SSH].
+
 [Git for Windows]: https://git-scm.com/download/win
 [evanwill's instructions]: https://gist.github.com/evanwill/0207876c3243bbb6863e65ec5dc3f058
 [ezwinports]: https://sourceforge.net/projects/ezwinports/files/
+[Connecting to GitHub with SSH]: https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh
 
 Configure Notepad++
 -------------------
@@ -84,8 +98,15 @@ In Notepad++, open Settings > Preferences and change these:
   and "Replace by space".  Make is the only language for which I
   use tabs instead of spaces.
 
+Open Settings > Shortcut Mapper > Run, and remove the F5 shortcut.
+
 Open Settings > Style Configurator > Language: Global Styles > Style: Default
 Style, and change Font Style to Consolas 9.
+
+Open Run > Run..., enter the following command, and save it as "Make
+in Parent" with shortcut F5.
+
+    cmd /C "cd $(CURRENT_DIRECTORY)\.. && "C:\Program Files\Git\mingw64\bin\make.exe" || pause"
 
 [Auto-Completion]: http://docs.notepad-plus-plus.org/index.php/Auto_Completion
 
