@@ -57,11 +57,13 @@ Open a terminal, check for updated software, and install it:
 
 While that's running, open Terminal preferences:
 
-* Change the font to Ubuntu Mono 9 to fit two terminals
-  side-by-side on a 1024-pixel-wide display.
+* In the Appearance pane, change the font to Ubuntu Mono 9 to fit
+  two terminals side-by-side on a 1024-pixel-wide display or three
+  on a 1600-pixel-wide display.
 * Set the default geometry to 35 rows tall.
-* Set the background to transparent, with 0.90 opacity, and the
-  background color to actual black (`#000000`)
+* Set the background to transparent, with 0.90 opacity
+* In the Colors pane, change the background color to actual black
+  (`#000000`).
 
 At this point, APT will have installed an updated `linux-image`
 package.  Updates to `linux-image` require a reboot.
@@ -79,18 +81,19 @@ Then install useful free software:
       libreoffice-impress libreoffice-draw sqlite3 flac advancecomp \
       oidentd gnome-font-viewer whois vlc guvcview python3-pip gimp \
       lame inkscape libjpeg-turbo-progs
-    # 125 MB download, 607 MB disk space
+    # 133 MB download, 577 MB disk space
 
 Ubuntu since 16.04 installs `python3-pil` by default to support HP
 printers, but the built-in Printers control panel doesn't support
 reading ink level.  So install compatibility with Qt 5 applications:
 
     sudo apt install hplip-gui sqlitebrowser
-    # 6 MB download, 24 MB disk space
+    # 9 MB download, 36 MB disk space
 
-These additional applications haven't been measured yet:
+These additional applications were needed for a particular purpose:
 
     sudo apt install wireshark
+    # 23 MB download, 122 MB disk space
 
 Some Python packages are maintained outside the distribution's
 repository.  Download these using pip:
@@ -120,13 +123,13 @@ that appear just below the web browser's back button.
 In each Launcher, add one application.
 
 1. Firefox, Mousepad, GNU Image Manipulation Program
-2. Terminal Emulator, Calculator, ???
+2. Terminal Emulator, MATE Calculator, ???
 
 With the window buttons out of the way, we have room for other things
 on the top panel:
 
-1. Change the Whisker Menu to display icon and title, and change its
-   title to Start.
+1. Open the Whisker Menu's properties.  In the Panel Button pane,
+   set it to display icon and title, and change its title to Start.
 2. Add Directory Menu and Show Desktop to the right of Start.
 3. Add CPU Graph to the right of the big separator, and set update
    interval to 1 s, width to 30, and no current usage bars.
@@ -138,9 +141,10 @@ on the top panel:
 Keyboard shortcuts
 ------------------
 
-In Settings > Keyboard > Application Shortcuts, add these commands:
+In Settings > Keyboard > Application Shortcuts, add these commands
+if they're not already present:
 
-* `xfce-taskmanager`: Ctrl+Shift+Esc
+* `xfce4-taskmanager`: Ctrl+Shift+Esc
 
 In Settings > Window Manager > Keyboard, change these commands
 to match [keyboard shortcuts in Windows], which I have used at
@@ -191,15 +195,17 @@ attempt to reconfigure the service to use PulseAudio.
 Other personalizations
 ----------------------
 
-Download [Jester] from Dafont.  Then install it:
+Download [Jester] from Dafont.  Then install it, either by opening
+the font in the file manager and clicking Install or by copying it
+into `~/.local/share/fonts`:
 
-    mkdir -p ~/.fonts
-    cd ~/.fonts
+    mkdir -p ~/.local/share/fonts
+    cd ~/.local/share/fonts
     unzip ~/Downloads/jester.zip
     ls
 
 Make sure `Jester.ttf` shows up in the list.  Then spray it over
-the rest of the UI:
+the rest of the UI in three panels under Start > Settings:
 
 * In Appearance, set the default font to Jester 10.
 * In Window Manager, set the title font to Jester Bold 10 and the
@@ -600,49 +606,21 @@ NovaSquirrel:
     cd NetPuzzleArena
     make -j2
 
-As of 2017-07-01, Microsoft has ended service for the previous Skype
-client (version 4.3), and versions 5 and later run in Electron, a
-cut-down version of the Chrome web browser that requires hundreds of
-megabytes of RAM just for chat.  So perhaps the most efficient way
-to communicate with your existing Skype contacts without hogging a
-browser content process is to use Eion Robb's [skype4pidgin], a
-Pidgin plug-in that uses the same JSON-based protocol as Skype for
-Web.  Its biggest drawback is that as of mid-2017, leaving suspend
-produces "Failed getting PPFT value", requiring a visit to the Buddy
-List to reconnect.
-
-    sudo apt install libpurple-dev libjson-glib-dev
-    cd ~/develop
-    git clone git://github.com/EionRobb/skype4pidgin.git
-    cd skype4pidgin/skypeweb
-    mkdir build
-    cd build
-    cmake ..
-    cpack
-    sudo dpkg -i skypeweb-1.4.0-Linux.deb
-
-The same developer made the [Purple Discord] plug-in to connect to
-Discord, whose official client also uses Electron.  But because it
-lacks retrieval of older messages, the line separating new messages
-from old, reactions, emoji selection, editing, pins, and other
-distinctive features of Discord, it's not quite as convenient as a
-RAM-saving tool.  In addition, use alongside Discord for Web will
-likely cause one of the two to stop receiving messages.  But for
-the sake of completeness:
-
-    cd ~/develop
-    git clone git://github.com/EionRobb/purple-discord.git
-    cd purple-discord
-    make
-    sudo make install
-
 Set up Git to identify you when committing changes to your own
 repositories.  (These are commented out to discourage copying and
-pasting without the address changed.)
+pasting without the address changed.  Copy these lines into a
+text editor, edit them there, and copy them into a terminal.)
 
     #git config --global user.email "jdoe@example.com"
     #git config --global user.name "John Doe"
     #git config --global core.editor "nano"
+    ssh-keygen -t rsa
+    cat ~/.ssh/id_rsa.pub
+
+Add this public key to your keyring on your repository host and then
+test your connection by cloning one of your own repositories.
+Further instructions, including GitHub's current SSH key
+fingerprints, are at [Connecting to GitHub with SSH].
 
 [WLA DX issue #265]: https://github.com/vhelin/wla-dx/issues/265
 [Debian source package mgba]: https://packages.debian.org/source/sid/mgba
@@ -652,8 +630,7 @@ pasting without the address changed.)
 [gmewav]: https://forums.nesdev.com/viewtopic.php?p=200347#p200347
 [little things]: https://github.com/pinobatch/little-things-nes
 [Blargg's snes_ntsc]: https://www.slack.net/~ant/libs/ntsc.html#snes_ntsc
-[skype4pidgin]: https://github.com/EionRobb/skype4pidgin
-[Purple Discord]: https://github.com/EionRobb/purple-discord
+[Connecting to GitHub with SSH]: https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh
 
 Wine is not an emulator
 -----------------------

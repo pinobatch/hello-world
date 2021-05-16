@@ -62,12 +62,15 @@ automatically add to your Path a folder called `bin` directly inside your
 user profile folder, such as `C:\Users\Pino\bin`, so you can put things
 like `ca65.exe` there.
 
+Configure Git
+-------------
+
 Copy the following commands into a text editor, uncomment them, edit them,
 and copy them into Git Bash.  They are commented to discourage running them
 unedited.
 
     # git config --global user.email "jdoe@example.com"
-	# git config --global user.name "John Doe"
+    # git config --global user.name "John Doe"
 
 (Or was adding `~/bin` a result of having tried to install devkitPro MSYS?)
 
@@ -78,7 +81,8 @@ Generate an SSH key for this PC
 
 Add this public key to your keyring on your repository host and then
 test your connection by cloning one of your own repositories.
-See also [Connecting to GitHub with SSH].
+Further instructions, including GitHub's current SSH key
+fingerprints, are at [Connecting to GitHub with SSH].
 
 [Git for Windows]: https://git-scm.com/download/win
 [evanwill's instructions]: https://gist.github.com/evanwill/0207876c3243bbb6863e65ec5dc3f058
