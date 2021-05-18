@@ -343,8 +343,9 @@ Many video games and other applications include images that the
 program displays while it is running, and not all are in a diffable
 format such as SVG.  In the [gbdev Discord server], [Eevee] (of "PHP:
 a fractal of bad design" fame) provided a formula to have `git diff`
-run common image types through ImageMagick.  Her formula might not
-help much with a merge, but it should still help you spot-check
+run common image types through ImageMagick.  Her formula, similar
+to the one in the article "[Image diffs with git]" by Aki Koskinen,
+won't help much with a merge, but it should still help you spot-check
 changes that you're about to commit.
 
 `~/.local/bin/git-imgdiff`:
@@ -371,6 +372,7 @@ changes that you're about to commit.
 
 [gbdev Discord server]: https://gbdev.io/chat.html
 [Eevee]: https://eev.ee/
+[Image diffs with git]: https://akikoskinen.info/image-diffs-with-git/
 
 ## Working with managers
 
