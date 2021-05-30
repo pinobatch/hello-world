@@ -392,9 +392,10 @@ Building applications from source
 Install prerequisites to build cc65, FCEUX, RGBDS, Scale2x, and
 gmewav from source code.
 
-    sudo apt install bison flex pkg-config libpng-dev scons \
-      libsdl-image1.2-dev libgtk2.0-dev libdumb1-dev libgme-dev
-    # 34 MB download, 159 MB disk space
+    sudo apt install bison flex pkg-config libpng-dev cmake \
+      libsdl-image1.2-dev libgtk2.0-dev libdumb1-dev libgme-dev \
+      libminizip-dev
+    # 36 MB download, 171 MB disk space
 
 Build cc65, an assembler targeting the NES, Super NES, and other
 6502 and 65816 platforms.
@@ -413,7 +414,7 @@ Build ASM6, a simpler non-linking assembler targeting 6502 platforms.
     cd ~/develop/asm6
     wget https://3dscapture.com/NES/asm6.zip
     unzip asm6.zip asm6.c
-    gcc -Os asm6.c -o ~/.local/bin/asm6
+    gcc -Os -s asm6.c -o ~/.local/bin/asm6
 
 The last step should show `/home/<username>/.local/bin/cc65`.  If it
 does not, add `~/.local/bin` to your `PATH` for next time you log in.
@@ -439,7 +440,7 @@ locally installed compilers and assemblers.
 Build RGBDS, an assembler targeting the Game Boy.
 
     cd ~/develop
-    git clone https://github.com/rednex/rgbds.git
+    git clone https://github.com/gbdev/rgbds.git
     cd rgbds
     make
     make install PREFIX="$HOME/.local"
@@ -476,7 +477,6 @@ switched from SVN on SourceForge to Git on GitHub, and in October
 `git clone` command downloads 144 MiB as of second quarter 2020,
 so run it on an unmetered connection.
 
-    sudo apt install libminizip-dev
     cd ~/develop
     git clone https://github.com/TASVideos/fceux.git
     cd fceux
@@ -515,12 +515,13 @@ default; Ubuntu doesn't.)  If not, use the dependencies listed at
     # TODO: Get source URIs in sources.list
     sudo apt build-dep mgba
     # or
-    sudo apt install cmake debhelper desktop-file-utils libavcodec-dev \
+    sudo apt install debhelper desktop-file-utils libavcodec-dev \
       libavformat-dev libavresample-dev libavutil-dev libedit-dev \
       libmagickwand-dev libpng-dev libqt5opengl5-dev libsdl2-dev \
       libsqlite3-dev libswscale-dev libzip-dev pkg-config \
-      qtbase5-dev qtmultimedia5-dev qttools5-dev-tools zlib1g-dev
-
+      qtbase5-dev qtmultimedia5-dev qttools5-dev-tools zlib1g-dev \
+      zipcmp zipmerge ziptool
+    # 47.2 MB download, 217 MB disk
     cd ~/develop
     git clone https://github.com/mgba-emu/mgba.git
     cd mgba
@@ -545,7 +546,7 @@ JPEG export plug-in, but GIMP in Ubuntu 18.04 has not.  In the
 meantime, build the command-line tools from source.  These
 instructions are based on [MozJPEG instructions] by Andrew Welch.
 
-    sudo apt install libtool nasm libpng-dev
+    sudo apt install libtool nasm
     cd ~/develop
     git clone https://github.com/mozilla/mozjpeg.git
     cd mozjpeg
@@ -577,6 +578,7 @@ part of the [little things] collection:
     cd little-things-nes/gmewav
     make
     cp ./gmewav ~/.local/bin
+    cp scripts/gmeplay.sh ~/.local/bin/gmeplay
 
 Build the demo program for [Blargg's snes_ntsc] library to preview
 composite artifacts from the NES or Super NES PPU.  As it was last
@@ -595,7 +597,7 @@ save only Windows bitmap files.  Work around that with ImageMagick.
 
     convert /path/to/something.png -colorspace rgb something.bmp
     ./snes_ntsc something.bmp
-    convert filtered.bmp something.png
+    convert filtered.bmp filtered.png
 
 Build *NetPuzzleArena*, a work-in-progress *Puzzle League* clone by
 NovaSquirrel:
@@ -632,6 +634,31 @@ fingerprints, are at [Connecting to GitHub with SSH].
 [Blargg's snes_ntsc]: https://www.slack.net/~ant/libs/ntsc.html#snes_ntsc
 [Connecting to GitHub with SSH]: https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh
 
+devkitARM
+---------
+devkitARM is a GCC-based toolchain published by devkitPro for
+building software for Game Boy Advance and Nintendo DS.  Install
+devkitARM through [devkitPro's version of pacman], the Arch Linux
+package manager.  (Unrelated to any Bandai Namco product.)
+In pacman, `-S` is roughly `install`, `-Sy` is `update`, and `-Syu`
+is `update` then `upgrade`.  (See [Henry Barreto's comparison].)
+After downloading the latest devkitPro pacman package:
+
+    sudo dpkg -i /path/to/devkitpro-pacman.amd64.deb
+    sudo dkp-pacman -Sy
+    sudo dkp-pacman -S gba-dev
+    # Download 64 MiB, install 295 MiB
+    source /etc/profile.d/devkit-env.sh
+    $DEVKITARM/bin/arm-none-eabi-gcc --version
+
+`gba-dev` is a metapackage including devkitARM, libgba (with
+examples), libfat, grit (an image converter), maxmod, and libtonc.
+All this installs to `/opt/devkitpro` to keep devkitPro's software
+out of the way of the system package manager (APT and dpkg).
+
+[devkitPro's version of pacman]: https://devkitpro.org/wiki/devkitPro_pacman
+[Henry Barreto's comparison]: https://dev.to/henrybarreto/pacman-s-simple-guide-for-apt-s-users-5hc4
+
 Wine is not an emulator
 -----------------------
 Install Microsoft proprietary fonts needed for some applications and
@@ -650,8 +677,12 @@ installing older `wine-stable` and newer `wine-development`.  The
 `wine-binfmt` package makes running Wine programs from the terminal
 more convenient.
 
-    sudo apt install wine-development wine-binfmt winetricks
-    # 103 MB download, 743 MB disk space
+    sudo apt install wine-development wine-binfmt
+    # 216 MB download, 1169 MB disk space
+
+If all Windows applications that you run have 64-bit versions,
+installing `wine64-development` will save a few hundred megabytes
+of disk space by not installing the 32-bit (i386) system libraries. 
 
 Run `winecfg` to create a Wine prefix.  This may take a couple
 minutes, much like the "Hi" screen the first time you log in to a
