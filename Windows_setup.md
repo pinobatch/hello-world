@@ -1,10 +1,11 @@
 Common programs with EXE/MSI installers:
 Dropbox, Notepad++, Python 3, Git (with Bash and Coreutils),
-devkitARM, Transmission, GIMP, 7-Zip, Firefox, OpenMPT
+devkitARM, Transmission, GIMP, 7-Zip, Firefox, OpenMPT,
+VLC media player
 
 Specialized programs that may require playing with zipfiles and/or
 SmartScreen "More info":
-j0CC-FamiTracker, FCEUX, BGB, RGBDS, Make, cc65, Info-ZIP,
+Dn-FamiTracker, FCEUX, BGB, RGBDS, Make, cc65, Info-ZIP,
 AdvanceCOMP
 
 In a PowerShell window, install a few Python packages from PyPI:
@@ -15,7 +16,7 @@ In a PowerShell window, install a few Python packages from PyPI:
     py -m pip install pillow
 
 To install:
-Audacity, LAME, oggenc, FFmpeg, VLC media player
+Audacity, LAME, oggenc, FFmpeg
 
 For command-line zipfile support, install Zip and UnZip programs published by
 [Info-ZIP].  But handle `unz600xn.exe` carefully, as it's a self-extracting
@@ -46,7 +47,16 @@ described some [power settings to change].
   "When plugged in, PC goes to sleep after" time to an hour or more,
   especially if you often use it on a desk with an external monitor.
 
+Occasionally, the most recent semiannual edition of Windows 19
+exposes quirks of older PC hardware.  To work around them:
+
+* Some older GPUs, such as NVIDIA GeForce 6150SE nForce 430, draw the
+  Start menu and taskbar with excessive transparency since Windows 10
+  20H2.  To fix this, per [devilgas's answer]: In Start > Settings >
+  Personalization > Colors, turn off Transparency effects.
+
 [power settings to change]: https://www.michaellinenberger.com/blog/four-windows-10-power-settings-you-should-probably-change-hibernation-and-sleep/
+[devilgas's answer]: https://answers.microsoft.com/en-us/windows/forum/windows_10-start-win_menu/windows-10-20h2-update-make-start-menu-transparent/a40e54a5-9249-46ae-b3f7-c6cc4a251f12
 
 Install Git and MSYS
 --------------------
@@ -62,6 +72,8 @@ automatically add to your Path a folder called `bin` directly inside your
 user profile folder, such as `C:\Users\Pino\bin`, so you can put things
 like `ca65.exe` there.
 
+(Or was adding `~/bin` a result of having tried to install devkitPro MSYS?)
+
 Configure Git
 -------------
 
@@ -71,8 +83,6 @@ unedited.
 
     # git config --global user.email "jdoe@example.com"
     # git config --global user.name "John Doe"
-
-(Or was adding `~/bin` a result of having tried to install devkitPro MSYS?)
 
 Generate an SSH key for this PC
 
