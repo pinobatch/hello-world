@@ -13,14 +13,32 @@ to close the file using a command-line option
     #git config --global user.name "John Doe"
     #git config --global core.editor "nano"
 
+As of 2021-08-13, GitHub's Git remote [no longer accepts passwords].
+Thus you must do one of two things: create a [personal access token]
+and paste it as your password every time you "push" (upload) your
+work to GitHub, or create an SSH key pair and [add its public key]
+to your GitHub account.  If you are not behind an especially tight
+corporate firewall, SSH may prove more convenient.  This is because
+existing HTTPS [credential helpers] as of mid-2021 are made for
+proprietary desktop operating systems, not GNU/Linux, though
+[libsecret] looks promising.
+
+    ssh-keygen -t rsa
+    cat ~/.ssh/id_rsa.pub
+
 [digitaldreamer's answer]: https://stackoverflow.com/a/2596835/2738262
+[no longer accepts passwords]: https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/
+[personal access token]: https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
+[add its public key]: https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh
+[credential helpers]: https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage
+[libsecret]: https://www.softwaredeveloper.blog/git-credential-storage-libsecret
 
 ## Import a project
 
 Based on [Peter's answer] to "Import existing source code to Github":
 
-1. On GitHub, create the remote repository and get the HTTPS URL of
-   the repository.
+1. On GitHub, create the remote repository and get the SSH or HTTPS
+   URL of the repository.
 2. Unzip the zip distribution into a new folder.
 3. Clean up the distribution.
 4. Convert any documentation to Markdown.
@@ -42,7 +60,7 @@ you're adding an ignored file and refuse to do anything.
     git rm --cached zip.in
     cp ~/path/to/some/gitignore .gitignore
     git add .gitignore
-    git commit -m "Imported version X.Y.Z from ZIPURL"
+    git commit -m "Version X.Y.Z from ZIPURL"
 
 Then you can send this new project to GitHub.  (A shortcut for
 `--set-upstream` is `-u`.
@@ -52,7 +70,8 @@ Then you can send this new project to GitHub.  (A shortcut for
 
 An alternate method is to clone the GitHub repository first.
 
-1. On GitHub, create the remote repository and get the HTTPS URL of the repository.
+1. On GitHub, create the remote repository and get the SSH or HTTPS
+   URL of the repository.
 2. Download the repository:
 
         git clone GITHUBURL
@@ -63,7 +82,7 @@ An alternate method is to clone the GitHub repository first.
 6. Add all new files:
 
         git add .
-        git commit -m 'Imported version X.Y.Z from ZIPURL'
+        git commit -m 'version X.Y.Z from ZIPURL'
         git pull origin master
         git push origin master
 
