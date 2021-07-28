@@ -222,6 +222,23 @@ and under `[Qt]`, change or add the following:
 Other fonts to download include Wasted Collection, Comic Neue,
 and Patrick Hand.
 
+Bash aliases:
+
+There appears to be a gradual movement away from running graphical
+applications as root. This makes it more difficult for users of
+graphical text editors to edit configuration files, such as to
+upgrade from the `stable` version of Debian to a `testing` version
+in some state of freeze. To replace the functionality of `gksu` that
+has been missing since sometime in 2017, drop this snippet from
+[Gabriel Sandoval's answer] in your profile.
+
+    # first make sure .bashrc is calling .bash_aliases
+    grep bash_aliases ~/.bashrc
+    mousepad ~/.bash_aliases
+    
+    # per https://askubuntu.com/a/1067364/232993
+    alias gksu='pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY'
+
 Power Manager:
 
 * When laptop lid is closed on battery: Suspend
@@ -294,6 +311,7 @@ HexChat:
 * Set my nick
 * Set my real name in Preferences > Chatting > Advanced
 
+[Gabriel Sandoval's answer]: https://askubuntu.com/a/1067364/232993
 [Jester]: http://www.dafont.com/jester.font
 [palm detection]: https://github.com/advancingu/XPS13Linux/issues/3
 
