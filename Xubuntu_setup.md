@@ -109,14 +109,12 @@ Add a second panel, semi-inspired by a cross between Unity's panel
 and my [LCARS mockup].  It has big launcher buttons and a window list
 that appear just below the web browser's back button.
 
-
 1. Deskbar orientation, always autohide, 64px wide, 3 rows,
    75% length; appearance: 75% background alpha.
 2. Drag it to the bottom left corner and lock it.
-3. Add six Launcher instances to the new panel. (As of Ubuntu 20.04,
-   [Quicklauncher has been replaced] with multiple rows of the
-   standard Launcher.)
-
+3. Add six Launcher instances to the new panel. (As of Ubuntu 20.04
+   and Debian 11, [Quicklauncher has been replaced] with multiple
+   rows of the standard Launcher.)
 4. Move the window buttons to the new panel below the launchers,
    and turn off Show flat buttons.
 
