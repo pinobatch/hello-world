@@ -532,7 +532,7 @@ default; Ubuntu doesn't.)  If not, use the dependencies listed at
     sudo apt build-dep mgba
     # or
     sudo apt install debhelper desktop-file-utils libavcodec-dev \
-      libavformat-dev libavresample-dev libavutil-dev libedit-dev \
+      libavformat-dev libavresample-dev libavutil-dev libavfilter-dev libedit-dev \
       libmagickwand-dev libpng-dev libqt5opengl5-dev libsdl2-dev \
       libsqlite3-dev libswscale-dev libzip-dev pkg-config \
       qtbase5-dev qtmultimedia5-dev qttools5-dev-tools zlib1g-dev \
