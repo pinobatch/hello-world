@@ -1,0 +1,119 @@
+Summary of the Apple III SOS File System, also used by
+Apple II ProDOS and GS/OS, condensed from
+<http://fileformats.archiveteam.org/wiki/ProDOS_file_system>
+
+clusters 0-1: boot loader
+clusters 2-5: root directory
+cluster 6: volume bitmap (1 for each ? cluster)
+
+A directory is a doubly linked list of clusters.
+bytes 0-1: ID of previous cluster (0 for first)
+bytes 2-3: ID of next cluster (0 for last)
+
+First entry of root directory
+0: storage type ($F0) plus name length
+1-15: volume label (/[A-Z][0-9A-Z.]+/)
+16-23 bytes: reserved
+24-27: file system birthtime (per B422)
+28: version (usually 0)
+29: min_version (usually 0)
+30: access (per B423)
+31: entry_length (always 39)
+32: entries_per_block (floor(508 / entry_length) = 13)
+33: file count (number of entries in dir with nonzero storage type)
+35: first cluster of volume bitmap (usually 6)
+37: size of volume in 512-byte clusters
+
+[TODO: Do subdirectory file counts include the volume label or
+the first entry of a subdirectory?]
+
+Volume bitmap has one cluster for each 4096 clusters in a volume.
+Each byte represents whether 8 clusters free (1) or used (0).
+[TODO: What is the bit ordering?]
+
+First entry of subdirectory
+0: storage type ($E0) plus name length
+1-15: copy of subdirectory name (/[A-Z][0-9A-Z.]+/)
+16-23 bytes: reserved
+24-27: directory birthtime (per B422)
+28: version (usually 0)
+29: min_version (usually 0)
+30: access (per B423)
+31: entry_length (always 39 in ProDOS)
+32: entries_per_block (floor(508 / entry_length) = 13 in ProDOS)
+33: file count (number of entries in dir with nonzero storage type)
+35: cluster of entry in parent directory
+37: index of entry in parent directory (0-12)
+38: entry_length of parent directory (always 39)
+
+File
+0: storage type ($10, $20, $30, $D0) plus name length
+1-15: copy of subdirectory name (/[A-Z][0-9A-Z.]+/)
+16: file type
+17: cluster of key block
+19: number of blocks
+21-23: length of file in bytes
+24-27: birthtime (per B422)
+28: version (usually 0)
+29: min_version (usually 0)
+30: access (per B423)
+31: subtype
+33: modification time
+37: pointer to first block of parent directory
+
+storage type $10 is small files (1 to 512 bytes)
+storage type $20 is medium files (513 to 131072 bytes)
+storage type $30 is large files (131073+ bytes)
+storage type $D0 is linked list files (i.e. subdirectories)
+
+number of blocks is
+- 1 for small files files
+- 1+n for medium files, fewer if sparse
+- 1+ceil(n/256)+n for large files, fewer if sparse
+- at least max(1, ceil(n/4))
+
+Medium files have a cluster list pointing at data clusters
+Large files have 2 layers of cluster lists
+A zero entry in a cluster list corresponds to a $00-filled cluster
+The first cluster in a file is never a zero entry
+
+Creation and modification timestamps are two 2-byte integers
+
+fedcba98 76543210  Timestamp: Date
+|||||||| |||+++++- day
+|||||||+-+++------ month
++++++++----------- year (what calendar?)
+fedcba98 76543210  Timestamp: Time
+   |||||   ++++++- minute
+   +++++---------- hour
+
+76543210  Access bits for a file
+|||   |+- read enable
+|||   +-- write enable
+||+------ changed since last backup
+|+------- move enable
++-------- delete enable
+
+File types:
+$01: bad cluster list
+$04: text file
+$06: binary file; subtype is load address
+$0F: directory
+$19-$1B: AppleWorks document
+$FA: Integer BASIC program
+$FB: Integer BASIC save state
+$FC: Applesoft BASIC program
+$FD: Applesoft BASIC save state
+$FE: EDASM relocatable object file
+$FF: executable ("system") file, eqv. to $06 with subtype $2000
+
+On 5.25" disk drives, each of 35 tracks contains 8 clusters stored
+across 16 DOS 3.3 sectors.
+
+         sector: 0 1 2 3 4 5 6 7 8 9 A B C D E F
+        cluster: 0 7 6 6 5 5 4 4 3 3 2 2 1 1 0 7
+half of cluster: 1 1 2 1 2 1 2 1 2 1 2 1 2 1 2 2
+
+ProDOS-ordered disk images (.po extension) have the halves of
+a cluster in logical order.  DOS 3.3-ordered disk images (.do
+or .dsk extension) have the halves in 5.25" sector order.
