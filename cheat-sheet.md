@@ -120,9 +120,15 @@ Add all changes to tracked files (not newly added files) to the cart.
 
     git add -u
 
-Or just add all additions and removals to the cart.
+Add all changes, including added *and removed* files, to the cart.
 
     git add -A .
+
+Interactively cherry-pick changes in the work tree into the cart.
+Calculate `git diff`, show each hunk of diff in each changed text
+file, and ask for thumbs up (`y`) or thumbs down (`n`) on adding it.
+
+    git add -p
 
 **Remove a file** from the cart as if it had not been changed
 (per [genehack's answer]).

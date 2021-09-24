@@ -493,6 +493,7 @@ switched from SVN on SourceForge to Git on GitHub, and in October
 `git clone` command downloads 144 MiB as of second quarter 2020,
 so run it on an unmetered connection.
 
+    sudo apt install qttools5-dev libx264-dev
     cd ~/develop
     git clone https://github.com/TASVideos/fceux.git
     cd fceux
