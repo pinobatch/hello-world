@@ -1,0 +1,26 @@
+#!/bin/bash
+# SuperFetch! ;-)
+# This script prepopulates the disk cache with programs.
+# Use SQLite to read Firefox's history and bookmarks file into cache,
+# but do it first because it needs exclusive access and Firefox will
+# complain if it can't write
+## echo "vacuum;" | nice sqlite3 "/home/pino/.mozilla/firefox/rkcmszuf.default/places.sqlite" > /dev/null 2>&1
+
+# Once VLC's window flashes, everything is at least safe to use
+nice vlc vlc://quit > /dev/null 2>&1
+nice firefox --help > /dev/null
+sleep 30
+# Load GUI applications in the background
+nice mousepad --version > /dev/null
+nice gimp -i -b '(gimp-quit 0)' > /dev/null 2>&1
+nice wine control --version > /dev/null 2>&1
+sleep 10
+# Load the command line toolchain
+nice fceux --help > /dev/null
+nice ca65 --help > /dev/null
+nice ld65 --help > /dev/null
+nice make --version > /dev/null
+nice xfce4-terminal --version > /dev/null
+nice python3 -c "from PIL import Image,ImageDraw,ImageChops;import urllib.request,xml.etree.ElementTree,html5lib,os"
+sleep 10
+## nice chromium --help > /dev/null

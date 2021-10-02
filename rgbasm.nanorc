@@ -1,0 +1,37 @@
+## Here is a modified exampe for assembler.
+# By DaKnig#5022 in gbdev Discord server
+
+syntax "gbz80" "\.(inc|z80|asm)"
+comment ";"
+magic "gameboy assembly source, rgbds style"
+
+##set morespace
+##set mouse
+##set autoindent
+##set casesensitive
+##set tabsize 4
+
+color red "\<[A-Z_]{2,}\>"
+
+##color brightgreen "\.(data|subsection|text)"
+##color green "\.(align|file|globl|global|hidden|section|size|type|weak)"
+icolor green "\<(db|ds|dw)\>"
+icolor brightyellow "\<(adc|add|and|cp|dec|inc|or|sbc|sub|xor|bit|res|set|swap|rl|rla|rlc|rlca|rr|rra|rrc|rrca|sla|sra|srl|ld|call|jr|jr z|jr nz|jr c|jr nc|jp|jp z|jp nz|jp c|jp nc|ret|reti|rst|pop|push|ccf|cpl|daa|di|ei|halt|nop|scf|stop)\>"
+icolor brightred "^[[:space:]]*[.0-9A-Z_]*:"
+##color brightcyan "^[[:space:]]*#[[:space:]]*(define|undef|include|ifn?def|endif|elif|else|if|warning|error)"
+color brightcyan "^"
+#color brightcyan "^[[:space:]]*#[[:space:]]*(define|include(_next)?|(un|ifn?)def|endif|el(if|se)|if|warning|error|pragma)"
+
+
+# Strings.
+color brightyellow "<[^= 	]*>" ""(\\.|[^"])*""
+# Multiline strings.  This regex is VERY resource intensive,
+# and sometimes colours things that shouldn't be coloured.
+##color brightyellow start=""(\\.|[^"])*\\[[:space:]]*$" end="^(\\.|[^"])*""
+
+# Comments.
+color brightblue ";.*"
+##color brightblue start="/\*" end="\*/"
+
+# Trailing whitespace.
+color ,green "[[:space:]]+$"
