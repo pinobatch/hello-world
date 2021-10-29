@@ -337,6 +337,14 @@ Synchronize changes from the parent project.
     git pull upstream master
     git push origin master
 
+If it's been a while, there might be a lot of changes in the parent
+that you have not incorporated.  Another way to merge is to replay
+your changes on top of the parent's HEAD.
+
+    git fetch upstream master
+    git rebase upstream/master
+    git push origin master
+
 Then reapply work done in a feature branch on top of synced changes.
 
     git checkout subseq-optimization
