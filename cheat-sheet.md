@@ -46,7 +46,7 @@ Based on [Peter's answer] to "Import existing source code to Github":
 
         git init
         git add .
-        git commit -m "Imported version X.Y.Z from ZIPURL"
+        git commit -m "Import version X.Y.Z from ZIPURL"
 
 Or if your working copy has files that shouldn't be tracked quite
 yet, but you have a newline-separated list of files that should,
@@ -60,7 +60,7 @@ you're adding an ignored file and refuse to do anything.
     git rm --cached zip.in
     cp ~/path/to/some/gitignore .gitignore
     git add .gitignore
-    git commit -m "Version X.Y.Z from ZIPURL"
+    git commit -m "Import version X.Y.Z from ZIPURL"
 
 Then you can send this new project to GitHub.  (A shortcut for
 `--set-upstream` is `-u`.
@@ -82,7 +82,7 @@ An alternate method is to clone the GitHub repository first.
 6. Add all new files:
 
         git add .
-        git commit -m 'version X.Y.Z from ZIPURL'
+        git commit -m 'Import version X.Y.Z from ZIPURL'
         git pull origin master
         git push origin master
 
@@ -198,7 +198,7 @@ repository, without disclosing their paths to collaborators.
 
 **Commit changes** that have been added to the cart, with a message describing the change. Some remotes watch for specially formatted messages and use them to trigger actions such as closing issue reports.
 
-    git commit -m "fix #13: blah blah check if null"
+    git commit -m "Fix #13: blah blah check if null"
 
 Or add a commit with a longer message spanning multiple lines.  This opens a text file in your chosen text editor to compose the message.  Once you save the file and close the editor, Git uses the first 50 characters of the first line as the summary.
 
@@ -206,8 +206,8 @@ Or add a commit with a longer message spanning multiple lines.  This opens a tex
 
 Or add all changed files to the cart and commit them, skipping newly created files.  These are equivalent:
 
-    git add -u && git commit -m "update chat server list"
-    git commit -am "update chat server list"
+    git add -u && git commit -m "Update chat server list"
+    git commit -am "Update chat server list"
 
 Do the same while adding to the commit message a signature that the changes are yours. Some projects require this signature to trace responsibility for copyright in changes.
 
@@ -217,6 +217,8 @@ Add changes in the cart to the last commit or correct its commit
 message before you push it.
 
     git commit --amend
+
+(See also "[How to Write a Git Commit Message]" by Chris Beams.)
 
 Switch back to master and **merge** changes from the branch.
 
@@ -273,6 +275,7 @@ This can be incorporated into a makefile:
 [thkala's answer]: https://stackoverflow.com/a/4509530/2738262
 [gitignore docs]: https://git-scm.com/docs/gitignore
 [mipadi's answer]: https://stackoverflow.com/a/338470/2738262
+[How to Write a Git Commit Message]: https://chris.beams.io/posts/git-commit/
 [Richard and VolkA]: https://stackoverflow.com/q/278192/2738262
 [VonC's answer]: https://stackoverflow.com/a/16163608/2738262
 
