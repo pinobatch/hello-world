@@ -283,9 +283,12 @@ This can be incorporated into a makefile:
 
 Say things go horribly wrong in your repo, and you've already
 committed.  If you haven't done `git gc` recently, you can probably
-recover your data.  Visit [Oh Shit, Git!?!] to see how.
+recover your data.  Visit [Oh Shit, Git!?!] to see how.  Eevee's
+2015 article "[Just enough Git to be (less) dangerous]" may help
+build your mental model enough to understand the documentation.
 
 [Oh Shit, Git!?!]: https://ohshitgit.com/
+[Just enough Git to be (less) dangerous]: https://eev.ee/blog/2015/04/24/just-enough-git-to-be-less-dangerous/
 
 ## Working with out-of-band change submissions
 
