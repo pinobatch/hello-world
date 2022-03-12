@@ -107,13 +107,29 @@ $FD: Applesoft BASIC save state
 $FE: EDASM relocatable object file
 $FF: executable ("system") file, eqv. to $06 with subtype $2000
 
-On 5.25" disk drives, each of 35 tracks contains 8 clusters stored
-across 16 DOS 3.3 sectors.
+Disk image formats
+------------------
 
-         sector: 0 1 2 3 4 5 6 7 8 9 A B C D E F
-        cluster: 0 7 6 6 5 5 4 4 3 3 2 2 1 1 0 7
-half of cluster: 1 1 2 1 2 1 2 1 2 1 2 1 2 1 2 2
+The 5.25" disk in a Disk II drive has 35 tracks of 16 256-byte
+sectors.  ProDOS stores each cluster as 2 sectors with a stride
+of 2 sectors or 3 when wrapping around the end of a track.
+For comparison, DOS 3.3 uses a 13-sector stride or 14 when wrapping.
 
-ProDOS-ordered disk images (.po extension) have the halves of
-a cluster in logical order.  DOS 3.3-ordered disk images (.do
-or .dsk extension) have the halves in 5.25" sector order.
+    physical sector: 0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F
+      ProDOS sector: 0a 4a 0b 4b 1a 5a 1b 5b 2a 6a 2b 6b 3a 7a 3b 7b
+     DOS 3.3 sector: 0  7  E  6  D  5  C  4  B  3  A  2  9  1  8  F
+
+Disk II images in `.po` format are stored in ProDOS order.
+
+      ProDOS sector: 0a 0b 1a 1b 2a 2b 3a 3b 4a 4b 5a 5b 6a 6b 7a 7b
+    physical sector: 0  2  4  6  8  A  C  E  1  3  5  7  9  B  D  F
+     DOS 3.3 sector: 0  E  D  C  B  A  9  8  7  6  5  4  3  2  1  F
+
+Disk II images in `.dsk` or `.do` format are stored in DOS 3.3 order.
+
+     DOS 3.3 sector: 0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F
+      ProDOS sector: 0a 7a 6b 6a 5b 5a 4b 4a 3b 3a 2b 2a 1b 1a 0b 7b
+    physical sector: 0  D  B  9  7  5  3  1  E  C  A  8  6  4  2  F
+
+To convert `.po` to `.dsk` or vice versa, reverse the order of the
+middle 14 sectors in each track.
