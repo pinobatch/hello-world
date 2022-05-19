@@ -293,6 +293,7 @@ Mousepad languages:
    GTKSourceView looks for languages:
    `~/.local/share/gtksourceview-2.0/language-specs`
    and `~/.local/share/gtksourceview-3.0/language-specs`
+   and `~/.local/share/gtksourceview-4/language-specs`
 
 ReText:
 
@@ -330,6 +331,10 @@ Change these preferences:
   set Use Tracking Protection to Always.  This blocks scripts and
   1-pixel images from domains that track users across sites, based
   on the list used by the Disconnect extension.
+
+With the migration of Firefox to Snap packaging as of Ubuntu 22.04,
+Firefox is having trouble seeing user-installed fonts.  Thus Jester
+may show up in the user interface but not in web pages.
 
 Install these extensions: [Stylus] and [HTTPS Everywhere]
 
