@@ -17,7 +17,7 @@ It received several sequels, including _Pitfall 2: Lost Caverns_ on the 2600, wh
 _Super Pitfall_ was poorly received, to put it nicely.
 
 "Pitfall" or "[Pitfall seed]" is also the name of an uncommon item in Nintendo's social simulator _[Animal Crossing]_ for GameCube.
-Above ground, a pitfall appears as a white sphere with a red exclamation point, much like the [issue icon] in GitHub.
+Above ground, a pitfall appears as a white sphere with a red exclamation point, much like the [issue icon] in GitHub looked prior to 2021-05-13 when the issue icons were "[refreshed]".
 But when buried, it appears as a crack in the ground, the same as a buried fossil or Gyroid.
 If a villager steps on the crack, the villager will fall into a trap and have to mash buttons to climb out.
 Because _Animal Crossing_ also included several playable NES games that the player could unlock, as well as an unused "dummy" triangle, there was initially a lot of confusion as to what a "pitfall" was.
@@ -32,6 +32,7 @@ Here, a "pitfall" may refer to a bug in the documentation.
 [Pitfall seed]: https://nookipedia.com/wiki/Pitfall_seed
 [Animal Crossing]: https://en.wikipedia.org/wiki/Animal_Crossing_%28video_game%29
 [issue icon]: https://primer.style/octicons/issue-opened-16
+[refreshed]: https://github.com/primer/octicons/commit/4176539b4b4a2d8f0c23fe95ff3a4c6e219ec773
 [Brawl pitfall]: http://www.ssbwiki.com/pitfall
 
 Unova
