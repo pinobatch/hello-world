@@ -41,7 +41,14 @@ Unova
 Its geography roughly corresponds to the area around New York, New York.
 In the Japanese versions of _B&W_, Unova is called Isshu (イッシュ), pronounced roughly like "issue".
 
-In this repository, the term "unova" may mean something like a feature request.
-We'll see later what it means.
+In this repository, the term "unova" may mean something like a feature request, after Latin *nova* meaning "new".
+We'll see later what it ends up meaning.
 
 [Unova]: http://bulbapedia.bulbagarden.net/wiki/Unova
+
+Commit message jargon
+====
+
+I may state in a commit message that I have given some document a "but reduction".  This refers to the advice in ["Five Phrases That Make People Discount What You're Saying" by Gwen Moran][Moran] to reduce the use of the conjunction "but" in one's writing.
+
+[Moran]: https://getpocket.com/explore/item/5-phrases-that-make-people-discount-what-you-re-saying

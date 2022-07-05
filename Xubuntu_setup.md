@@ -84,8 +84,8 @@ Then install useful free software:
     # 133 MB download, 577 MB disk space
 
 Ubuntu since 16.04 installs `python3-pil` by default to support HP
-printers, but the built-in Printers control panel doesn't support
-reading ink level.  So install compatibility with Qt 5 applications:
+printers in a basic manner.  To add the ability to read ink level,
+install compatibility with Qt 5 applications:
 
     sudo apt install hplip-gui sqlitebrowser
     # 9 MB download, 36 MB disk space
@@ -374,11 +374,13 @@ consider how to serve [ads that don't track] users across websites.
 (This is a hard problem because third-party ad networks pay out
 [three times as much] for ads based on tracking than for ads not
 based on tracking.)  A [JavaScript switcher] extension works for
-some but not all sites.  So I just ignore articles on those sites and
+some but not all sites, as operators of more "premium" websites
+have turned them into single-page apps to control ads and metering
+more precisely.  So I just ignore articles on those sites and
 block them at the DNS level to keep from visiting them by mistake.
 Others are social networks that build a [shadow profile] (a dossier
-about non-members' viewing habits), but which are left out of
-Disconnect's list for the benefit of members.
+about non-members' viewing habits) yet are left out of Disconnect's
+list for the benefit of members.
 
     pkexec mousepad /etc/hosts
     
@@ -526,7 +528,7 @@ instructions to make MEKA play nicely with smaller monitors.)
 
 Debian and Ubuntu package the free Game Boy Color and Game Boy
 Advance emulator mGBA as `mgba-qt`.  Its GBA emulation is great.  Its
-GBC emulation is progressing (to put it nicely) but is good enough
+GBC emulation is progressing (to put it nicely), though good enough
 for game logic if your device can't run Wine or proprietary software.
 Even if your distribution has outdated mGBA, if your `sources.list`
 has source URIs, you can use `sudo apt build-dep mgba` to grab
@@ -540,10 +542,10 @@ default; Ubuntu doesn't.)  If not, use the dependencies listed at
     sudo apt install debhelper desktop-file-utils libavcodec-dev \
       libavformat-dev libavresample-dev libavutil-dev libavfilter-dev \
       libmagickwand-dev libpng-dev libqt5opengl5-dev libsdl2-dev \
-      libsqlite3-dev libswscale-dev pkg-config libedit-dev \
-      qtbase5-dev qtmultimedia5-dev qttools5-dev-tools \
+      libsqlite3-dev libswscale-dev pkg-config libedit-dev libelf-dev \
+      liblua5.4-dev qtbase5-dev qtmultimedia5-dev qttools5-dev-tools \
       libzip-dev zlib1g-dev zipcmp zipmerge ziptool
-    # 47.2 MB download, 217 MB disk
+    # 47.8 MB download, 220 MB disk
     cd ~/develop
     git clone https://github.com/mgba-emu/mgba.git
     cd mgba
@@ -563,10 +565,11 @@ and black-on-white text or line art fare even better thanks to
 
 The MozJPEG distribution includes counterparts to the `cjpeg`,
 `djpeg`, and `jpegtran` command-line tools included with libjpeg.
-Mozilla intends that image editor developers add MozJPEG as their
-JPEG export plug-in, but GIMP in Ubuntu 18.04 has not.  In the
-meantime, build the command-line tools from source.  These
-instructions are based on [MozJPEG instructions] by Andrew Welch.
+Mozilla intends that image editor developers add MozJPEG as
+their JPEG export plug-in, but GIMP in Ubuntu 18.04 has not
+([GIMP issue #1039]).  In the meantime, build the command-line
+tools from source.  These instructions are based on
+[MozJPEG instructions] by Andrew Welch.
 
     sudo apt install libtool nasm
     cd ~/develop
@@ -585,10 +588,11 @@ Then it can be used as follows:
     # This produces output with 4:2:0 chroma subsampling
     mozcjpeg -quality 75 kitten.png > kitten.jpg
     # This produces output with full-resolution chroma,
-    # useful for pictures containing both hard edges
+    # useful for pictures containing both hard edges and
+    # soft edges
     mozcjpeg -quality 75 -sample 1x1 kitten.png > kitten.jpg
     # Recompressing an existing JPEG image, as with AdvanceCOMP
-    # (but you won't get the trellis quantization)
+    # (lossless, therefore without trellis quantization)
     mozjpegtran -progressive -optimize puppy.jpg > puppy-opt.jpg
     mozjpegtran -progressive -optimize -outfile puppy.jpg puppy.jpg
 
@@ -650,6 +654,7 @@ fingerprints, are at [Connecting to GitHub with SSH].
 [Debian source package mgba]: https://packages.debian.org/source/sid/mgba
 [MozJPEG]: https://github.com/mozilla/mozjpeg
 [deringing]: https://kornel.ski/deringing/
+[GIMP issue #1039]: https://gitlab.gnome.org/GNOME/gimp/-/issues/1039
 [MozJPEG instructions]: https://nystudio107.com/blog/installing-mozjpeg-on-ubuntu-16-04-forge
 [gmewav]: https://forums.nesdev.com/viewtopic.php?p=200347#p200347
 [little things]: https://github.com/pinobatch/little-things-nes
@@ -684,11 +689,10 @@ out of the way of the system package manager (APT and dpkg).
 Wine is not an emulator
 -----------------------
 Install Microsoft proprietary fonts needed for some applications and
-websites.  Ubuntu has a package for this, but the download locations
-in Ubuntu 16.04's package are out of date.  This causes configuration
-to fail, which in turn causes Update Notifier to make repeated
-pop-ups.  So if you use 16.04, install Debian's newer package.
-(This is fixed in 18.04.)
+websites.  At times, some distributions' download locations have been
+out of date.  This causes configuration to fail, which in turn causes
+Update Notifier to make repeated pop-ups.  In Ubuntu 16.04, Debian's
+package was needed.  (This was fixed in 18.04.)
 
     wget http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.6_all.deb
     sudo dpkg -i ttf-mscorefonts-installer_3.6_all.deb
@@ -704,7 +708,9 @@ more convenient.
 
 If all Windows applications that you run have 64-bit versions,
 installing `wine64-development` will save a few hundred megabytes
-of disk space by not installing the 32-bit (i386) system libraries. 
+of disk space by not installing the 32-bit (i386) system libraries.
+However, be careful because 32-bit Video for Windows codecs work
+only in 32-bit applications.
 
 Run `winecfg` to create a Wine prefix.  This may take a couple
 minutes, much like the "Hi" screen the first time you log in to a
@@ -717,15 +723,16 @@ Make some customizations:
 The things I'm most likely to run in Wine:
 
 * OpenMPT (free sample-based music editor, formerly ModPlug Tracker)
-* FCEUX (free NES emulator with debugger)
-* FamiTracker (free NES music editor)
-* No$sns (proprietary Super NES emulator, which runs at full speed on
-  an Atom unlike bsnes-plus or Mesen-S)
-* BGB (proprietary Game Boy emulator)
+* Dn-FamiTracker (free NES music editor)
+* No$sns (proprietary Super NES emulator, which may work on machines
+  that cannot run Mesen-S at full speed)
+* BGB (proprietary Game Boy emulator), 32-bit version to allow
+  use with CamStudio or ZMBV lossless codec
 * Gens Kmod (Genesis/Mega Drive emulator with debugging)
 
 To make launching Windows program from the terminal more convenient,
-put a shell script in `~/.local/bin` that handles slash conversion.
+put a shell script in `~/.local/bin` for each such program that
+converts slashes.
 
     nano ~/.local/bin/famitracker
 
@@ -734,7 +741,7 @@ put a shell script in `~/.local/bin` that handles slash conversion.
     if [ -n "$filetoopen" ]; then
         filetoopen=`winepath -w "$filetoopen"`
     fi
-    '/home/pino/.wine/drive_c/Program Files (x86)/FamiTracker/j0CC-Famitracker-j0.5.3.exe' "$filetoopen"
+    '/home/pino/.wine/drive_c/Program Files (x86)/FamiTracker/Dn-FamiTracker.exe' "$filetoopen"
 
     chmod +x ~/.local/bin/famitracker
 
@@ -761,8 +768,8 @@ For example, Mono 4.6.2.7 in Ubuntu 18.04 lacks features needed
 by the Event Viewer in Mesen and Mesen-S.
 On the other hand, sometimes the latest version of Mono introduces
 regressions.  For example, Mono 6.12 breaks configuration dialog
-boxes in Mesen and Mesen-S emulators compared to 6.8 and 6.10,
-causing them to treat both OK and Cancel as Cancel.
+boxes in some versions of Mesen and Mesen-S emulators compared to
+6.8 and 6.10, causing them to treat both OK and Cancel as Cancel.
 
 Upgrading from distro Mono to upstream Mono never worked for me.
 For this reason, fully uninstall Mono in order to switch between
