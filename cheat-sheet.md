@@ -35,23 +35,28 @@ proprietary desktop operating systems, not GNU/Linux, though
 
 ## Import a project
 
+A Git repository consists of **commits**, which represent states of the source code as a whole.
+Each commit has usually 1 or 2 parent commits representing an earlier state.
+The first commit to a repository is an **initial commit** which has no parent.
+
 Based on [Peter's answer] to "Import existing source code to Github":
 
-1. On GitHub, create the remote repository and get the SSH or HTTPS
-   URL of the repository.
+1. Create the remote repository and get its SSH URL.
 2. Unzip the zip distribution into a new folder.
 3. Clean up the distribution.
-4. Convert any documentation to Markdown.
+4. Convert documentation to Markdown.
 5. Run these commands inside the project:
 
         git init
         git add .
         git commit -m "Import version X.Y.Z from ZIPURL"
 
+This creates the initial *commit*, or state of the source code.
+
 Or if your working copy has files that shouldn't be tracked quite
 yet, but you have a newline-separated list of files that should,
-you can pass this manifest file to Git (per [David King's answer]).
-But make sure to do this *before* you set up a `.gitignore` that
+pass this manifest file to Git (per [David King's answer]).
+Make sure to do this *before* you set up a `.gitignore` that
 includes the manifest file.  Otherwise, Git will complain that
 you're adding an ignored file and refuse to do anything.
 
@@ -62,23 +67,22 @@ you're adding an ignored file and refuse to do anything.
     git add .gitignore
     git commit -m "Import version X.Y.Z from ZIPURL"
 
-Then you can send this new project to GitHub.  (A shortcut for
+Then you can send this new project to the remote.  (A shortcut for
 `--set-upstream` is `-u`.
 
     git remote add origin GITHUBURL
     git push --set-upstream origin master
 
-An alternate method is to clone the GitHub repository first.
+An alternate method is to clone the repository on the remote first.
 
-1. On GitHub, create the remote repository and get the SSH or HTTPS
-   URL of the repository.
+1. Create the remote repository and get its SSH or HTTPS URL.
 2. Download the repository:
 
         git clone GITHUBURL
 
 3. Unzip the zip distribution into the resulting folder.
 4. Clean up the distribution.
-5. Convert any documentation to Markdown.
+5. Convert documentation to Markdown.
 6. Add all new files:
 
         git add .
@@ -88,15 +92,19 @@ An alternate method is to clone the GitHub repository first.
 
 ## Create a feature branch locally and merge it locally
 
-Say you've got the idea for a bug fix or new feature while riding
-the bus.  For this, you create a branch of the tree, sometimes
-called a feature branch or topic branch.
+A commit can have any number of children that represent different directions of change, such as by different developers.
+A **branch** represents one of these directions.
+When a new repository is created, only one branch exists, with a name like `master`, `main`, or `trunk`.
+
+Say you've got the idea for a bug fix or new feature while riding the bus.
+To build this, you create a "feature branch" or "topic branch", a sequence of commits representing the development of this feature.
 
 **List** the existing branches and show which is checked out.
 
     git branch
 
 **Create** a new branch and switch to it.
+Switching to a branch, also called **checking out** the branch, points the special `HEAD` branch at that branch and (if the branch already exists) unpacks that state of the source code into the working copy.
 
     git checkout -b subseq-optimization
 
@@ -220,11 +228,13 @@ message before you push it.
 
 (See also "[How to Write a Git Commit Message]" by Chris Beams.)
 
-Switch back to master and **merge** changes from the branch.
+Commits are added to `HEAD`, which should be on a feature branch at this point.
+After a commit is added, the branch is moved to point at the child commit.
+Once you have made progress on the branch, switch back to `master` and **merge** changes from the branch.
 
     git checkout master && git merge subseq-optimization
 
-**Delete a branch** that has been merged.
+**Delete a branch** that has been merged and is no longer needed.
 
     git branch -d subseq-optimization
 
@@ -243,7 +253,12 @@ See all diffs to a file.
 
     git log -p kitten.txt
 
-**Tag** the latest commit with a version number. Occasionally you may want to release your software, which creates a tarball or zipfile suitable for use by people who do not use Git or even a compiler.  A tag identifies a release, and some remotes use it to associate a binary release with the corresponding source release.
+**Tag** the latest commit with a version number.
+Occasionally you may want to release your software, which creates a tarball or zipfile suitable for use by people who do not use Git or even a compiler.
+A tag acts as a long-term nickname for a particular commit.
+Some remotes use a tag to associate a binary release with the corresponding commit.
+A common naming convention for tags uses the letter `v` followed by a group of numbers separated by periods.
+These numbers often follow the [SemVer] spec for production software or the [0ver] spec for early experimental software.
 
     git tag v0.05wip4
 
@@ -277,6 +292,8 @@ This can be incorporated into a makefile:
 [mipadi's answer]: https://stackoverflow.com/a/338470/2738262
 [How to Write a Git Commit Message]: https://chris.beams.io/posts/git-commit/
 [Richard and VolkA]: https://stackoverflow.com/q/278192/2738262
+[SemVer]: https://semver.org/
+[0ver]: https://0ver.org/
 [VonC's answer]: https://stackoverflow.com/a/16163608/2738262
 
 ## Fixing serious mistakes
