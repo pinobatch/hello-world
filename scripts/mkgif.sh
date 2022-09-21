@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 # Video to GIF script using FFmpeg and GIMP to optimize
 # By ISSOtm (Eldred Habert), licensed Creative Commons Zero as of 2021-09-01
+# Usage: mkgif.sh kitten.webm kitten.gif
 ffmpeg -y -i "$1" -c:v huffyuv -an /tmp/gif.avi
 ffmpeg -y -i /tmp/gif.avi -filter_complex "[0:v] palettegen=255" /tmp/gif.png
 ffmpeg -y -i /tmp/gif.avi -i /tmp/gif.png -filter_complex "[0:v][1:v] paletteuse=bayer:4" /tmp/gif.gif
