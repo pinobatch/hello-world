@@ -25,7 +25,7 @@ Nehalem or Opteron:
 10. Type the name and password for your Linux user account within the
     virtual machine.
 
-Inside Ubuntu, set up a Game Boy toolchain.
+Inside Ubuntu, set up a Game Boy and NES toolchain.
 
     sudo apt update
     sudo apt upgrade
@@ -38,7 +38,7 @@ Inside Ubuntu, set up a Game Boy toolchain.
     make
     sudo make install
 
-Test the toolchain by compiling two of Pino's projects.
+Test the toolchain by building two of Pino's projects from source.
 
     cd ~/develop
     git clone https://github.com/pinobatch/240p-test-mini.git
@@ -53,9 +53,8 @@ Test the toolchain by compiling two of Pino's projects.
     make 240pee.nes
     cp 240pee.nes ~/Desktop/
 
-The virtual machine may not include support for emulators or other
-graphical applications.  Install emulators in Windows to test the
-built ROMs.
+The virtual machine may lack support for graphical applications.
+Install emulators in Windows to test the built ROMs.
 
  1. In File Explorer, open This PC > C:
  2. Create a folder called `emulators`
@@ -88,3 +87,11 @@ built ROMs.
 17. Under Settings, set your button bindings for each platform
     (NES, SNES, Game Boy).
 18. Drag one of the built ROMs from the desktop onto the window.
+
+Once the emulators have been unblocked and configured in Windows,
+they can be run from within WSL.
+
+    cd ~/develop/libbet
+    /mnt/c/emulators/sameboy/sameboy.exe libbet.gb
+    cd ~/develop/240p-test-mini/nes
+    /mnt/c/emulators/Mesen.exe 240pee.nes
