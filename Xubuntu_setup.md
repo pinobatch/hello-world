@@ -193,6 +193,13 @@ attempt to reconfigure the service to use PulseAudio.
 Other personalizations
 ----------------------
 
+[Enable bitmap fonts](https://askubuntu.com/a/1281443/232993)
+if needed.
+
+    sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
+    sudo ln -s ../conf.avail/70-force-bitmaps.conf /etc/fonts/conf.d/
+    sudo dpkg-reconfigure fontconfig
+
 Download [Jester] from Dafont.  Then install it, either by opening
 the font in the file manager and clicking Install or by copying it
 into `~/.local/share/fonts`:
@@ -421,11 +428,13 @@ gmewav from source code.
     # 36 MB download, 171 MB disk space
 
 Build cc65, an assembler targeting the NES, Super NES, and other
-6502 and 65816 platforms.
+6502 and 65816 platforms.  Using a shallow clone (`--depth=10`)
+limits how many revisions Git has to download, so as to economize
+storage and Internet bandwidth.
 
-    mkdir ~/develop
-    cd ~/develop
-    git clone https://github.com/cc65/cc65.git
+    mkdir -p ~/develop/assemblers
+    cd ~/develop/assemblers
+    git clone --depth=10 https://github.com/cc65/cc65.git
     cd cc65
     nice make -j2
     make install PREFIX="$HOME/.local"
@@ -433,8 +442,8 @@ Build cc65, an assembler targeting the NES, Super NES, and other
 
 Build ASM6, a simpler non-linking assembler targeting 6502 platforms.
 
-    mkdir ~/develop/asm6
-    cd ~/develop/asm6
+    mkdir -p ~/develop/assemblers/asm6
+    cd ~/develop/assemblers/asm6
     wget https://3dscapture.com/NES/asm6.zip
     unzip asm6.zip asm6.c
     gcc -Os -s asm6.c -o ~/.local/bin/asm6
@@ -462,8 +471,8 @@ locally installed compilers and assemblers.
 
 Build RGBDS, an assembler targeting the Game Boy.
 
-    cd ~/develop
-    git clone https://github.com/gbdev/rgbds.git
+    cd ~/develop/assemblers
+    git clone --depth=10 https://github.com/gbdev/rgbds.git
     cd rgbds
     make
     make install PREFIX="$HOME/.local"
@@ -473,8 +482,8 @@ Build WLA DX, an assembler targeting Z80 machines among others.
 The final call to `cmake` works around its makefile's inability to
 receive a `$PREFIX` from the environment ([WLA DX issue #265]).
 
-    cd ~/develop
-    git clone https://github.com/vhelin/wla-dx.git
+    cd ~/develop/assemblers
+    git clone --depth=10 https://github.com/vhelin/wla-dx.git
     cd wla-dx
     cmake -G "Unix Makefiles" .
     make -j4
@@ -493,20 +502,18 @@ source tarball.
     nice make -j2
     make install
 
-Build FCEUX (SDL) from source because the version in Git is newer
-than the one in Ubuntu's repository.  In April 2018, the FCEUX team
-switched from SVN on SourceForge to Git on GitHub, and in October
-2020, the team dropped SCons in favor of CMake.  The following
-`git clone` command downloads 144 MiB as of second quarter 2020,
+Build FCEUX from source because the version in Git is newer than the
+one in Ubuntu's repository.  Because of the project's long history,
+cloning the repository downloads 144 MiB as of second quarter 2020,
 so run it on an unmetered connection.
 
     sudo apt install qttools5-dev libx264-dev
-    cd ~/develop
-    git clone https://github.com/TASVideos/fceux.git
+    cd ~/develop/emulators
+    git clone --depth=10 https://github.com/TASEmulators/fceux.git
     cd fceux
     mkdir build
     cd build
-    cmake -DCMAKE_INSTALL_PREFIX=$HOME/.local -DCMAKE_BUILD_TYPE=Release ..
+    cmake -DCMAKE_INSTALL_PREFIX="$HOME/.local" -DCMAKE_BUILD_TYPE=Release ..
     make -kj4
     make install
 
@@ -520,6 +527,7 @@ instructions to make MEKA play nicely with smaller monitors.)
 
     sudo apt install liballegro5-dev
     # 2 MB download, 9 MB disk
+    cd ~/develop/emulators
     git clone --recursive https://github.com/ocornut/meka.git
     cd meka/meka/srcs
     sed -e 's/-5[.]0/-5/g' Makefile > Makefile_
@@ -546,8 +554,8 @@ default; Ubuntu doesn't.)  If not, use the dependencies listed at
       liblua5.4-dev qtbase5-dev qtmultimedia5-dev qttools5-dev-tools \
       libzip-dev zlib1g-dev zipcmp zipmerge ziptool
     # 47.8 MB download, 220 MB disk
-    cd ~/develop
-    git clone https://github.com/mgba-emu/mgba.git
+    cd ~/develop/emulators
+    git clone --depth=10 https://github.com/mgba-emu/mgba.git
     cd mgba
     mkdir build
     cd build
@@ -688,11 +696,16 @@ out of the way of the system package manager (APT and dpkg).
 
 Wine is not an emulator
 -----------------------
-Install Microsoft proprietary fonts needed for some applications and
-websites.  At times, some distributions' download locations have been
-out of date.  This causes configuration to fail, which in turn causes
-Update Notifier to make repeated pop-ups.  In Ubuntu 16.04, Debian's
-package was needed.  (This was fixed in 18.04.)
+Install Microsoft Core Fonts for the Web, which are proprietary fonts
+needed for some applications and websites.
+
+Because Core Fonts are not free software, the package in a
+distribution's repository usually downloads the fonts from a separate
+web host and unpacks them.  As the hosting situation changes, the
+download location may fall out of date.  This causes configuration to
+fail, which in turn causes Update Notifier to make repeated pop-ups.
+In Ubuntu 16.04, Debian's package was needed.  (This was fixed in
+18.04; I'm leaving the instructions up in case it recurs.)
 
     wget http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.6_all.deb
     sudo dpkg -i ttf-mscorefonts-installer_3.6_all.deb
@@ -709,8 +722,8 @@ more convenient.
 If all Windows applications that you run have 64-bit versions,
 installing `wine64-development` will save a few hundred megabytes
 of disk space by not installing the 32-bit (i386) system libraries.
-However, be careful because 32-bit Video for Windows codecs work
-only in 32-bit applications.
+However, be careful because 32-bit Video for Windows codecs work only
+in 32-bit applications, particularly when recording video in bgb.
 
 Run `winecfg` to create a Wine prefix.  This may take a couple
 minutes, much like the "Hi" screen the first time you log in to a
@@ -725,7 +738,7 @@ The things I'm most likely to run in Wine:
 * OpenMPT (free sample-based music editor, formerly ModPlug Tracker)
 * Dn-FamiTracker (free NES music editor)
 * No$sns (proprietary Super NES emulator, which may work on machines
-  that cannot run Mesen-S at full speed)
+  that cannot run Mesen 2 at full speed)
 * BGB (proprietary Game Boy emulator), 32-bit version to allow
   use with CamStudio or ZMBV lossless codec
 * Gens Kmod (Genesis/Mega Drive emulator with debugging)
@@ -745,7 +758,7 @@ converts slashes.
 
     chmod +x ~/.local/bin/famitracker
 
-Some software, such as NO$SNS, doesn't play nice with PulseAudio in
+Some software, such as No$sns, doesn't play nice with PulseAudio in
 Wine 3.6, giving an error like this followed by a crash:
 
     Assertion 'pa_sample_spec_valid(spec)' failed at pulse/sample.c:67,
@@ -788,10 +801,9 @@ in the [Mono project repository].  This procedure is based on
 
 Proprietary crap
 ----------------
-I don't intend "crap" to put down the work that went into this
-software.  It's just that relying on proprietary tools increases the
-chance of having to start over in your search for tools should a tool
-maintainer get [hit by a bus].
+Relying on proprietary tools increases the chance of having to
+start over in your search for tools should a tool maintainer get
+[hit by a bus].
 
 Get the Ubuntu .deb matching your distribution from [Dropbox].
 
