@@ -193,11 +193,13 @@ attempt to reconfigure the service to use PulseAudio.
 Other personalizations
 ----------------------
 
-[Enable bitmap fonts](https://askubuntu.com/a/1281443/232993)
-if needed.
+[Enable bitmap fonts] if needed.  (Use `yes-bitmaps` instead of
+`force-bitmaps` because the latter has caused Firefox 112 to draw
+invisible text, per [bug 1827950].)
 
-    sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
-    sudo ln -s ../conf.avail/70-force-bitmaps.conf /etc/fonts/conf.d/
+    cd /etc/fonts/conf.d
+    sudo rm 70-no-bitmaps.conf
+    sudo ln -s ../conf.avail/70-yes-bitmaps.conf .
     sudo dpkg-reconfigure fontconfig
 
 Download [Jester] from Dafont.  Then install it, either by opening
@@ -246,7 +248,7 @@ has been missing since sometime in 2017, drop this snippet from
 
 Power Manager:
 
-* When laptop lid is closed on battery: Suspend
+* When laptop lid is closed: Suspend
 * Suspend when inactive for 15 minutes on battery
 * On critical battery power (10%), ask
 * Blank screen after 5 minutes on battery or 15 minutes plugged in
@@ -317,8 +319,10 @@ HexChat:
 * Set my nick
 * Set my real name in Preferences > Chatting > Advanced
 
-[Gabriel Sandoval's answer]: https://askubuntu.com/a/1067364/232993
+[Enable bitmap fonts]: https://askubuntu.com/a/1281443/232993
+[bug 1827950]: https://bugzilla.mozilla.org/show_bug.cgi?id=1827950
 [Jester]: http://www.dafont.com/jester.font
+[Gabriel Sandoval's answer]: https://askubuntu.com/a/1067364/232993
 [palm detection]: https://github.com/advancingu/XPS13Linux/issues/3
 
 Firefox
@@ -843,6 +847,27 @@ straightforward to parse the download URL out of the HTML.
 [hit by a bus]: https://en.wikipedia.org/wiki/Bus_factor
 [Dropbox]: https://www.dropbox.com/install-linux
 [Emulicious]: https://emulicious.net/
+
+Periodic maintenance
+--------------------
+
+Things to have an administrator do at least once a week:
+
+    # Refresh the catalog of available DPKGs
+    sudo apt update
+    # Download DPKGs where one in the catalog is
+    # newer than what is installed
+    sudo apt -dy upgrade
+    # Install (and download if needed) said newer DPKGs
+    sudo apt upgrade
+    
+    # Download and install Snap packages newer than what is installed
+    # (you may need to do this with the web browser closed)
+    sudo snap refresh
+    
+    # Discard old systemd log entries
+    # per <https://askubuntu.com/a/1238221/232993>
+    sudo journalctl --vacuum-time=10d
 
 External links
 --------------
