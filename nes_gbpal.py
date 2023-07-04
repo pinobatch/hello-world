@@ -2,9 +2,22 @@
 """
 Generate an NES emulator palette resembling the Game Boy's
 
+Deuteranopia, the most common form of color blindness, makes it
+impossible for players to tell red and green apart.  The condition
+is found in 1 in 12 people assigned male at birth. The usual way
+to accommodate deuteranopia in a game or in the user interface of
+an application is to increase luminance contrast, or use a blue
+and yellow contrast in chloropleth maps.  To ensure an NES game is
+still playable by color-blind people, test it in an NES emulator
+with a custom palette resembling the monochrome screen of the
+Game Boy compact video game system.
+
+See "Chasing rainbows" by Andy Baio, published in The Verge in
+April 2023
+<https://www.theverge.com/23650428/colorblindness-design-ui-accessibility-wordle>
+
 Copyright 2021 Damian Yerrick
 License: MIT (Expat variant)
-
 """
 # NES colors 0B, 1A, 29, 38 from a palette generated with
 # Bisqwit's web application, the same palette used in savtool.py
