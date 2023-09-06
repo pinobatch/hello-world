@@ -59,6 +59,7 @@ import sys
 import hashlib
 
 outfilename = 'dedupe_out.txt'
+deletefilename = "dedupe_delete.sh"
 initial_hash_size = 16384
 
 def sortndrop(dic):
@@ -162,6 +163,15 @@ def main():
     with open(outfilename, 'wt') as outfp:
         outfp.write("\n\n".join(repr(h) + "\n" + "\n".join(sorted(files))
                                 for (h, files) in all_files))
+
+   print("Getting deletion list and writing to", deletefilename)
+   with open(deletefilename, "wt") as deletefp:
+       deletefp.write(f'#!/bin/sh\ncd "{os.getcwd()}"\n\n# Remove duplicate files\n')
+       for h, files in all_files:
+           sorted_files = sorted(files, key=len)
+           sorted_files.pop(0)
+           deletefp.write("".join((f'rm "{f}"\n') for f in sorted_files))
+
 
 if __name__=='__main__':
     main()
