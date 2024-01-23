@@ -1,0 +1,9 @@
+#!/bin/bash
+# Script by ISSOtm of gbdev server to build and run a Rust program.
+# Congratulations: Rust is a scripting language!
+set -euo pipefail
+TMPFILE=$(mktemp)
+trap "rm ${TMPFILE@Q}" EXIT
+rustc "$1" -o "$TMPFILE"
+# Only `exec` this if you don't care about TMPFILE getting deleted
+"$TMPFILE" "${@:2]"

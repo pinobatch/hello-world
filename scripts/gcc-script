@@ -1,0 +1,38 @@
+#!/bin/sh
+# gcc-script: a shell "interpreter" for C programs
+# Copyright 2024 LunarLambda
+# SPDX-License-Identifier: FSFAP
+
+# This script compiles and runs a C program whose filename is passed
+# as its first argument.  It lets the user treat C as a scripting
+# language in a POSIX environment using the installed GCC.
+#
+# 1. Install this script as `gcc-script` in a folder on your PATH
+# 2. Add `#!/usr/bin/env gcc-script` at the top of a C program
+# 3. Make the C program executable: `chmod +x hello.c`
+# 4. Run the program: `./hello.c`
+#
+# If you have another program that generates C, you can pipe it
+# into gcc-script: `cat hello.c | gcc-script -`
+
+set -e
+
+out=`mktemp --tmpdir gcc-script.XXXXXX`
+
+if [ -z "$1" ]; then
+    echo "usage: $(basename "$0") <file> [args]"
+    exit 1
+fi
+
+if sed -e '1{/^#!/d}' "$1" | gcc -x c -o "$out" ${CFLAGS:--O2 -g} - $LDFLAGS; then
+    shift
+    chmod +x "$out"
+    E=0
+    "$out" "$@" || E=$?
+    if [ $E -ne 0 ]; then
+        echo "$(basename "$0"): $out returned $E" >&2
+        exit $E
+    fi
+fi
+
+rm -f "$out" || true
