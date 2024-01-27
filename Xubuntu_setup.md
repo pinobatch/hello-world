@@ -327,13 +327,6 @@ HexChat:
 
 Firefox
 -------
-There used to be an extension called "Ubuntu modifications for
-Firefox" ([xul-ext-ubufox]) that reminded the user to restart
-Firefox after APT upgrades it.  It no longer works with any
-supported version of Mozilla Firefox.
-
-    sudo apt remove xul-ext-ubufox
-
 Change these preferences:
 
 * In General > Language and Appearance > Fonts & Colors > Advanced,
@@ -347,16 +340,16 @@ With the migration of Firefox to Snap packaging as of Ubuntu 22.04,
 Firefox is having trouble seeing user-installed fonts.  Thus Jester
 may show up in the user interface but not in web pages.
 
-Install these extensions: [Stylus] and [HTTPS Everywhere]
+Install these extensions: [Stylus] and [Control Panel for Twitter]
 
 Firefox for Linux has Ctrl+Q as a shortcut for Quit.  Ctrl+Q is
 fine for applications with only one window, not a [tabbed MDI]
 like that of most web browsers since NetCaptor.  When the user
 reaches for Ctrl+Tab or Ctrl+W, the user may accidentally press
 Ctrl+Q and lose data in those HTML forms that Restore Previous
-Session cannot restore.  The extension that's supposed to fix this
-([Disable Ctrl-Q and Cmd-Q]) is not compatible with GNU/Linux
-because of [bug 1325692] that has lingered unfixed for years.
+Session cannot restore.  Even the shortcut Ctrl+Shift+Q is too
+close to Ctrl+Shift+Tab.  (Not that extensions can change them
+anyway because of years-unfixed [bug 1325692].)
 
 The workaround is to open `about:config` and set the preferences
 `browser.showQuitWarning` and `browser.warnOnQuit` to `true`.
@@ -387,11 +380,12 @@ consider how to serve [ads that don't track] users across websites.
 based on tracking.)  A [JavaScript switcher] extension works for
 some but not all sites, as operators of more "premium" websites
 have turned them into single-page apps to control ads and metering
-more precisely.  So I just ignore articles on those sites and
-block them at the DNS level to keep from visiting them by mistake.
-Others are social networks that build a [shadow profile] (a dossier
-about non-members' viewing habits) yet are left out of Disconnect's
-list for the benefit of members.
+more precisely.  I look for articles on these sites syndicated on
+MSN.com, and if they're not there, I just ignore them and block
+the sites at the DNS level to keep from visiting them by mistake.
+Others are social networking services that build a [shadow profile]
+(a dossier about non-members' viewing habits) yet are left out of
+Disconnect's list for the benefit of members.
 
     pkexec mousepad /etc/hosts
     
@@ -406,20 +400,62 @@ list for the benefit of members.
     0.0.0.0 www.facebook.com
     0.0.0.0 connect.facebook.net
 
-[xul-ext-ubufox]: https://apps.ubuntu.com/cat/applications/xul-ext-ubufox/
 [tabbed MDI]: https://en.wikipedia.org/wiki/Tab_(GUI)
-[Disable Ctrl-Q and Cmd-Q]: https://addons.mozilla.org/en-US/firefox/addon/disable-ctrl-q-and-cmd-q/?src=search
 [bug 1325692]: https://bugzilla.mozilla.org/show_bug.cgi?id=1325692
 [bug 502908 comment 40]: https://bugzilla.mozilla.org/show_bug.cgi?id=502908#c40
 [bug 1325692 comment 26]: https://bugzilla.mozilla.org/show_bug.cgi?id=1325692#c26
 [Stylus]: https://addons.mozilla.org/en-US/firefox/addon/styl-us/
-[HTTPS Everywhere]: https://addons.mozilla.org/en-US/firefox/addon/https-everywhere/
+[Control Panel for Twitter]: https://addons.mozilla.org/firefox/addon/control-panel-for-twitter/
 [SYN, SYN-ACK, RST sequence]: https://stackoverflow.com/q/55708231/2738262
 [Race Cache with Network]: https://support.mozilla.org/en-US/questions/1267945
 [ads that don't track]: https://blogs.harvard.edu/doc/2016/04/15/get-it-right-forbes/
 [three times as much]: http://images.politico.com/global/2014/02/09/beales_eisenach_daa_study.pdf
 [JavaScript switcher]: https://addons.mozilla.org/en-US/firefox/addon/quick-js-switcher/
 [shadow profile]: https://spideroak.com/articles/facebook-shadow-profiles-a-profile-of-you-that-you-never-created
+
+### Overriding Firefox's new tab
+
+Firefox places serious restrictions on content retrieved from the
+computer's file system using the `file:` protocol:
+
+- Firefox treats each path on the file system as a separate origin,
+  causing requests affected by the same-origin policy to fail.
+- Only `http:` and `https:` sites, not files, can be pinned to
+  the 6 to 8 spaces on Firefox's default new tab page.
+- Extensions to customize Firefox's new tab page cannot load local
+  files that transclude external images, style sheets, or scripts
+  from the file system.
+
+This makes customization of the new tab page and local development of
+web pages less convenient without running a local web server in the
+background all the time.
+
+Start by creating a web root for static files, and test it.
+
+    mkdir "$HOME/Documents/localhost"
+    echo '<!DOCTYPE HTML><html><head><title>Localhost</title></head><body>Localhost</body></html>' > "$HOME/Documents/localhost/index.html"
+    python3 --version
+    python3 -m http.server 8000 --bind 127.0.0.1 --protocol HTTP/1.1 --directory /home/pino/Documents/localhost/
+
+If the Python version is prior to 3.11, as in Ubuntu versions prior
+to 23.04 "lunar", remove the `--protocol HTTP/1.1` option.
+
+Open Firefox and view [your local web server].  If it works, close
+Firefox and stop the server, then open Start > Settings >
+Session and Startup.  Add a new task:
+
+* Name: HTTP on localhost
+* Description: Serve local files on localhost:8000
+* Command: `python3 -m http.server 8000 --bind 127.0.0.1 --directory /home/pino/Documents/localhost/ --protocol HTTP/1.1`
+* Trigger: on login
+
+Log out of Xfce and log back in, then view your local web server
+again.  If it works, install the extension [New Tab Override] by
+Sören Hentzschel and set it to use [your local web server] as its
+custom URL.
+
+[your local web server]: http://localhost:8000/
+[New Tab Override]: https://addons.mozilla.org/en-US/firefox/addon/new-tab-override/
 
 Building applications from source
 ---------------------------------
