@@ -415,10 +415,10 @@ Disconnect's list for the benefit of members.
 
 ### Overriding Firefox's new tab
 
-Firefox places serious restrictions on content retrieved from the
+Firefox places severe restrictions on content retrieved from the
 computer's file system using the `file:` protocol:
 
-- Firefox treats each path on the file system as a separate origin,
+- Browsers treat each path on the file system as a separate origin,
   causing requests affected by the same-origin policy to fail.
 - Only `http:` and `https:` sites, not files, can be pinned to
   the 6 to 8 spaces on Firefox's default new tab page.
@@ -432,10 +432,10 @@ background all the time.
 
 Start by creating a web root for static files, and test it.
 
-    mkdir "$HOME/Documents/localhost"
+    mkdir -p "$HOME/Documents/localhost"
     echo '<!DOCTYPE HTML><html><head><title>Localhost</title></head><body>Localhost</body></html>' > "$HOME/Documents/localhost/index.html"
     python3 --version
-    python3 -m http.server 8000 --bind 127.0.0.1 --protocol HTTP/1.1 --directory /home/pino/Documents/localhost/
+    python3 -m http.server 8000 --bind 127.0.0.1 --protocol HTTP/1.1 --directory "$HOME/Documents/localhost/"
 
 If the Python version is prior to 3.11, as in Ubuntu versions prior
 to 23.04 "lunar", remove the `--protocol HTTP/1.1` option.
@@ -449,13 +449,23 @@ Session and Startup.  Add a new task:
 * Command: `python3 -m http.server 8000 --bind 127.0.0.1 --directory /home/pino/Documents/localhost/ --protocol HTTP/1.1`
 * Trigger: on login
 
+(The home directory in "Command" is hardcoded until I can tell
+whether Session and Startup allows using environment variables.)
+
 Log out of Xfce and log back in, then view your local web server
 again.  If it works, install the extension [New Tab Override] by
 Sören Hentzschel and set it to use [your local web server] as its
 custom URL.
 
+Should Python's HTTP server not work well, other minimalist HTTP
+servers to consider include [thttpd], [publicfile], and (if not
+[repulsed by PHP from 2012]) `php -S localhost:8000`.
+
 [your local web server]: http://localhost:8000/
 [New Tab Override]: https://addons.mozilla.org/en-US/firefox/addon/new-tab-override/
+[thttpd]: http://www.acme.com/software/thttpd/
+[publicfile]: https://cr.yp.to/publicfile.html
+[repulsed by PHP from 2012]: https://eev.ee/blog/2012/04/09/php-a-fractal-of-bad-design/
 
 Building applications from source
 ---------------------------------
