@@ -467,6 +467,31 @@ servers to consider include [thttpd], [publicfile], and (if not
 [publicfile]: https://cr.yp.to/publicfile.html
 [repulsed by PHP from 2012]: https://eev.ee/blog/2012/04/09/php-a-fractal-of-bad-design/
 
+### Working around snap confinement
+
+Both VLC media player and GNOME's screenshot tool save pictures in
+the [XDG pictures folder].  Unlike these, FCEUX and Mesen by default
+save pictures to a hidden folder.  This makes them inaccessible to
+applications packaged as a snap because snap confinement blocks
+applications from reading possibly sensitive data in [hidden folders]
+that belong to other applications.  A symptom of this is screenshots
+failing to upload to forums, Discord servers, and elsewhere.
+
+Work around this by putting symbolic links to the XDG pictures folder
+into the hidden folders.  Use relative symbolic links in case the
+drive is later mounted as removable `/media` on another system.
+
+    mkdir -p ~/.config/Mesen2 ~/.fceux ~/Pictures/mesen ~/Pictures/fceux
+    cd ~/.config/Mesen2
+    test -d Screenshots && mv Screenshots/* ~/Pictures/mesen/ && rmdir Screenshots
+    ln -s ../../Pictures/mesen Screenshots
+    cd ~/.fceux
+    test -d snaps && mv snaps/* ~/Pictures/fceux/ && rmdir snaps
+    ln -s ../Pictures/fceux snaps
+
+[XDG pictures folder]: https://wiki.archlinux.org/title/XDG_user_directories
+[hidden folders]: https://askubuntu.com/q/1290345/232993
+
 Building applications from source
 ---------------------------------
 Install prerequisites to build cc65, FCEUX, RGBDS, Scale2x, and
