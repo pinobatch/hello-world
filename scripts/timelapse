@@ -1,0 +1,6 @@
+#!/bin/sh
+set -e
+# Take a time lapse of an X session and speed it up by a factor of 30
+# based on script by Gyan, <https://superuser.com/a/1019703/302629>
+# ffmpeg x11grab docs: <https://trac.ffmpeg.org/wiki/Capture/Desktop>
+ffmpeg -y -framerate 1 -f x11grab -s 1920,1080 -i :0.0+0,0 -vf 'settb=expr=1/30,setpts=PTS/30,scale=640:360' -r 30 -vcodec libx264 -crf 0 -preset ultrafast ~/Desktop/timelapse.mp4

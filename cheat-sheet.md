@@ -432,12 +432,28 @@ changes that you're about to commit.
 
 ## Working with managers
 
-Record a time-lapse video of your day to prove to yourself and others how much time you spend on various types of task.  Based on [FFmpeg desktop capture].  Using FFmpeg on X Window System (on FreeBSD or Linux):
+Record a time-lapse video of your day to prove to yourself and
+others how much time you spend on various types of task.
+Using FFmpeg on X Window System (tested on Linux; OpenBSD or
+FreeBSD should be similar), run this in one terminal window and
+then switch to another.  (Based on [FFmpeg desktop capture])
 
-    ffmpeg -y -f x11grab -video_size 1024x768 -framerate 1/2 -i :0.0 \
+    ffmpeg -y -f x11grab -video_size 1920x1080 -framerate 1/2 -i :0.0 \
       -filter:v "setpts=PTS/60,fps=30" \
       ~/Desktop/rec.mp4
 
-The first line takes a screenshot of the primary screen every 2 seconds, and the second speeds up playback to 60 times real time so that each minute of the video represents one hour of real time.
+The first line takes a screenshot of the primary screen every 2
+seconds, and the second speeds up playback to 60 times real time
+so that each minute of the video represents one hour of real time.
+
+If your collaboration platform limits the size of uploaded video
+files, run a two-pass encode to limit the video's average bit rate.
+
+    ffmpeg -y -i ~/Desktop/rec.mp4 -c:v libx264 -vf "scale=960:540" \
+      -pix_fmt yuv420p -b:v 530k -pass 1 \
+      -f null /dev/null
+    ffmpeg -y -i ~/Desktop/rec.mp4 -c:v libx264 -vf "scale=960:540" \
+      -pix_fmt yuv420p -b:v 530k -pass 2 \
+      -movflags +faststart ~/Desktop/recsmall.mp4
 
 [FFmpeg desktop capture]: https://trac.ffmpeg.org/wiki/Capture/Desktop
