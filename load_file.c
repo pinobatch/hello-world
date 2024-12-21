@@ -2,12 +2,15 @@
 read a file into an array
 untested! by Damian Yerrick, no rights reserved
 The successive doubling looks complicated compared to fseek-ftell
-solution, but it's meant to be generic enough to read piped stdin.
+solution, but it's meant to be generic enough to read piped stdin
+even on platforms whose C library's realloc() is slow (like Windows).
 */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <limits.h>
+
+#define LOAD_FILE_MIN_SIZE 16384
 
 /**
  * Reads the remainder of a file until EOF into freshly allocated
@@ -18,7 +21,7 @@ solution, but it's meant to be generic enough to read piped stdin.
  * may set errno.
  */
 void *load_file_by_fp(FILE infp[restrict static 1], size_t *restrict out_size) {
-  size_t capacity = 16384;
+  size_t capacity = LOAD_FILE_MIN_SIZE;
   unsigned char *out = calloc(1, capacity);
   size_t sz = fread(out, 1, capacity, infp);
   while (!feof(infp) && !ferror(infp) && sz < SIZE_MAX) {
@@ -32,7 +35,8 @@ void *load_file_by_fp(FILE infp[restrict static 1], size_t *restrict out_size) {
   }
   if (feof(infp)) {  // successfully read the whole file
     if (out_size) *out_size = sz;
-    unsigned char *newout = realloc(out, sz);  // shrinkwrap
+    if (sz < sizeof(size_t)) sz = sizeof(size_t);  // avoid realloc(ptr, 0) UB
+    unsigned char *newout = realloc(out, sz);  // shrinkwrap allocation
     return newout ? newout : out;
   }
 return_error:

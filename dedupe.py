@@ -75,14 +75,14 @@ Return a tuple (multis, singles) where
     return multis, singles
 
 def minimd5_beginning(filename):
-    # 40-bit md5 because this step just narrows the possibilities.
+    # 64-bit md5 because this step just narrows the possibilities.
     # Speed is more important than being cryptographically secure
     # for this step.
     h = hashlib.md5()
     with open(filename, 'rb') as infp:
         txt = infp.read(initial_hash_size)
     h.update(txt)
-    return h.hexdigest()[:10]
+    return h.hexdigest()[:16]
 
 def sha256_entire_file(filename):
     h = hashlib.sha256()
@@ -115,10 +115,11 @@ def print_stats(step, all_files, singles):
     total_bytes = sum(key[0] * (len(files) - 1)
                       for (key, files) in all_files)
     total_files = sum(len(files) for (key, files) in all_files)
+    groups_pl = 'dupe group' if len(all_files) == 1 else 'dupe groups'
     print("%s drops %d singles\n"
-          "leaving %d files in %d dupe groups with %d KiB wasted"
+          "leaving %d files in %d %s with %d KiB wasted"
           % (step, len(singles),
-             total_files, len(all_files), total_bytes // 1024))
+             total_files, len(all_files), groups_pl, total_bytes // 1024))
 
 def main():
     print("Reading all folders in %s" % os.getcwd())
@@ -136,11 +137,13 @@ def main():
         all_files.extend(os.path.join(folder, filename)
                          for filename in files)
 
-    print("Narrowing to regular files (not symbolic links)")
+    print("Narrowing %d files to regular files (not symbolic links)"
+          % len(all_files))
     all_files = [((),
-                  [p for p in all_files if os.path.isfile(p)])]
+                  [p for p in all_files
+                   if os.path.isfile(p) and not os.path.islink(p)])]
+    print("leaving %d files" % sum(len(x[1]) for x in all_files))
 
-    print("Starting with %d files" % sum(len(x[1]) for x in all_files))
     all_files, singles = add_one_hash(all_files, os.path.getsize)
     print_stats("Sorting by size", all_files, singles)
 
@@ -164,13 +167,13 @@ def main():
         outfp.write("\n\n".join(repr(h) + "\n" + "\n".join(sorted(files))
                                 for (h, files) in all_files))
 
-   print("Getting deletion list and writing to", deletefilename)
-   with open(deletefilename, "wt") as deletefp:
-       deletefp.write(f'#!/bin/sh\ncd "{os.getcwd()}"\n\n# Remove duplicate files\n')
-       for h, files in all_files:
-           sorted_files = sorted(files, key=len)
-           sorted_files.pop(0)
-           deletefp.write("".join((f'rm "{f}"\n') for f in sorted_files))
+    print("Getting deletion list and writing to", deletefilename)
+    with open(deletefilename, "wt") as deletefp:
+        deletefp.write(f'#!/bin/sh\ncd "{os.getcwd()}"\n\n# Remove duplicate files\n')
+        for h, files in all_files:
+            sorted_files = sorted(files, key=len)
+            deletefp.write("#   %s\n" % sorted_files.pop(0))
+            deletefp.write("".join((f'rm "{f}"\n') for f in sorted_files))
 
 
 if __name__=='__main__':
