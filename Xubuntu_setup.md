@@ -190,6 +190,32 @@ attempt to reconfigure the service to use PulseAudio.
 [Debian bug 901148]: https://bugs.debian.org/901148
 [PulseAudio troubleshooting on ArchWiki]: https://wiki.archlinux.org/index.php/PulseAudio/Troubleshooting
 
+External displays
+-----------------
+
+If you use an external monitor with a computer, and Settings >
+Display does not list its full resolution, make a "modeline" to
+specify its signal timing.  (Not to be confused with Madeline
+from *Madeline* or Madeline from *Celeste*.)
+Per "[How to Set a Custom Screen Resolution]":
+
+    xrandr
+    # Make a note of what names it assigns to your laptop's video output ports.
+    cvt 1280 1024
+    # Copy everything after "Modeline" and replace everything after "--newmode"
+    xrandr --newmode "1280x1024_60.00"  109.00  1280 1368 1496 1712  1024 1027 1034 1063 -hsync +vsync
+    # Change the port name and mode name
+    xrandr --addmode DP-2 "1280x1024_60.00"
+
+Then activate this mode in Settings > Display.
+
+To make this mode permanently available after restarting your
+computer, paste the `xrandr` commands into a new file:
+
+    sudo nano /etc/profile.d/xrandr-modes.sh
+
+[How to Set a Custom Screen Resolution]: https://www.tecmint.com/set-display-screen-resolution-in-ubuntu/
+
 Other personalizations
 ----------------------
 
@@ -591,6 +617,16 @@ so run it on an unmetered connection.
     cmake -DCMAKE_INSTALL_PREFIX="$HOME/.local" -DCMAKE_BUILD_TYPE=Release ..
     make -kj4
     make install
+
+Build Mesen, a multi-system emulator
+
+    sudo apt install git clang build-essential libsdl2-dev dotnet8
+    cd ~/develop/emulators
+    git clone https://github.com/SourMesen/Mesen2.git
+    cd Mesen2
+    time make -j4
+    bin/linux-x64/Release/linux-x64/publish/Mesen
+    cp bin/linux-x64/Release/linux-x64/publish/Mesen ~/.local/bin
 
 Build MEKA, a ColecoVision, Sega Master System, and Game Gear
 emulator.  The `sed` line changes the makefile from requiring

@@ -1,3 +1,12 @@
+# Pino's Git cheat sheet
+
+Do you seek to [git gud]?  Or just to rely on your audience's trust
+for GitHub's releases page?  Here's how to get started with [Git]
+distributed version control software.
+
+[git gud]: https://store.steampowered.com/app/1490570/git_gud/?curator_clanid=4777282
+[Git]: https://git-scm.com/
+
 ## Identify yourself
 
 Before you do anything else, install Git and associate your commits
@@ -199,7 +208,7 @@ View a file from two commits ago (per [mipadi's answer]).
     nano .gitignore
     git add .gitignore
 
-Or exclude files or directories only from your copy of the
+Exclude additional files or directories only from your copy of the
 repository, without disclosing their paths to collaborators.
 
     nano .git/info/exclude
@@ -312,11 +321,12 @@ build your mental model enough to understand the documentation.
 Review a folder containing individual files that you modified while
 on break on someone else's computer where you do not have the full
 repository cloned.  This folder in your Dropbox or extracted using
-`unzip` contains only those files that were modified.  (The `-D` flag
-allows `git diff` to produce "irreversible deletes".  Without `-D`,
-the diff includes the full text of each unmodified file.)
+`unzip` contains only those files that were modified.  (The
+`--diff-filter=d` flag causes `git diff` to disregard files missing
+from the change folder.  Without it, the diff includes the full text
+of each unmodified file.)
 
-    git diff -D src ~/Dropbox/myproject/changes
+    git diff --diff-filter=d src ~/Dropbox/myproject/changes
 
 Then merge the changes into your working copy.
 
