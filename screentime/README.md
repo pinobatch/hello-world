@@ -3,10 +3,12 @@ Screen time analysis scripts
 
 The only good spyware is self-spyware.
 
-These are Python scripts I made in June and July 2026 when I was
-trying to understand a longstanding time management skill issue
-that was preventing me from engaging with my hobbies and causing me
-to say things that hurt other people out of feeling overwhelmed.
+After the pandemic, I experienced a time management skill issue.
+Something was leaving me with no time to engage with my hobbies.
+It came to a head in 2026, when I felt overwhelmed and said
+something in a chat room that deeply hurt another member.
+That's when I wrote these scripts to get to the bottom of this
+by monitoring how I spend my time on my computer outside work.
 
 No LLM tools were used in the production of these scripts.
 
@@ -58,7 +60,8 @@ active tab, it writes the current local time and what it thinks is
 the server name or the other participants in a group chat.
 
     ignore Friends
-    ignore @Coworker
+    ignore @Alice Boss
+    ignore @Bob Coworker
 
     Sun 2026-07-26
     15:13:45 BlastEm
@@ -72,6 +75,13 @@ lines.  "Friends" represents time when Discord is open and I am not
 interacting with it.  Other servers and usernames may represent time
 spent at work.
 
+On the next run, it rereads the log, counts how long the browser's
+window name showed each server, and shows the servers viewed for the
+longest time each day.  If a sample is missing, such as if Discord
+was not active during the sample, it extends the previous sample up
+to one minute.  This accounts for, say, opening another website to
+do research while composing a message.
+
 Use of xdotool inspired by [Volker Siegel's answer]
 
 ### Why not Wayland?
@@ -80,7 +90,18 @@ Wayland focuses on security over functionality.  It lacks widely used
 protocol extensions for several things that are possible under X.
 This [breaks workflows], including screen time monitoring.
 
+Further reading
+---------------
+
+* "[Quantified self]" on Wikipedia
+* [r/QuantifiedSelf] on Reddit
+* [selfspy], a larger-scope self-monitoring daemon for desktop
+  computers
+
 [Discord]: https://discord.com/
 [xdotool]: https://github.com/jordansissel/xdotool
 [Volker Siegel's answer]: https://unix.stackexchange.com/a/306146/119806
 [breaks workflows]: https://xkcd.com/1172/
+[Quantified self]: https://en.wikipedia.org/wiki/Quantified_self
+[r/QuantifiedSelf]: https://www.reddit.com/r/QuantifiedSelf/
+[selfspy]: https://github.com/selfspy/selfspy

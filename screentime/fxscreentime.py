@@ -42,6 +42,7 @@ https://unix.stackexchange.com/a/306146/119806
 """
     global xdo_last_error
 
+    # Get browser PID
     cmd = list(getpid_cmd)
     cmd[cmd.index('?')] = classRE
     try:
@@ -53,6 +54,8 @@ https://unix.stackexchange.com/a/306146/119806
             print(err, file=sys.stderr)
         return []
     pid = pid.split(None, 1)[0].decode("ascii")
+
+    # Get browser's window names
     cmd = list(searchname_cmd)
     cmd[cmd.index('?')] = pid
     cmd[cmd.index('?')] = nameRE
@@ -65,6 +68,8 @@ https://unix.stackexchange.com/a/306146/119806
             xdo_last_error = err
             print(err, file=sys.stderr)
         return []
+
+    xdo_last_error = None  # print first error after valid sample
     return output.decode("utf-8").strip().split("\n")
 
 def extract_server(name):
@@ -164,6 +169,8 @@ def read_log(logfp):
     servers_to_ignore = set()
     for line in logfp:
         line = line.strip()
+        if not line or line.startswith("#"): continue
+
         if line.startswith("ignore "):
             servers_to_ignore.add(line[7:].strip())
             continue
