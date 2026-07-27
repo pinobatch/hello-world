@@ -101,7 +101,7 @@ to let the shell check for KeyboardInterrupt.
 """
     if 'idlelib' not in sys.modules:
         now = time.time()
-        naptime = min(MAX_NAP_LENGTH, end_time - now)
+        naptime = end_time - now
         if naptime > 0: time.sleep(naptime)
         return
         
