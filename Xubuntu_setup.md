@@ -305,6 +305,14 @@ GIMP:
 * Left dock: Tool Options, Layers, and Colormap
 * Right dock: Empty
 
+In GIMP 3, to restore GIMP 2's behavior of zooming by 200 percent
+per two units of Ctrl+Up or Ctrl+Down, try this solution in a
+[comment by Phasma_AFK].
+In Edit > Preferences > Input Devices > Input Controllers, under
+Active Controllers, double-click Main Mouse Wheel.
+- Under Scroll Up (Ctrl), search for and choose `view-zoom-in`.
+- Under Scroll Down (Ctrl), search for and choose `view-zoom-out`.
+
 IDLE 3:
 
 * Font: Ubuntu Mono 9
@@ -350,6 +358,7 @@ HexChat:
 [Jester]: http://www.dafont.com/jester.font
 [Gabriel Sandoval's answer]: https://askubuntu.com/a/1067364/232993
 [palm detection]: https://github.com/advancingu/XPS13Linux/issues/3
+[comment by Phasma_AFK]: https://www.reddit.com/r/GIMP/comments/1jnssdp/comment/n3k3cz8/
 
 Firefox
 -------
